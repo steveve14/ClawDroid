@@ -58,7 +58,7 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView tvIcon;
+        private final View pinIndicator;
         private final TextView tvTitle;
         private final TextView tvTime;
         private final TextView tvPreview;
@@ -67,7 +67,7 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvIcon = itemView.findViewById(R.id.tvIcon);
+            pinIndicator = itemView.findViewById(R.id.pinIndicator);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvPreview = itemView.findViewById(R.id.tvPreview);
@@ -80,13 +80,11 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
             tvPreview.setText(item.getLastMessagePreview() != null
                     ? item.getLastMessagePreview() : "");
 
-            // Icon — pinned or channel or default
+            // Pin indicator
             if (item.getIsPinned() == 1) {
-                tvIcon.setText("📌");
-            } else if (item.getChannelId() != null) {
-                tvIcon.setText("📡");
+                pinIndicator.setVisibility(View.VISIBLE);
             } else {
-                tvIcon.setText("💬");
+                pinIndicator.setVisibility(View.GONE);
             }
 
             // Channel chip

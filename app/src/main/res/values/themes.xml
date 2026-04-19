@@ -2,17 +2,113 @@
 <resources>
 
     <style name="Theme.ClawDroid" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary -->
         <item name="colorPrimary">@color/purple_primary</item>
-        <item name="colorPrimaryVariant">@color/purple_primary_variant</item>
+        <item name="colorPrimaryContainer">@color/purple_primary_variant</item>
         <item name="colorOnPrimary">@color/purple_on_primary</item>
-        <item name="colorSecondary">@color/purple_secondary</item>
-        <item name="colorOnSecondary">@color/purple_on_secondary</item>
+        <item name="colorOnPrimaryContainer">#E0D2FF</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">#625B71</item>
+        <item name="colorSecondaryContainer">#E8DEF9</item>
+        <item name="colorOnSecondary">@color/purple_on_primary</item>
+        <item name="colorOnSecondaryContainer">#686177</item>
+
+        <!-- Tertiary -->
+        <item name="colorTertiary">#633B48</item>
+        <item name="colorTertiaryContainer">#7D5260</item>
+        <item name="colorOnTertiary">@color/purple_on_primary</item>
+        <item name="colorOnTertiaryContainer">#FFCBDA</item>
+
+        <!-- Error -->
+        <item name="colorError">#BA1A1A</item>
+        <item name="colorErrorContainer">#FFDAD6</item>
+        <item name="colorOnError">@color/purple_on_primary</item>
+        <item name="colorOnErrorContainer">#93000A</item>
+
+        <!-- Surface -->
+        <item name="colorSurface">#FEF7FF</item>
+        <item name="colorSurfaceVariant">#E7E0E8</item>
+        <item name="colorOnSurface">#1D1B20</item>
+        <item name="colorOnSurfaceVariant">#494551</item>
         <item name="android:colorBackground">@color/background</item>
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorOnBackground">#1D1B20</item>
+        <item name="colorSurfaceContainerLowest">#FFFFFF</item>
+        <item name="colorSurfaceContainerLow">#F8F1F9</item>
+        <item name="colorSurfaceContainer">#F2ECF4</item>
+        <item name="colorSurfaceContainerHigh">#EDE6EE</item>
+        <item name="colorSurfaceContainerHighest">#E7E0E8</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">#7A7582</item>
+        <item name="colorOutlineVariant">#CBC4D2</item>
+
+        <!-- Inverse -->
+        <item name="colorSurfaceInverse">#322F35</item>
+        <item name="colorOnSurfaceInverse">#F5EFF6</item>
+        <item name="colorPrimaryInverse">#CFBCFF</item>
+
+        <!-- System bars -->
         <item name="android:statusBarColor">@color/background</item>
-        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:navigationBarColor">#FEF7FF</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Shape -->
+        <item name="shapeAppearanceSmallComponent">@style/Shape.ClawDroid.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/Shape.ClawDroid.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/Shape.ClawDroid.Large</item>
+    </style>
+
+    <!-- Shapes -->
+    <style name="Shape.ClawDroid.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="Shape.ClawDroid.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Shape.ClawDroid.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- Bottom Navigation -->
+    <style name="Widget.ClawDroid.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">#FEF7FF</item>
+        <item name="itemIconTint">@color/bottom_nav_colors</item>
+        <item name="itemTextColor">@color/bottom_nav_colors</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.ClawDroid.BottomNav.Indicator</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="Widget.ClawDroid.BottomNav.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#E8DEF8</item>
+        <item name="shapeAppearance">@style/Shape.ClawDroid.Large</item>
+    </style>
+
+    <!-- Cards -->
+    <style name="Widget.ClawDroid.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">#1ACBC4D2</item>
+    </style>
+
+    <style name="Widget.ClawDroid.Card.Large" parent="Widget.ClawDroid.Card">
+        <item name="cardCornerRadius">24dp</item>
+    </style>
+
+    <!-- FAB -->
+    <style name="Widget.ClawDroid.FAB" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">#6750A4</item>
+        <item name="tint">@color/purple_on_primary</item>
+        <item name="shapeAppearance">@style/Shape.ClawDroid.FAB</item>
+    </style>
+
+    <style name="Shape.ClawDroid.FAB" parent="">
+        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

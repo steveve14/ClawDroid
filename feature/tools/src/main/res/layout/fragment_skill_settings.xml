@@ -4,28 +4,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/md_surface">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:title="🎭 스킬 관리"
-        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel" />
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
+        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+        app:navigationIconTint="@color/md_on_surface" />
 
-    <TextView
+    <!-- Description -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI의 능력을 확장하는 스킬을 관리합니다.\n활성화된 스킬은 시스템 프롬프트에 자동으로 추가됩니다."
-        android:textSize="13sp"
-        android:textColor="?android:textColorSecondary"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp" />
+        android:layout_marginHorizontal="@dimen/spacing_lg"
+        app:cardCornerRadius="@dimen/radius_lg"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/md_surface_container_low">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?attr/colorOutlineVariant" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How Skills Work"
+                android:textSize="@dimen/text_base"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_surface" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Skills extend your AI's capabilities.\nActive skills are automatically added to the system prompt."
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/md_on_surface_variant"
+                android:layout_marginTop="@dimen/spacing_sm" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerSkills"
@@ -33,7 +57,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:padding="8dp"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_2xl"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <TextView
@@ -42,9 +68,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="등록된 스킬이 없습니다.\n내부 저장소의 skills 폴더에 SKILL.md를 추가하세요."
-        android:textSize="14sp"
-        android:textColor="?android:textColorSecondary"
+        android:text="No skills registered.\nAdd SKILL.md to the skills folder."
+        android:textSize="@dimen/text_sm"
+        android:textColor="@color/md_on_surface_variant"
         android:visibility="gone" />
 
 </LinearLayout>

@@ -31,7 +31,7 @@ android {
         versionCode 1
         versionName "1.0.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.clawdroid.app.HiltTestRunner"
 
         def properties = new Properties()
         def localFile = rootProject.file("local.properties")
@@ -106,5 +106,14 @@ dependencies {
 
     testImplementation libs.junit5
     testImplementation libs.mockito.core
+
     androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.espresso.contrib
+    androidTestImplementation libs.espresso.intents
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.rules
+    androidTestImplementation libs.test.ext.junit
+    androidTestImplementation libs.hilt.android.testing
+    androidTestImplementation libs.navigation.testing
+    androidTestAnnotationProcessor libs.hilt.compiler
 }

@@ -4,19 +4,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/md_surface">
 
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="📡 채널"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
+        android:paddingHorizontal="@dimen/spacing_lg"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Channels"
+                android:textColor="@color/md_on_surface"
+                android:textSize="@dimen/text_xl"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02" />
+
+            <ImageButton
+                android:id="@+id/btnRefresh"
+                android:layout_width="@dimen/avatar_md"
+                android:layout_height="@dimen/avatar_md"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="새로고침"
+                android:padding="8dp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <!-- Channel List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -24,7 +54,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="80dp"
+        android:paddingTop="@dimen/spacing_sm"
+        android:paddingBottom="96dp"
+        android:paddingHorizontal="@dimen/spacing_lg"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,36 +70,61 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:padding="@dimen/spacing_2xl"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="📡"
-            android:textSize="48sp" />
+        <FrameLayout
+            android:layout_width="@dimen/icon_3xl"
+            android:layout_height="@dimen/icon_3xl"
+            android:background="@drawable/bg_card_ghost_large">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/stat_notify_sync"
+                android:contentDescription="채널" />
+
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="채널을 연결해보세요!"
-            android:textSize="16sp"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:layout_marginTop="8dp" />
+            android:text="Connect Your Channels"
+            android:textSize="@dimen/text_xl"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/spacing_lg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link Telegram, Discord, or Slack\nto manage all chats in one place."
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/md_on_surface_variant"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/spacing_sm" />
 
     </LinearLayout>
 
     <!-- FAB: Add Channel -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddChannel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:contentDescription="채널 추가"
         app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@color/md_on_primary"
+        app:backgroundTint="@color/md_primary_container"
+        app:shapeAppearance="@style/Shape.ClawDroid.FAB"
+        app:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

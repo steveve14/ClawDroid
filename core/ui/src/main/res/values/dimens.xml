@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing (based on 4dp grid) -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">12dp</dimen>
+    <dimen name="spacing_lg">16dp</dimen>
+    <dimen name="spacing_xl">24dp</dimen>
+    <dimen name="spacing_2xl">32dp</dimen>
+    <dimen name="spacing_3xl">48dp</dimen>
+
+    <!-- Border Radius -->
+    <dimen name="radius_sm">4dp</dimen>
+    <dimen name="radius_md">8dp</dimen>
+    <dimen name="radius_lg">12dp</dimen>
+    <dimen name="radius_xl">16dp</dimen>
+    <dimen name="radius_2xl">24dp</dimen>
+    <dimen name="radius_full">9999dp</dimen>
+
+    <!-- Icon Sizes -->
+    <dimen name="icon_sm">16dp</dimen>
+    <dimen name="icon_md">24dp</dimen>
+    <dimen name="icon_lg">32dp</dimen>
+    <dimen name="icon_xl">48dp</dimen>
+    <dimen name="icon_2xl">56dp</dimen>
+    <dimen name="icon_3xl">80dp</dimen>
+    <dimen name="icon_4xl">96dp</dimen>
+
+    <!-- Avatar Sizes -->
+    <dimen name="avatar_sm">32dp</dimen>
+    <dimen name="avatar_md">40dp</dimen>
+    <dimen name="avatar_lg">48dp</dimen>
+    <dimen name="avatar_xl">56dp</dimen>
+    <dimen name="avatar_2xl">96dp</dimen>
+
+    <!-- Typography -->
+    <dimen name="text_xs">11sp</dimen>
+    <dimen name="text_sm">12sp</dimen>
+    <dimen name="text_base">14sp</dimen>
+    <dimen name="text_md">16sp</dimen>
+    <dimen name="text_lg">18sp</dimen>
+    <dimen name="text_xl">20sp</dimen>
+    <dimen name="text_2xl">24sp</dimen>
+    <dimen name="text_3xl">32sp</dimen>
+    <dimen name="text_4xl">44sp</dimen>
+
+    <!-- Toolbar -->
+    <dimen name="toolbar_height">56dp</dimen>
+
+    <!-- Bottom Nav -->
+    <dimen name="bottom_nav_height">80dp</dimen>
+    <dimen name="bottom_nav_radius">24dp</dimen>
+
+    <!-- Chat -->
+    <dimen name="bubble_max_width_percent">85</dimen>
+    <dimen name="bubble_padding">16dp</dimen>
+    <dimen name="bubble_radius_large">16dp</dimen>
+    <dimen name="bubble_radius_tail">4dp</dimen>
+    <dimen name="input_bar_min_height">48dp</dimen>
+    <dimen name="input_bar_max_height">128dp</dimen>
+
+    <!-- Cards -->
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_padding_lg">24dp</dimen>
+    <dimen name="card_elevation">0dp</dimen>
+
+    <!-- FAB -->
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="fab_margin">24dp</dimen>
+
+    <!-- Voice -->
+    <dimen name="voice_orb_size">192dp</dimen>
+    <dimen name="voice_orb_pulse_size">256dp</dimen>
+    <dimen name="voice_pulse_size">256dp</dimen>
+    <dimen name="voice_btn_large">80dp</dimen>
+    <dimen name="voice_btn_small">56dp</dimen>
+</resources>

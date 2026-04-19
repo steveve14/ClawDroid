@@ -5,26 +5,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_surface"
     tools:context=".ui.ConversationListFragment">
 
-    <!-- Toolbar -->
+    <!-- TopAppBar — transparent with blur feel -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="ClawDroid"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
+        android:paddingHorizontal="@dimen/spacing_lg"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@android:drawable/star_big_on"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/app_name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Profile avatar -->
+            <FrameLayout
+                android:layout_width="@dimen/avatar_md"
+                android:layout_height="@dimen/avatar_md"
+                android:background="@drawable/bg_gradient_primary_circle">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/sym_def_app_icon"
+                    android:contentDescription="@string/app_name" />
+
+            </FrameLayout>
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="@string/app_name"
+                android:textColor="@color/md_primary_container"
+                android:textSize="@dimen/text_xl"
+                android:textStyle="bold"
+                android:letterSpacing="-0.02" />
+
+            <!-- Search icon -->
+            <ImageButton
+                android:id="@+id/btnSearch"
+                android:layout_width="@dimen/avatar_md"
+                android:layout_height="@dimen/avatar_md"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_search"
+                android:contentDescription="검색"
+                android:padding="8dp" />
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -33,7 +72,7 @@
         android:id="@+id/searchBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="대화 검색..."
+        android:hint="Search chats..."
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +84,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="80dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="96dp"
+        android:paddingHorizontal="@dimen/spacing_lg"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,36 +101,76 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:padding="@dimen/spacing_2xl"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🐾"
-            android:textSize="48sp" />
+        <!-- Central icon -->
+        <FrameLayout
+            android:layout_width="@dimen/icon_4xl"
+            android:layout_height="@dimen/icon_4xl"
+            android:background="@drawable/bg_card_ghost_large">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/btn_star_big_on"
+                android:contentDescription="시작" />
+
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="대화를 시작해보세요!"
-            android:textSize="16sp"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:layout_marginTop="8dp" />
+            android:text="The Ethereal Intelligence"
+            android:textSize="@dimen/text_2xl"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:letterSpacing="-0.02" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start a conversation to explore\nthe boundaries of intelligence."
+            android:textSize="@dimen/text_md"
+            android:textColor="@color/md_on_surface_variant"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/spacing_sm" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Conversation"
+            android:textSize="@dimen/text_base"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_primary"
+            android:background="@drawable/bg_gradient_primary"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="16dp"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:elevation="8dp" />
 
     </LinearLayout>
 
     <!-- FAB: New Conversation -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewConversation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:contentDescription="새 대화"
         app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@color/md_on_primary"
+        app:backgroundTint="@color/md_primary_container"
+        app:shapeAppearance="@style/Shape.ClawDroid.FAB"
+        app:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

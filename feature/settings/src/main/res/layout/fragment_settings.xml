@@ -3,300 +3,470 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/md_surface">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_2xl">
 
-        <!-- Toolbar -->
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="⚙️ 설정"
-            app:titleTextColor="@android:color/white" />
-
-        <!-- AI Model Section -->
+        <!-- Header -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🤖 AI 모델"
-            android:textSize="14sp"
+            android:text="Settings"
+            android:textSize="@dimen/text_3xl"
             android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
+            android:textColor="@color/md_on_surface"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:letterSpacing="-0.02" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configure your AI companion experience"
+            android:textSize="@dimen/text_base"
+            android:textColor="@color/md_on_surface_variant"
+            android:layout_marginTop="@dimen/spacing_xs" />
+
+        <!-- Section: Intelligence Core -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intelligence Core"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface_variant"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_sm"
+            android:letterSpacing="0.05" />
+
+        <!-- AI Models -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low"
+            android:layout_marginBottom="@dimen/spacing_sm">
 
             <LinearLayout
+                android:id="@+id/btnModelSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_manage"
+                        android:contentDescription="AI" />
+
+                </FrameLayout>
 
                 <LinearLayout
-                    android:id="@+id/btnModelSettings"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="16dp"
-                    android:background="?attr/selectableItemBackground">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="기본 모델 설정"
-                        android:textSize="16sp" />
+                        android:text="AI Models"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
 
                     <TextView
                         android:id="@+id/tvCurrentModel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Gemini Nano"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurfaceVariant" />
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?attr/colorOutlineVariant"
-                    android:layout_marginHorizontal="16dp" />
-
-                <LinearLayout
-                    android:id="@+id/btnApiKeys"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="16dp"
-                    android:background="?attr/selectableItemBackground">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="클라우드 API 키 관리"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?attr/colorOutlineVariant"
-                    android:layout_marginHorizontal="16dp" />
-
-                <LinearLayout
-                    android:id="@+id/btnFallbackOrder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="16dp"
-                    android:background="?attr/selectableItemBackground">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="폴백 순서 설정"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Persona Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🎭 페르소나"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
-
+        <!-- Persona -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low"
+            android:layout_marginBottom="@dimen/spacing_sm">
 
             <LinearLayout
+                android:id="@+id/btnPersonaSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        android:contentDescription="Persona" />
+
+                </FrameLayout>
 
                 <LinearLayout
-                    android:id="@+id/btnPersonaSettings"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:background="?attr/selectableItemBackground">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="이름 · 성격 설정"
-                        android:textSize="16sp" />
+                        android:text="Persona"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name, personality, system prompt"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?attr/colorOutlineVariant"
-                    android:layout_marginHorizontal="16dp" />
-
-                <LinearLayout
-                    android:id="@+id/btnSystemPrompt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:background="?attr/selectableItemBackground">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="시스템 프롬프트"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Tools Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="🔧 도구 · 스킬"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
-
+        <!-- Tools & Skills -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low">
 
             <LinearLayout
                 android:id="@+id/btnToolSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
                 android:background="?attr/selectableItemBackground">
 
-                <TextView
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_compass"
+                        android:contentDescription="Tools" />
+
+                </FrameLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="내장 도구 · 스킬 관리"
-                    android:textSize="16sp" />
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tools &amp; Skills"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Built-in tools, custom skills"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Security Section -->
+        <!-- Section: Integrations -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🔒 보안"
-            android:textSize="14sp"
+            android:text="Integrations"
+            android:textSize="@dimen/text_sm"
             android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
+            android:textColor="@color/md_on_surface_variant"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_sm"
+            android:letterSpacing="0.05" />
 
+        <!-- Channels -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low">
+
+            <LinearLayout
+                android:id="@+id/btnApiKeys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/stat_notify_sync"
+                        android:contentDescription="Channels" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Channels"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Telegram, Discord, Slack"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Section: Application -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface_variant"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_sm"
+            android:letterSpacing="0.05" />
+
+        <!-- Security -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low"
+            android:layout_marginBottom="@dimen/spacing_sm">
 
             <LinearLayout
                 android:id="@+id/btnSecuritySettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
                 android:background="?attr/selectableItemBackground">
 
-                <TextView
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_lock_lock"
+                        android:contentDescription="Security" />
+
+                </FrameLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="앱 잠금 · 보안 설정"
-                    android:textSize="16sp" />
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="App Lock"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PIN, biometric, security"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchAppLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- About Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ℹ️ 정보"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorPrimary"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
-
+        <!-- About -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="12dp">
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low">
 
             <LinearLayout
                 android:id="@+id/btnAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
                 android:background="?attr/selectableItemBackground">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ClawDroid v1.0.0"
-                    android:textSize="16sp" />
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        android:contentDescription="About" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="AI-Powered Assistant"
-                    android:textSize="13sp"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:layout_marginTop="4dp" />
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ClawDroid v1.0.0"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
 
             </LinearLayout>
 

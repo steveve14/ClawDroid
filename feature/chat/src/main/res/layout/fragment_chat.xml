@@ -5,17 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_surface"
     tools:context=".ui.ChatFragment">
 
     <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
+        android:paddingHorizontal="@dimen/spacing_md"
         app:navigationIcon="@android:drawable/ic_menu_revert"
-        app:navigationIconTint="@android:color/white"
-        app:titleTextColor="@android:color/white"
+        app:navigationIconTint="@color/md_on_surface"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -23,26 +25,55 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tvTitle"
+            <!-- AI Avatar mini -->
+            <FrameLayout
+                android:layout_width="@dimen/avatar_sm"
+                android:layout_height="@dimen/avatar_sm">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_gradient_primary_circle" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/sym_def_app_icon"
+                    android:contentDescription="AI" />
+
+            </FrameLayout>
+
+            <!-- Title column -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="코딩 도우미" />
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/spacing_md">
 
-            <TextView
-                android:id="@+id/tvModelName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:alpha="0.8"
-                android:drawableEnd="@android:drawable/arrow_down_float"
-                tools:text="gemini-nano ▾" />
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_primary_container"
+                    android:textSize="@dimen/text_lg"
+                    android:textStyle="bold"
+                    android:letterSpacing="-0.02"
+                    tools:text="ClawDroid" />
+
+                <TextView
+                    android:id="@+id/tvModelName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/md_outline"
+                    android:textSize="@dimen/text_xs"
+                    android:fontFamily="monospace"
+                    tools:text="gemini-nano" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -54,7 +85,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:padding="8dp"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_sm"
+        android:paddingBottom="@dimen/spacing_sm"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:stackFromEnd="true"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
@@ -69,7 +102,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="8dp"
+        android:padding="@dimen/spacing_sm"
+        android:background="@drawable/bg_bubble_ai"
+        android:layout_marginStart="@dimen/spacing_lg"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/inputBar"
         app:layout_constraintStart_toStartOf="parent">
@@ -82,9 +117,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="응답 생성 중..."
-            android:textSize="12sp"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:text="Generating..."
+            android:textSize="@dimen/text_sm"
+            android:textColor="@color/md_on_surface_variant"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>
@@ -96,9 +131,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="8dp"
-        android:background="?attr/colorSurface"
-        android:elevation="4dp"
+        android:padding="@dimen/spacing_sm"
+        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:layout_marginBottom="@dimen/spacing_sm"
+        android:background="@drawable/bg_input_bar"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -106,20 +143,22 @@
         <!-- Attach -->
         <ImageButton
             android:id="@+id/btnAttach"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/avatar_md"
+            android:layout_height="@dimen/avatar_md"
             android:src="@android:drawable/ic_menu_gallery"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="첨부" />
+            android:contentDescription="첨부"
+            android:padding="8dp" />
 
         <!-- Voice -->
         <ImageButton
             android:id="@+id/btnVoiceInput"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/avatar_md"
+            android:layout_height="@dimen/avatar_md"
             android:src="@android:drawable/ic_btn_speak_now"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="음성 입력" />
+            android:contentDescription="음성 입력"
+            android:padding="8dp" />
 
         <!-- Text Input -->
         <com.google.android.material.textfield.TextInputEditText
@@ -127,22 +166,32 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginHorizontal="8dp"
-            android:hint="메시지 입력..."
+            android:layout_marginHorizontal="@dimen/spacing_sm"
+            android:hint="Message ClawDroid..."
             android:maxLines="5"
             android:inputType="textMultiLine"
             android:background="@android:color/transparent"
-            android:padding="12dp" />
+            android:paddingVertical="12dp"
+            android:textSize="@dimen/text_base"
+            android:textColor="@color/md_on_surface"
+            android:textColorHint="@color/md_on_surface_variant" />
 
         <!-- Send -->
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <FrameLayout
             android:id="@+id/btnSend"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:contentDescription="전송"
-            app:srcCompat="@android:drawable/ic_menu_send"
-            app:fabSize="mini"
-            app:backgroundTint="?attr/colorPrimary" />
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_gradient_primary_pill"
+            android:contentDescription="전송">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_send"
+                android:contentDescription="send" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

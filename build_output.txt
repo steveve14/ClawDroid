@@ -1,0 +1,494 @@
+﻿> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :core:ai:preBuild UP-TO-DATE
+> Task :core:ai:preDebugBuild UP-TO-DATE
+> Task :core:ai:generateDebugResValues UP-TO-DATE
+> Task :core:ai:generateDebugResources UP-TO-DATE
+> Task :core:ai:packageDebugResources UP-TO-DATE
+> Task :core:data:preBuild UP-TO-DATE
+> Task :core:data:preDebugBuild UP-TO-DATE
+> Task :core:data:generateDebugResValues UP-TO-DATE
+> Task :core:data:generateDebugResources UP-TO-DATE
+> Task :core:data:packageDebugResources UP-TO-DATE
+> Task :core:model:preBuild UP-TO-DATE
+> Task :core:model:preDebugBuild UP-TO-DATE
+> Task :core:model:generateDebugResValues UP-TO-DATE
+> Task :core:model:generateDebugResources UP-TO-DATE
+> Task :core:model:packageDebugResources UP-TO-DATE
+> Task :core:ui:preBuild UP-TO-DATE
+> Task :core:ui:preDebugBuild UP-TO-DATE
+> Task :core:ui:generateDebugResValues UP-TO-DATE
+> Task :core:ui:generateDebugResources UP-TO-DATE
+> Task :core:ui:packageDebugResources UP-TO-DATE
+> Task :feature:channels:preBuild UP-TO-DATE
+> Task :feature:channels:preDebugBuild UP-TO-DATE
+> Task :feature:channels:generateDebugResValues UP-TO-DATE
+> Task :feature:channels:generateDebugResources UP-TO-DATE
+> Task :feature:channels:packageDebugResources UP-TO-DATE
+> Task :feature:chat:preBuild UP-TO-DATE
+> Task :feature:chat:preDebugBuild UP-TO-DATE
+> Task :feature:chat:generateDebugResValues UP-TO-DATE
+> Task :feature:chat:generateDebugResources UP-TO-DATE
+> Task :feature:chat:packageDebugResources UP-TO-DATE
+> Task :feature:settings:preBuild UP-TO-DATE
+> Task :feature:settings:preDebugBuild UP-TO-DATE
+> Task :feature:settings:generateDebugResValues UP-TO-DATE
+> Task :feature:settings:generateDebugResources UP-TO-DATE
+> Task :feature:settings:packageDebugResources UP-TO-DATE
+> Task :feature:tools:preBuild UP-TO-DATE
+> Task :feature:tools:preDebugBuild UP-TO-DATE
+> Task :feature:tools:generateDebugResValues UP-TO-DATE
+> Task :feature:tools:generateDebugResources UP-TO-DATE
+> Task :feature:tools:packageDebugResources UP-TO-DATE
+> Task :feature:voice:preBuild UP-TO-DATE
+> Task :feature:voice:preDebugBuild UP-TO-DATE
+> Task :feature:voice:generateDebugResValues UP-TO-DATE
+> Task :feature:voice:generateDebugResources UP-TO-DATE
+> Task :feature:voice:packageDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :core:ai:parseDebugLocalResources UP-TO-DATE
+> Task :core:ai:generateDebugRFile UP-TO-DATE
+> Task :core:data:parseDebugLocalResources UP-TO-DATE
+> Task :core:data:generateDebugRFile UP-TO-DATE
+> Task :core:model:parseDebugLocalResources UP-TO-DATE
+> Task :core:model:generateDebugRFile UP-TO-DATE
+> Task :core:ui:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :core:ui:parseDebugLocalResources UP-TO-DATE
+> Task :core:ui:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :core:ui:generateDebugRFile UP-TO-DATE
+> Task :feature:channels:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :feature:channels:parseDebugLocalResources UP-TO-DATE
+> Task :feature:channels:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :feature:channels:generateDebugRFile UP-TO-DATE
+> Task :feature:chat:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :feature:chat:parseDebugLocalResources UP-TO-DATE
+> Task :feature:chat:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :feature:chat:generateDebugRFile UP-TO-DATE
+> Task :feature:settings:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :feature:settings:parseDebugLocalResources UP-TO-DATE
+> Task :feature:settings:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :feature:settings:generateDebugRFile UP-TO-DATE
+> Task :feature:tools:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :feature:tools:parseDebugLocalResources UP-TO-DATE
+> Task :feature:tools:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :feature:tools:generateDebugRFile UP-TO-DATE
+> Task :feature:voice:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :feature:voice:parseDebugLocalResources UP-TO-DATE
+> Task :feature:voice:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :feature:voice:generateDebugRFile UP-TO-DATE
+> Task :app:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :core:ai:writeDebugAarMetadata UP-TO-DATE
+> Task :core:data:writeDebugAarMetadata UP-TO-DATE
+> Task :core:model:writeDebugAarMetadata UP-TO-DATE
+> Task :core:ui:writeDebugAarMetadata UP-TO-DATE
+> Task :feature:channels:writeDebugAarMetadata UP-TO-DATE
+> Task :feature:chat:writeDebugAarMetadata UP-TO-DATE
+> Task :feature:settings:writeDebugAarMetadata UP-TO-DATE
+> Task :feature:tools:writeDebugAarMetadata UP-TO-DATE
+> Task :feature:voice:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :core:ai:extractDeepLinksDebug UP-TO-DATE
+> Task :core:ai:processDebugManifest UP-TO-DATE
+> Task :core:data:extractDeepLinksDebug UP-TO-DATE
+> Task :core:data:processDebugManifest UP-TO-DATE
+> Task :core:model:extractDeepLinksDebug UP-TO-DATE
+> Task :core:model:processDebugManifest UP-TO-DATE
+> Task :core:ui:extractDeepLinksDebug UP-TO-DATE
+> Task :core:ui:processDebugManifest UP-TO-DATE
+> Task :feature:channels:extractDeepLinksDebug UP-TO-DATE
+> Task :feature:channels:processDebugManifest UP-TO-DATE
+> Task :feature:chat:extractDeepLinksDebug UP-TO-DATE
+> Task :feature:chat:processDebugManifest UP-TO-DATE
+> Task :feature:settings:extractDeepLinksDebug UP-TO-DATE
+> Task :feature:settings:processDebugManifest UP-TO-DATE
+> Task :feature:tools:extractDeepLinksDebug UP-TO-DATE
+> Task :feature:tools:processDebugManifest UP-TO-DATE
+> Task :feature:voice:extractDeepLinksDebug UP-TO-DATE
+> Task :feature:voice:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :core:ai:compileDebugLibraryResources UP-TO-DATE
+> Task :core:data:compileDebugLibraryResources UP-TO-DATE
+> Task :core:model:compileDebugLibraryResources UP-TO-DATE
+> Task :core:ui:compileDebugLibraryResources UP-TO-DATE
+> Task :feature:channels:compileDebugLibraryResources UP-TO-DATE
+> Task :feature:chat:compileDebugLibraryResources UP-TO-DATE
+> Task :feature:settings:compileDebugLibraryResources UP-TO-DATE
+> Task :feature:tools:compileDebugLibraryResources UP-TO-DATE
+> Task :feature:voice:compileDebugLibraryResources UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :core:ai:javaPreCompileDebug UP-TO-DATE
+> Task :core:data:javaPreCompileDebug UP-TO-DATE
+> Task :core:model:javaPreCompileDebug UP-TO-DATE
+> Task :core:model:compileDebugJavaWithJavac UP-TO-DATE
+> Task :core:model:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:data:compileDebugJavaWithJavac UP-TO-DATE
+> Task :core:model:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :core:data:transformDebugClassesWithAsm UP-TO-DATE
+> Task :core:data:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:ai:compileDebugJavaWithJavac UP-TO-DATE
+> Task :core:data:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :core:ai:transformDebugClassesWithAsm UP-TO-DATE
+> Task :core:ai:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:ui:javaPreCompileDebug UP-TO-DATE
+> Task :core:ui:compileDebugJavaWithJavac UP-TO-DATE
+> Task :core:ui:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :core:ai:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :core:ui:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:channels:javaPreCompileDebug UP-TO-DATE
+> Task :feature:channels:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature:channels:transformDebugClassesWithAsm UP-TO-DATE
+> Task :feature:channels:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:chat:javaPreCompileDebug UP-TO-DATE
+> Task :feature:chat:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature:chat:transformDebugClassesWithAsm UP-TO-DATE
+> Task :feature:chat:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:settings:javaPreCompileDebug UP-TO-DATE
+> Task :feature:settings:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature:settings:transformDebugClassesWithAsm UP-TO-DATE
+> Task :feature:settings:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:tools:javaPreCompileDebug UP-TO-DATE
+> Task :feature:tools:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature:tools:transformDebugClassesWithAsm UP-TO-DATE
+> Task :feature:tools:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :feature:voice:javaPreCompileDebug UP-TO-DATE
+> Task :feature:voice:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature:voice:transformDebugClassesWithAsm UP-TO-DATE
+> Task :feature:voice:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :app:preDebugAndroidTestBuild SKIPPED
+> Task :app:dataBindingMergeDependencyArtifactsDebugAndroidTest UP-TO-DATE
+> Task :app:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :app:generateDebugAndroidTestResources UP-TO-DATE
+> Task :app:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :app:dataBindingGenBaseClassesDebugAndroidTest UP-TO-DATE
+> Task :app:processDebugAndroidTestManifest UP-TO-DATE
+> Task :app:generateDebugAndroidTestBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :app:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :app:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :app:processDebugAndroidTestResources UP-TO-DATE
+> Task :app:compileDebugAndroidTestJavaWithJavac UP-TO-DATE
+> Task :app:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :app:compileDebugAndroidTestShaders NO-SOURCE
+> Task :app:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :core:ai:mergeDebugShaders UP-TO-DATE
+> Task :core:ai:compileDebugShaders NO-SOURCE
+> Task :core:ai:generateDebugAssets UP-TO-DATE
+> Task :core:ai:packageDebugAssets UP-TO-DATE
+> Task :core:data:mergeDebugShaders UP-TO-DATE
+> Task :core:data:compileDebugShaders NO-SOURCE
+> Task :core:data:generateDebugAssets UP-TO-DATE
+> Task :core:data:packageDebugAssets UP-TO-DATE
+> Task :core:model:mergeDebugShaders UP-TO-DATE
+> Task :core:model:compileDebugShaders NO-SOURCE
+> Task :core:model:generateDebugAssets UP-TO-DATE
+> Task :core:model:packageDebugAssets UP-TO-DATE
+> Task :core:ui:mergeDebugShaders UP-TO-DATE
+> Task :core:ui:compileDebugShaders NO-SOURCE
+> Task :core:ui:generateDebugAssets UP-TO-DATE
+> Task :core:ui:packageDebugAssets UP-TO-DATE
+> Task :feature:channels:mergeDebugShaders UP-TO-DATE
+> Task :feature:channels:compileDebugShaders NO-SOURCE
+> Task :feature:channels:generateDebugAssets UP-TO-DATE
+> Task :feature:channels:packageDebugAssets UP-TO-DATE
+> Task :feature:chat:mergeDebugShaders UP-TO-DATE
+> Task :feature:chat:compileDebugShaders NO-SOURCE
+> Task :feature:chat:generateDebugAssets UP-TO-DATE
+> Task :feature:chat:packageDebugAssets UP-TO-DATE
+> Task :feature:settings:mergeDebugShaders UP-TO-DATE
+> Task :feature:settings:compileDebugShaders NO-SOURCE
+> Task :feature:settings:generateDebugAssets UP-TO-DATE
+> Task :feature:settings:packageDebugAssets UP-TO-DATE
+> Task :feature:tools:mergeDebugShaders UP-TO-DATE
+> Task :feature:tools:compileDebugShaders NO-SOURCE
+> Task :feature:tools:generateDebugAssets UP-TO-DATE
+> Task :feature:tools:packageDebugAssets UP-TO-DATE
+> Task :feature:voice:mergeDebugShaders UP-TO-DATE
+> Task :feature:voice:compileDebugShaders NO-SOURCE
+> Task :feature:voice:generateDebugAssets UP-TO-DATE
+> Task :feature:voice:packageDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :app:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :feature:chat:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:voice:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:channels:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:tools:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature:settings:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :app:transformDebugAndroidTestClassesWithAsm UP-TO-DATE
+> Task :app:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugAndroidTestJavaRes UP-TO-DATE
+> Task :core:ai:processDebugJavaRes UP-TO-DATE
+> Task :core:data:processDebugJavaRes UP-TO-DATE
+> Task :core:model:processDebugJavaRes NO-SOURCE
+> Task :core:ui:processDebugJavaRes UP-TO-DATE
+> Task :feature:channels:processDebugJavaRes UP-TO-DATE
+> Task :feature:chat:processDebugJavaRes UP-TO-DATE
+> Task :feature:settings:processDebugJavaRes UP-TO-DATE
+> Task :feature:tools:processDebugJavaRes UP-TO-DATE
+> Task :feature:voice:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :app:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :feature:chat:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :feature:voice:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :feature:channels:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :feature:tools:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :feature:settings:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :core:ai:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :core:data:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :core:ui:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :core:model:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :app:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :core:ai:mergeDebugJniLibFolders UP-TO-DATE
+> Task :core:ai:mergeDebugNativeLibs NO-SOURCE
+> Task :core:ai:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :core:data:mergeDebugJniLibFolders UP-TO-DATE
+> Task :core:data:mergeDebugNativeLibs NO-SOURCE
+> Task :core:data:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :core:model:mergeDebugJniLibFolders UP-TO-DATE
+> Task :core:model:mergeDebugNativeLibs NO-SOURCE
+> Task :core:model:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :core:ui:mergeDebugJniLibFolders UP-TO-DATE
+> Task :core:ui:mergeDebugNativeLibs NO-SOURCE
+> Task :core:ui:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :feature:channels:mergeDebugJniLibFolders UP-TO-DATE
+> Task :feature:channels:mergeDebugNativeLibs NO-SOURCE
+> Task :feature:channels:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :feature:chat:mergeDebugJniLibFolders UP-TO-DATE
+> Task :feature:chat:mergeDebugNativeLibs NO-SOURCE
+> Task :feature:chat:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :feature:settings:mergeDebugJniLibFolders UP-TO-DATE
+> Task :feature:settings:mergeDebugNativeLibs NO-SOURCE
+> Task :feature:settings:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :feature:tools:mergeDebugJniLibFolders UP-TO-DATE
+> Task :feature:tools:mergeDebugNativeLibs NO-SOURCE
+> Task :feature:tools:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :feature:voice:mergeDebugJniLibFolders UP-TO-DATE
+> Task :feature:voice:mergeDebugNativeLibs NO-SOURCE
+> Task :feature:voice:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :app:mergeDebugNativeLibs NO-SOURCE
+> Task :app:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :app:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :app:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :app:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :app:packageDebugAndroidTest UP-TO-DATE
+> Task :app:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :app:assembleDebugAndroidTest UP-TO-DATE
+> Task :core:ai:preDebugAndroidTestBuild UP-TO-DATE
+> Task :core:ai:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :core:ai:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :core:ai:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :core:ai:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :core:ai:generateDebugAndroidTestResources UP-TO-DATE
+> Task :core:ai:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :core:ai:processDebugAndroidTestManifest UP-TO-DATE
+> Task :core:ai:processDebugAndroidTestResources UP-TO-DATE
+> Task :core:ai:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :core:ai:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :core:ai:compileDebugAndroidTestShaders NO-SOURCE
+> Task :core:ai:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :core:ai:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :core:ai:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :core:ai:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :core:ai:transformDebugAndroidTestClassesWithAsm UP-TO-DATE
+> Task :core:ai:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :core:ai:mergeDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :core:ai:processDebugAndroidTestJavaRes NO-SOURCE
+> Task :core:ai:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :core:ai:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :core:ai:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :core:ai:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :core:ai:mergeProjectDexDebugAndroidTest UP-TO-DATE
+> Task :core:ai:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :core:ai:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :core:ai:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :core:ai:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :core:ai:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :core:ai:packageDebugAndroidTest UP-TO-DATE
+> Task :core:ai:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :core:ai:assembleDebugAndroidTest UP-TO-DATE
+> Task :core:data:preDebugAndroidTestBuild UP-TO-DATE
+> Task :core:data:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :core:data:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :core:data:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :core:data:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :core:data:generateDebugAndroidTestResources UP-TO-DATE
+> Task :core:data:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :core:data:processDebugAndroidTestManifest UP-TO-DATE
+> Task :core:data:processDebugAndroidTestResources UP-TO-DATE
+> Task :core:data:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :core:data:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :core:data:compileDebugAndroidTestShaders NO-SOURCE
+> Task :core:data:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :core:data:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :core:data:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :core:data:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :core:data:transformDebugAndroidTestClassesWithAsm UP-TO-DATE
+> Task :core:data:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :core:data:mergeDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :core:data:processDebugAndroidTestJavaRes NO-SOURCE
+> Task :core:data:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :core:data:checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :core:data:mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :core:data:mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :core:data:mergeProjectDexDebugAndroidTest UP-TO-DATE
+> Task :core:data:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :core:data:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :core:data:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :core:data:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :core:data:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :core:data:packageDebugAndroidTest UP-TO-DATE
+> Task :core:data:createDebugAndroidTestApkListingFileRedirect UP-TO-DATE
+> Task :core:data:assembleDebugAndroidTest UP-TO-DATE
+> Task :core:model:preDebugAndroidTestBuild UP-TO-DATE
+> Task :core:model:javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :core:model:checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :core:model:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :core:model:mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :core:model:generateDebugAndroidTestResources UP-TO-DATE
+> Task :core:model:mergeDebugAndroidTestResources UP-TO-DATE
+> Task :core:model:processDebugAndroidTestManifest UP-TO-DATE
+> Task :core:model:processDebugAndroidTestResources UP-TO-DATE
+> Task :core:model:compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :core:model:mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :core:model:compileDebugAndroidTestShaders NO-SOURCE
+> Task :core:model:generateDebugAndroidTestAssets UP-TO-DATE
+> Task :core:model:mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :core:model:compressDebugAndroidTestAssets UP-TO-DATE
+> Task :core:model:desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :core:model:dexBuilderDebugAndroidTest UP-TO-DATE
+> Task :core:model:mergeDebugAndroidTestGlobalSynthetics UP-TO-DATE
+> Task :core:model:processDebugAndroidTestJavaRes NO-SOURCE
+> Task :core:model:mergeDebugAndroidTestJavaResource UP-TO-DATE
+> Task :core:model:mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+.\gradlew : 
+위치 줄:1 문자:1
++ .\gradlew assembleDebugAndroidTest 2>&1 | Out-File -FilePath build_ou ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':core:model:checkDebugAndroidTestDuplicateClasses'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.Ch
+eckDuplicatesRunnable
+   > Duplicate class kotlin.collections.jdk8.CollectionsJDK8Kt found in modules
+ kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-
+stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1.6.21 (
+org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.internal.jdk7.JDK7PlatformImplementations found in 
+modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:
+kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1
+.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.internal.jdk7.JDK7PlatformImplementations$ReflectSd
+kVersion found in modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org
+.jetbrains.kotlin:kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk7-1.6.21.jar -> ko
+tlin-stdlib-jdk7-1.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.internal.jdk8.JDK8PlatformImplementations found in 
+modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:
+kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1
+.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.internal.jdk8.JDK8PlatformImplementations$ReflectSd
+kVersion found in modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org
+.jetbrains.kotlin:kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> ko
+tlin-stdlib-jdk8-1.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.io.path.ExperimentalPathApi found in modules kotlin
+-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib:
+1.8.22) and kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1.6.21 (org.jet
+brains.kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.io.path.PathRelativizer found in modules kotlin-std
+lib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib:1.8.
+22) and kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1.6.21 (org.jetbrai
+ns.kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.io.path.PathsKt found in modules kotlin-stdlib-1.8.
+22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib:1.8.22) and 
+kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1.6.21 (org.jetbrains.kotli
+n:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.io.path.PathsKt__PathReadWriteKt found in modules k
+otlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-st
+dlib:1.8.22) and kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1.6.21 (or
+g.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.io.path.PathsKt__PathUtilsKt found in modules kotli
+n-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib
+:1.8.22) and kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1.6.21 (org.je
+tbrains.kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.jdk7.AutoCloseableKt found in modules kotlin-stdlib
+-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib:1.8.22)
+ and kotlin-stdlib-jdk7-1.6.21.jar -> kotlin-stdlib-jdk7-1.6.21 (org.jetbrains.
+kotlin:kotlin-stdlib-jdk7:1.6.21)
+     Duplicate class kotlin.jvm.jdk8.JvmRepeatableKt found in modules kotlin-st
+dlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib:1.8
+.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1.6.21 (org.jetbra
+ins.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.random.jdk8.PlatformThreadLocalRandom found in modu
+les kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotl
+in-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1.6.2
+1 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.streams.jdk8.StreamsKt found in modules kotlin-stdl
+ib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-stdlib:1.8.2
+2) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1.6.21 (org.jetbrain
+s.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.streams.jdk8.StreamsKt$asSequence$$inlined$Sequence
+$1 found in modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbr
+ains.kotlin:kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-s
+tdlib-jdk8-1.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.streams.jdk8.StreamsKt$asSequence$$inlined$Sequence
+$2 found in modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbr
+ains.kotlin:kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-s
+tdlib-jdk8-1.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.streams.jdk8.StreamsKt$asSequence$$inlined$Sequence
+$3 found in modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbr
+ains.kotlin:kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-s
+tdlib-jdk8-1.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.streams.jdk8.StreamsKt$asSequence$$inlined$Sequence
+$4 found in modules kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbr
+ains.kotlin:kotlin-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-s
+tdlib-jdk8-1.6.21 (org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.text.jdk8.RegexExtensionsJDK8Kt found in modules ko
+tlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin-std
+lib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1.6.21 (org
+.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     Duplicate class kotlin.time.jdk8.DurationConversionsJDK8Kt found in module
+s kotlin-stdlib-1.8.22.jar -> kotlin-stdlib-1.8.22 (org.jetbrains.kotlin:kotlin
+-stdlib:1.8.22) and kotlin-stdlib-jdk8-1.6.21.jar -> kotlin-stdlib-jdk8-1.6.21 
+(org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21)
+     
+     Learn how to fix dependency resolution errors at https://d.android.com/r/t
+ools/classpath-sync-errors
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 23s
+> Task :core:model:mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :core:model:stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :core:model:validateSigningDebugAndroidTest UP-TO-DATE
+> Task :core:model:writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :core:ui:preDebugAndroidTestBuild UP-TO-DATE
+> Task :core:ui:dataBindingMergeDependencyArtifactsDebugAndroidTest UP-TO-DATE
+> Task :core:model:checkDebugAndroidTestDuplicateClasses FAILED
+> Task :core:ui:generateDebugAndroidTestResValues
+310 actionable tasks: 2 executed, 308 up-to-date

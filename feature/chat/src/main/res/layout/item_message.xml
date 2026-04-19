@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="2dp">
+    android:layout_marginVertical="@dimen/spacing_xs">
 
     <!-- User Message (right aligned) -->
     <LinearLayout
@@ -13,10 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="64dp"
-        android:layout_marginEnd="8dp"
         android:orientation="vertical"
-        android:background="@drawable/bg_user_bubble"
-        android:padding="12dp"
+        android:background="@drawable/bg_bubble_user"
+        android:padding="@dimen/spacing_lg"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -24,19 +24,19 @@
             android:id="@+id/tvUserContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@android:color/white"
-            tools:text="React 카운터 컴포넌트 만들어줘" />
+            android:textSize="@dimen/text_base"
+            android:textColor="@color/md_on_surface"
+            android:lineSpacingMultiplier="1.4"
+            tools:text="Help me build a React counter component" />
 
         <TextView
             android:id="@+id/tvUserTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:textSize="10sp"
-            android:textColor="@android:color/white"
-            android:alpha="0.7"
-            android:layout_marginTop="4dp"
+            android:textSize="@dimen/text_xs"
+            android:textColor="@color/md_on_surface_variant"
+            android:layout_marginTop="@dimen/spacing_xs"
             tools:text="14:30" />
 
     </LinearLayout>
@@ -48,42 +48,67 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginEnd="64dp"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical"
-        android:background="@drawable/bg_ai_bubble"
-        android:padding="12dp"
+        android:orientation="horizontal"
         android:visibility="gone"
         tools:visibility="visible">
 
-        <!-- Markdown content rendered here -->
-        <TextView
-            android:id="@+id/tvAiContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="?attr/colorOnSurface"
-            tools:text="네, React 카운터를 만들어 드릴게요!" />
+        <!-- AI Avatar -->
+        <FrameLayout
+            android:layout_width="@dimen/avatar_sm"
+            android:layout_height="@dimen/avatar_sm"
+            android:layout_marginTop="4dp">
 
-        <!-- Tool call chip -->
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chipToolCall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            style="@style/Widget.Material3.Chip.Assist"
-            android:textSize="11sp"
-            tools:text="🔧 calculator ✅"
-            tools:visibility="visible" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_gradient_primary_circle" />
 
-        <!-- Token/time info -->
-        <TextView
-            android:id="@+id/tvAiMeta"
+        </FrameLayout>
+
+        <!-- Bubble content -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:layout_marginTop="4dp"
-            tools:text="⏱️ 1.2s · 342 tokens" />
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:background="@drawable/bg_bubble_ai"
+            android:padding="@dimen/spacing_lg">
+
+            <!-- Markdown content rendered here -->
+            <TextView
+                android:id="@+id/tvAiContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_base"
+                android:textColor="@color/md_on_surface"
+                android:lineSpacingMultiplier="1.4"
+                tools:text="Sure, I'll create a React counter for you!" />
+
+            <!-- Tool call chip -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipToolCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:textSize="@dimen/text_xs"
+                app:chipBackgroundColor="@color/md_surface_container_high"
+                app:chipCornerRadius="@dimen/radius_full"
+                tools:text="calculator"
+                tools:visibility="visible" />
+
+            <!-- Token/time info -->
+            <TextView
+                android:id="@+id/tvAiMeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_xs"
+                android:textColor="@color/md_on_surface_variant"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:fontFamily="monospace"
+                tools:text="1.2s · 342 tokens" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

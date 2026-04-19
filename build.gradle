@@ -7,5 +7,8 @@ plugins {
 subprojects {
     configurations.configureEach {
         exclude group: 'org.jetbrains', module: 'annotations-java5'
+        // kotlin-stdlib 1.8+ 에 jdk7/jdk8 모듈이 통합되어 중복 발생 방지
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
     }
 }

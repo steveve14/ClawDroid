@@ -1,24 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Shared colors for all modules -->
-    <color name="purple_primary">#5B21B6</color>
-    <color name="purple_primary_variant">#7C3AED</color>
+    <!-- Material Design 3 — ClawDroid Design System -->
+
+    <!-- Primary -->
+    <color name="md_primary">#4F378A</color>
+    <color name="md_primary_container">#6750A4</color>
+    <color name="md_on_primary">#FFFFFF</color>
+    <color name="md_on_primary_container">#E0D2FF</color>
+    <color name="md_primary_fixed">#E9DDFF</color>
+    <color name="md_primary_fixed_dim">#CFBCFF</color>
+    <color name="md_on_primary_fixed">#22005D</color>
+    <color name="md_on_primary_fixed_variant">#4F378A</color>
+    <color name="md_inverse_primary">#CFBCFF</color>
+
+    <!-- Secondary -->
+    <color name="md_secondary">#625B71</color>
+    <color name="md_secondary_container">#E8DEF9</color>
+    <color name="md_on_secondary">#FFFFFF</color>
+    <color name="md_on_secondary_container">#686177</color>
+    <color name="md_on_secondary_fixed">#1E192B</color>
+    <color name="md_on_secondary_fixed_variant">#4A4358</color>
+    <color name="md_secondary_fixed">#E8DEF9</color>
+    <color name="md_secondary_fixed_dim">#CCC2DC</color>
+
+    <!-- Tertiary -->
+    <color name="md_tertiary">#633B48</color>
+    <color name="md_tertiary_container">#7D5260</color>
+    <color name="md_on_tertiary">#FFFFFF</color>
+    <color name="md_on_tertiary_container">#FFCBDA</color>
+    <color name="md_tertiary_fixed">#FFD9E3</color>
+    <color name="md_tertiary_fixed_dim">#EEB8C8</color>
+
+    <!-- Error -->
+    <color name="md_error">#BA1A1A</color>
+    <color name="md_error_container">#FFDAD6</color>
+    <color name="md_on_error">#FFFFFF</color>
+    <color name="md_on_error_container">#93000A</color>
+
+    <!-- Surface & Background -->
+    <color name="md_surface">#FEF7FF</color>
+    <color name="md_surface_bright">#FEF7FF</color>
+    <color name="md_surface_dim">#DED8E0</color>
+    <color name="md_surface_container">#F2ECF4</color>
+    <color name="md_surface_container_low">#F8F1F9</color>
+    <color name="md_surface_container_high">#EDE6EE</color>
+    <color name="md_surface_container_highest">#E7E0E8</color>
+    <color name="md_surface_container_lowest">#FFFFFF</color>
+    <color name="md_surface_variant">#E7E0E8</color>
+    <color name="md_surface_tint">#6750A4</color>
+    <color name="md_on_surface">#1D1B20</color>
+    <color name="md_on_surface_variant">#494551</color>
+    <color name="md_on_background">#1D1B20</color>
+    <color name="md_inverse_surface">#322F35</color>
+    <color name="md_inverse_on_surface">#F5EFF6</color>
+
+    <!-- Outline -->
+    <color name="md_outline">#7A7582</color>
+    <color name="md_outline_variant">#CBC4D2</color>
+
+    <!-- Legacy aliases (for backward compat) -->
+    <color name="purple_primary">#4F378A</color>
+    <color name="purple_primary_variant">#6750A4</color>
     <color name="purple_on_primary">#FFFFFF</color>
-    <color name="purple_secondary">#C4B5FD</color>
-    <color name="purple_on_secondary">#1E1B4B</color>
-    <color name="purple_900">#2E1065</color>
+    <color name="purple_secondary">#E8DEF9</color>
+    <color name="purple_on_secondary">#1E192B</color>
+    <color name="purple_900">#22005D</color>
 
-    <color name="background">#F8F5FF</color>
+    <color name="background">#FEF7FF</color>
     <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#F3EEFF</color>
-    <color name="on_background">#1C1B1F</color>
-    <color name="on_surface">#1C1B1F</color>
+    <color name="surface_variant">#E7E0E8</color>
+    <color name="on_background">#1D1B20</color>
+    <color name="on_surface">#1D1B20</color>
 
+    <!-- Status -->
     <color name="status_connected">#22C55E</color>
     <color name="status_disconnected">#EF4444</color>
     <color name="status_error">#F59E0B</color>
 
-    <color name="bubble_user">#EDE9FE</color>
-    <color name="bubble_assistant">#F3F4F6</color>
-    <color name="code_block_bg">#1E1E2E</color>
+    <!-- Chat -->
+    <color name="bubble_user">#E8DEF9</color>
+    <color name="bubble_assistant">#E7E0E8</color>
+    <color name="code_block_bg">#322F35</color>
+
+    <!-- Channel brand -->
+    <color name="telegram_blue">#0088CC</color>
+    <color name="discord_blurple">#5865F2</color>
+    <color name="slack_pink">#E01E5A</color>
+
+    <!-- Transparent variants -->
+    <color name="surface_80">#CCFEF7FF</color>
+    <color name="surface_90">#E6FEF7FF</color>
+    <color name="primary_05">#0D4F378A</color>
+    <color name="primary_10">#1A4F378A</color>
+    <color name="primary_15">#264F378A</color>
+    <color name="primary_20">#334F378A</color>
+    <color name="outline_variant_10">#1ACBC4D2</color>
+    <color name="outline_variant_20">#33CBC4D2</color>
+    <color name="outline_variant_40">#66CBC4D2</color>
 </resources>

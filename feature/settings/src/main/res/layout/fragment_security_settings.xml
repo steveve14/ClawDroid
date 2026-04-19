@@ -4,66 +4,94 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/md_surface">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="🔒 보안 설정"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
         app:navigationIcon="@android:drawable/ic_menu_revert"
-        app:navigationIconTint="@android:color/white" />
+        app:navigationIconTint="@color/md_on_surface" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_2xl">
 
-            <!-- App Lock (PIN) -->
+            <!-- Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Security &amp;\nPermissions"
+                android:textSize="@dimen/text_3xl"
+                android:textStyle="bold"
+                android:textColor="@color/md_primary"
+                android:letterSpacing="-0.03"
+                android:paddingTop="@dimen/spacing_lg" />
+
+            <!-- Device Security Status Banner -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp">
+                android:layout_marginTop="@dimen/spacing_xl"
+                app:cardCornerRadius="@dimen/radius_2xl"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_low">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/spacing_xl">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/icon_3xl"
+                        android:layout_height="@dimen/icon_3xl"
+                        android:background="@drawable/bg_chip_secondary">
+
+                        <ImageView
+                            android:layout_width="@dimen/avatar_md"
+                            android:layout_height="@dimen/avatar_md"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_lock_lock"
+                            android:contentDescription="보안" />
+
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_lg">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="앱 잠금"
-                            android:textSize="16sp" />
+                            android:text="Device Protected"
+                            android:textSize="@dimen/text_lg"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="PIN(4~6자리)으로 앱 잠금"
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:text="All security systems active"
+                            android:textSize="@dimen/text_sm"
+                            android:textColor="@color/md_on_surface_variant"
+                            android:layout_marginTop="4dp" />
 
                     </LinearLayout>
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/switchAppLock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -74,36 +102,57 @@
                 android:id="@+id/cardBiometric"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                app:cardCornerRadius="12dp">
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:cardCornerRadius="@dimen/radius_2xl"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/outline_variant_10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="16dp"
+                    android:padding="@dimen/spacing_xl"
                     android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_lg"
+                        android:layout_height="@dimen/avatar_lg"
+                        android:background="@drawable/bg_chip_secondary">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_lock_lock"
+                            android:contentDescription="생체인증" />
+
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_lg">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="생체 인증"
-                            android:textSize="16sp" />
+                            android:text="Biometric Authentication"
+                            android:textSize="@dimen/text_base"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
 
                         <TextView
                             android:id="@+id/tvBiometricDesc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="지문 또는 얼굴 인식으로 잠금 해제"
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:text="Fingerprint or face recognition"
+                            android:textSize="@dimen/text_sm"
+                            android:textColor="@color/md_on_surface_variant"
+                            android:layout_marginTop="4dp" />
 
                     </LinearLayout>
 
@@ -116,38 +165,126 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Encryption -->
+            <!-- App Lock (PIN) -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp">
+                android:layout_marginTop="@dimen/spacing_sm"
+                app:cardCornerRadius="@dimen/radius_2xl"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/outline_variant_10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="16dp"
+                    android:padding="@dimen/spacing_xl"
                     android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_lg"
+                        android:layout_height="@dimen/avatar_lg"
+                        android:background="@drawable/bg_chip_secondary">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_lock_lock"
+                            android:contentDescription="PIN" />
+
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_lg">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="대화 암호화"
-                            android:textSize="16sp" />
+                            android:text="App Lock (PIN)"
+                            android:textSize="@dimen/text_base"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="로컬 데이터베이스 암호화"
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:text="4-6 digit PIN lock"
+                            android:textSize="@dimen/text_sm"
+                            android:textColor="@color/md_on_surface_variant"
+                            android:layout_marginTop="4dp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchAppLock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Encryption -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                app:cardCornerRadius="@dimen/radius_2xl"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/outline_variant_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_xl"
+                    android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_lg"
+                        android:layout_height="@dimen/avatar_lg"
+                        android:background="@drawable/bg_chip_secondary">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_lock_lock"
+                            android:contentDescription="암호화" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_lg">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Data Encryption"
+                            android:textSize="@dimen/text_base"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Local database encryption"
+                            android:textSize="@dimen/text_sm"
+                            android:textColor="@color/md_on_surface_variant"
+                            android:layout_marginTop="4dp" />
 
                     </LinearLayout>
 
@@ -164,34 +301,56 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="12dp">
+                android:layout_marginTop="@dimen/spacing_sm"
+                app:cardCornerRadius="@dimen/radius_2xl"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/outline_variant_10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="16dp"
+                    android:padding="@dimen/spacing_xl"
                     android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_lg"
+                        android:layout_height="@dimen/avatar_lg"
+                        android:background="@drawable/bg_chip_secondary">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:src="@android:drawable/ic_menu_delete"
+                            android:contentDescription="자동삭제" />
+
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_lg">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="대화 자동 삭제"
-                            android:textSize="16sp" />
+                            android:text="Auto-Delete"
+                            android:textSize="@dimen/text_base"
+                            android:textStyle="bold"
+                            android:textColor="@color/md_on_surface" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="일정 기간 후 자동으로 대화를 삭제합니다."
-                            android:textSize="13sp"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:text="Automatically delete old conversations"
+                            android:textSize="@dimen/text_sm"
+                            android:textColor="@color/md_on_surface_variant"
+                            android:layout_marginTop="4dp" />
 
                     </LinearLayout>
 

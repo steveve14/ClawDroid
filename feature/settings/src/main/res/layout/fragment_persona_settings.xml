@@ -4,64 +4,169 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/md_surface">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="🎭 페르소나 설정"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
         app:navigationIcon="@android:drawable/ic_menu_revert"
-        app:navigationIconTint="@android:color/white" />
+        app:navigationIconTint="@color/md_on_surface" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_2xl">
 
+            <!-- Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Persona"
+                android:textSize="@dimen/text_3xl"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_surface"
+                android:letterSpacing="-0.02" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Customize your AI companion"
+                android:textSize="@dimen/text_base"
+                android:textColor="@color/md_on_surface_variant"
+                android:layout_marginTop="@dimen/spacing_xs" />
+
+            <!-- Avatar -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_2xl">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_2xl"
+                    android:layout_height="@dimen/avatar_2xl"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_gradient_primary_circle">
+
+                    <ImageView
+                        android:layout_width="@dimen/avatar_lg"
+                        android:layout_height="@dimen/avatar_lg"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/sym_def_app_icon"
+                        android:contentDescription="Avatar" />
+
+                </FrameLayout>
+
+            </FrameLayout>
+
+            <!-- Name Input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="페르소나 이름"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+                android:layout_marginTop="@dimen/spacing_2xl"
+                android:hint="AI Name"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="@dimen/radius_lg"
+                app:boxCornerRadiusTopEnd="@dimen/radius_lg"
+                app:boxCornerRadiusBottomStart="@dimen/radius_lg"
+                app:boxCornerRadiusBottomEnd="@dimen/radius_lg"
+                app:boxBackgroundColor="@color/md_surface_container_lowest">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPersonaName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ClawDroid" />
+                    android:text="ClawDroid"
+                    android:textSize="@dimen/text_base" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Style Dropdown -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="대화 스타일"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:hint="Conversation Style"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxCornerRadiusTopStart="@dimen/radius_lg"
+                app:boxCornerRadiusTopEnd="@dimen/radius_lg"
+                app:boxCornerRadiusBottomStart="@dimen/radius_lg"
+                app:boxCornerRadiusBottomEnd="@dimen/radius_lg"
+                app:boxBackgroundColor="@color/md_surface_container_lowest">
 
                 <AutoCompleteTextView
                     android:id="@+id/actvStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
-                    android:text="Professional" />
+                    android:text="Professional"
+                    android:textSize="@dimen/text_base" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Style Chips -->
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friendly"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    app:chipBackgroundColor="@color/md_surface_container_high"
+                    app:chipCornerRadius="@dimen/radius_full" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Professional"
+                    android:checked="true"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    app:chipBackgroundColor="@color/md_secondary_container"
+                    app:chipCornerRadius="@dimen/radius_full" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Humorous"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    app:chipBackgroundColor="@color/md_surface_container_high"
+                    app:chipCornerRadius="@dimen/radius_full" />
+
+                <com.google.android.material.chip.Chip
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Concise"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    app:chipBackgroundColor="@color/md_surface_container_high"
+                    app:chipCornerRadius="@dimen/radius_full" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- System Prompt -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="시스템 프롬프트"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:hint="System Prompt"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="@dimen/radius_lg"
+                app:boxCornerRadiusTopEnd="@dimen/radius_lg"
+                app:boxCornerRadiusBottomStart="@dimen/radius_lg"
+                app:boxCornerRadiusBottomEnd="@dimen/radius_lg"
+                app:boxBackgroundColor="@color/md_surface_container_lowest"
                 app:counterEnabled="true"
                 app:counterMaxLength="2000">
 
@@ -69,18 +174,27 @@
                     android:id="@+id/etSystemPrompt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minLines="5"
+                    android:minLines="6"
                     android:inputType="textMultiLine"
-                    android:gravity="top" />
+                    android:gravity="top"
+                    android:textSize="@dimen/text_sm" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <!-- Save Button -->
+            <TextView
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="저장" />
+                android:layout_marginTop="@dimen/spacing_2xl"
+                android:text="Save Changes"
+                android:textSize="@dimen/text_base"
+                android:textStyle="bold"
+                android:textColor="@color/md_on_primary"
+                android:background="@drawable/bg_gradient_primary"
+                android:paddingVertical="16dp"
+                android:gravity="center"
+                android:elevation="4dp" />
 
         </LinearLayout>
 

@@ -4,68 +4,85 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/md_surface">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="ℹ️ 앱 정보"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/surface_80"
+        android:elevation="0dp"
         app:navigationIcon="@android:drawable/ic_menu_revert"
-        app:navigationIconTint="@android:color/white" />
+        app:navigationIconTint="@color/md_on_surface" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:paddingHorizontal="@dimen/spacing_lg"
+            android:paddingBottom="@dimen/spacing_2xl">
 
-            <!-- App Icon & Name -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🦞"
-                android:textSize="64sp"
-                android:layout_marginTop="24dp" />
+            <!-- App Icon -->
+            <FrameLayout
+                android:layout_width="@dimen/avatar_2xl"
+                android:layout_height="@dimen/avatar_2xl"
+                android:layout_marginTop="@dimen/spacing_2xl">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_gradient_primary_circle" />
+
+                <ImageView
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/sym_def_app_icon"
+                    android:contentDescription="ClawDroid" />
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ClawDroid"
-                android:textSize="28sp"
+                android:textSize="@dimen/text_2xl"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp" />
+                android:textColor="@color/md_on_surface"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:letterSpacing="-0.02" />
 
             <TextView
                 android:id="@+id/tvVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="v1.0.0"
-                android:textSize="16sp"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:layout_marginTop="4dp" />
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/md_on_surface_variant"
+                android:layout_marginTop="@dimen/spacing_xs" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AI-Powered Personal Assistant"
-                android:textSize="14sp"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:layout_marginTop="4dp" />
+                android:textSize="@dimen/text_sm"
+                android:textColor="@color/md_on_surface_variant"
+                android:layout_marginTop="@dimen/spacing_xs" />
 
             <!-- Info Cards -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="12dp">
+                android:layout_marginTop="@dimen/spacing_2xl"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_low">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,56 +93,59 @@
                         android:id="@+id/btnTerms"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="@dimen/spacing_lg"
                         android:background="?attr/selectableItemBackground">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="이용약관"
-                            android:textSize="16sp" />
+                            android:text="Terms of Service"
+                            android:textSize="@dimen/text_base"
+                            android:textColor="@color/md_on_surface" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?attr/colorOutlineVariant"
-                        android:layout_marginHorizontal="16dp" />
+                        android:background="@color/outline_variant_10"
+                        android:layout_marginHorizontal="@dimen/spacing_lg" />
 
                     <LinearLayout
                         android:id="@+id/btnPrivacy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="@dimen/spacing_lg"
                         android:background="?attr/selectableItemBackground">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="개인정보처리방침"
-                            android:textSize="16sp" />
+                            android:text="Privacy Policy"
+                            android:textSize="@dimen/text_base"
+                            android:textColor="@color/md_on_surface" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?attr/colorOutlineVariant"
-                        android:layout_marginHorizontal="16dp" />
+                        android:background="@color/outline_variant_10"
+                        android:layout_marginHorizontal="@dimen/spacing_lg" />
 
                     <LinearLayout
                         android:id="@+id/btnLicenses"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
+                        android:padding="@dimen/spacing_lg"
                         android:background="?attr/selectableItemBackground">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="오픈소스 라이선스"
-                            android:textSize="16sp" />
+                            android:text="Open Source Licenses"
+                            android:textSize="@dimen/text_base"
+                            android:textColor="@color/md_on_surface" />
 
                     </LinearLayout>
 
@@ -137,32 +157,34 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="12dp">
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/md_surface_container_low">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="@dimen/spacing_lg">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="기술 스택"
-                        android:textSize="14sp"
+                        android:text="Tech Stack"
+                        android:textSize="@dimen/text_sm"
                         android:textStyle="bold"
-                        android:textColor="?attr/colorPrimary" />
+                        android:textColor="@color/md_primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/spacing_sm"
                         android:text="Java 17 · Android SDK 35\nGemini Nano · OpenAI · Ollama\nRoom · Hilt · RxJava 3 · Retrofit\nMaterial Design 3"
-                        android:textSize="13sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:lineSpacingMultiplier="1.4" />
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:fontFamily="monospace"
+                        android:lineSpacingMultiplier="1.5" />
 
                 </LinearLayout>
 
