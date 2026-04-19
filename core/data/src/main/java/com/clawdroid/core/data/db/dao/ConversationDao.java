@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.core.Single;
 @Dao
 public interface ConversationDao {
 
-    @Query("SELECT * FROM conversations WHERE is_archived = 0 ORDER BY updated_at DESC")
+    @Query("SELECT * FROM conversations WHERE is_archived = 0 ORDER BY is_pinned DESC, updated_at DESC")
     Flowable<List<ConversationEntity>> getActiveConversations();
 
     @Query("SELECT * FROM conversations WHERE is_archived = 1 ORDER BY updated_at DESC")
@@ -47,4 +47,16 @@ public interface ConversationDao {
 
     @Query("UPDATE conversations SET last_message_preview = :preview, message_count = message_count + 1, updated_at = :updatedAt WHERE id = :id")
     Completable updateLastMessage(String id, String preview, String updatedAt);
+
+    @Query("UPDATE conversations SET is_pinned = :pinned WHERE id = :id")
+    Completable setPinned(String id, int pinned);
+
+    @Query("SELECT * FROM conversations WHERE is_archived = 0 AND (title LIKE '%' || :query || '%' OR last_message_preview LIKE '%' || :query || '%') ORDER BY is_pinned DESC, updated_at DESC")
+    Flowable<List<ConversationEntity>> search(String query);
+
+    @Query("UPDATE conversations SET is_archived = 0 WHERE id = :id")
+    Completable unarchive(String id);
+
+    @Query("DELETE FROM conversations WHERE updated_at < :cutoffDate AND is_pinned = 0")
+    Completable deleteOlderThan(String cutoffDate);
 }

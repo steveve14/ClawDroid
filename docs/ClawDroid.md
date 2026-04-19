@@ -33,35 +33,35 @@ cssclass: dashboard
 
 ### Phase 1 — MVP: AI 채팅 (코어)
 
-- [ ] 프로젝트 설계 문서 작성
-- [ ] 멀티모듈 프로젝트 스캐폴딩
-- [ ] AI 프로바이더 추상화 레이어 구현
-- [ ] Room DB 초기 스키마
-- [ ] Gemini Nano 온디바이스 통합
-- [ ] 클라우드 AI 폴백 (Gemini Cloud, OpenAI)
-- [ ] 채팅 UI (스트리밍, Markdown 렌더링)
+- [x] 프로젝트 설계 문서 작성
+- [x] 멀티모듈 프로젝트 스캐폴딩
+- [x] AI 프로바이더 추상화 레이어 구현
+- [x] Room DB 초기 스키마
+- [x] Gemini Nano 온디바이스 통합
+- [x] 클라우드 AI 폴백 (Gemini Cloud, OpenAI)
+- [x] 채팅 UI (스트리밍, Markdown 렌더링)
 
 ### Phase 2 — 음성 대화
 
-- [ ] STT: ML Kit 음성 인식 + SpeechRecognizer 폴백
-- [ ] TTS: Android TTS + ElevenLabs 선택적 지원
-- [ ] Talk Mode UI (웨이브폼, 오버레이)
-- [ ] Wake Word 감지
+- [x] STT: ML Kit 음성 인식 + SpeechRecognizer 폴백
+- [x] TTS: Android TTS + ElevenLabs 선택적 지원
+- [x] Talk Mode UI (웨이브폼, 오버레이)
+- [x] Wake Word 감지
 
 ### Phase 3 — 멀티채널 연동
 
-- [ ] 채널 프레임워크 (`Channel` 인터페이스)
-- [ ] Telegram Bot 연동
-- [ ] Discord Bot 연동
-- [ ] Slack Bot 연동
-- [ ] Gateway 서버 모드
+- [x] 채널 프레임워크 (`Channel` 인터페이스)
+- [x] Telegram Bot 연동
+- [x] Discord Bot 연동
+- [x] Slack Bot 연동
+- [x] Gateway 서버 모드
 
 ### Phase 4 — 도구·스킬 시스템
 
-- [ ] 도구 프레임워크 (`Tool` 인터페이스)
-- [ ] Function Calling 통합
-- [ ] 내장 도구 (browser, calendar, contacts 등)
-- [ ] 스킬 시스템 (SKILL.md 기반)
+- [x] 도구 프레임워크 (`Tool` 인터페이스)
+- [x] Function Calling 통합
+- [x] 내장 도구 (browser, calendar, contacts 등)
+- [x] 스킬 시스템 (SKILL.md 기반)
 
 ### Phase 5 — 고급 기능 & 배포
 

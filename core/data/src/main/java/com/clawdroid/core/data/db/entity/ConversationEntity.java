@@ -54,6 +54,9 @@ public class ConversationEntity {
     @ColumnInfo(name = "is_archived")
     private int isArchived;
 
+    @ColumnInfo(name = "is_pinned")
+    private int isPinned;
+
     @NonNull
     @ColumnInfo(name = "created_at")
     private String createdAt;
@@ -95,6 +98,9 @@ public class ConversationEntity {
 
     public int getIsArchived() { return isArchived; }
     public void setIsArchived(int isArchived) { this.isArchived = isArchived; }
+
+    public int getIsPinned() { return isPinned; }
+    public void setIsPinned(int isPinned) { this.isPinned = isPinned; }
 
     @NonNull public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(@NonNull String createdAt) { this.createdAt = createdAt; }

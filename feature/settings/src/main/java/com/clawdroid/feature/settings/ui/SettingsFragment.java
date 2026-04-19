@@ -34,23 +34,28 @@ public class SettingsFragment extends Fragment {
 
         binding.btnModelSettings.setOnClickListener(v ->
                 Navigation.findNavController(requireView())
-                        .navigate(R.id.action_settings_to_modelSettings));
+                        .navigate(com.clawdroid.core.ui.R.id.action_settings_to_modelSettings));
 
         binding.btnPersonaSettings.setOnClickListener(v ->
                 Navigation.findNavController(requireView())
-                        .navigate(R.id.action_settings_to_personaSettings));
+                        .navigate(com.clawdroid.core.ui.R.id.action_settings_to_personaSettings));
 
         binding.btnSecuritySettings.setOnClickListener(v ->
                 Navigation.findNavController(requireView())
-                        .navigate(R.id.action_settings_to_securitySettings));
+                        .navigate(com.clawdroid.core.ui.R.id.action_settings_to_securitySettings));
 
         binding.btnApiKeys.setOnClickListener(v ->
                 Navigation.findNavController(requireView())
-                        .navigate(R.id.action_settings_to_modelSettings));
+                        .navigate(com.clawdroid.core.ui.R.id.action_settings_to_modelSettings));
 
         binding.btnToolSettings.setOnClickListener(v -> {
-            // TODO: Navigate to tool settings
+            Navigation.findNavController(requireView())
+                    .navigate(com.clawdroid.core.ui.R.id.action_settings_to_toolSettings);
         });
+
+        binding.btnAbout.setOnClickListener(v ->
+                Navigation.findNavController(requireView())
+                        .navigate(com.clawdroid.core.ui.R.id.action_settings_to_about));
     }
 
     @Override

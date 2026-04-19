@@ -25,4 +25,7 @@
     <color name="bubble_user">#EDE9FE</color>
     <color name="bubble_assistant">#F3F4F6</color>
     <color name="code_block_bg">#1E1E2E</color>
+
+    <!-- Extended palette -->
+    <color name="purple_900">#2E1065</color>
 </resources>

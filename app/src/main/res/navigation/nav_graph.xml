@@ -40,7 +40,28 @@
         android:id="@+id/channelListFragment"
         android:name="com.clawdroid.feature.channels.ui.ChannelListFragment"
         android:label="@string/nav_channels"
-        tools:layout="@layout/fragment_channel_list" />
+        tools:layout="@layout/fragment_channel_list">
+        <action
+            android:id="@+id/action_channelList_to_channelAdd"
+            app:destination="@id/channelAddFragment" />
+        <action
+            android:id="@+id/action_channelList_to_channelDetail"
+            app:destination="@id/channelDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/channelAddFragment"
+        android:name="com.clawdroid.feature.channels.ui.ChannelAddFragment"
+        android:label="채널 추가" />
+
+    <fragment
+        android:id="@+id/channelDetailFragment"
+        android:name="com.clawdroid.feature.channels.ui.ChannelDetailFragment"
+        android:label="채널 상세">
+        <argument
+            android:name="channelId"
+            app:argType="long" />
+    </fragment>
 
     <!-- Settings Flow -->
     <fragment
@@ -57,6 +78,12 @@
         <action
             android:id="@+id/action_settings_to_securitySettings"
             app:destination="@id/securitySettingsFragment" />
+        <action
+            android:id="@+id/action_settings_to_toolSettings"
+            app:destination="@id/toolSettingsFragment" />
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/aboutFragment" />
     </fragment>
 
     <fragment
@@ -76,5 +103,25 @@
         android:name="com.clawdroid.feature.settings.ui.SecuritySettingsFragment"
         android:label="Security"
         tools:layout="@layout/fragment_security_settings" />
+
+    <fragment
+        android:id="@+id/toolSettingsFragment"
+        android:name="com.clawdroid.feature.tools.ui.ToolSettingsFragment"
+        android:label="도구 · 스킬">
+        <action
+            android:id="@+id/action_toolSettings_to_skillSettings"
+            app:destination="@id/skillSettingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/skillSettingsFragment"
+        android:name="com.clawdroid.feature.tools.ui.SkillSettingsFragment"
+        android:label="스킬 관리" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.clawdroid.feature.settings.ui.AboutFragment"
+        android:label="앱 정보"
+        tools:layout="@layout/fragment_about" />
 
 </navigation>

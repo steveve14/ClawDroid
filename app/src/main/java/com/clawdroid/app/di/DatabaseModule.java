@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.clawdroid.core.data.db.ClawDroidDatabase;
+import com.clawdroid.core.data.db.migration.Migrations;
 import com.clawdroid.core.data.db.dao.AiProviderDao;
 import com.clawdroid.core.data.db.dao.ChannelDao;
 import com.clawdroid.core.data.db.dao.ConversationDao;
@@ -30,7 +31,10 @@ public class DatabaseModule {
                 context,
                 ClawDroidDatabase.class,
                 "clawdroid.db"
-        ).build();
+        )
+        .addMigrations(Migrations.MIGRATION_1_2, Migrations.MIGRATION_2_3)
+        .fallbackToDestructiveMigration()
+        .build();
     }
 
     @Provides

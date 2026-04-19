@@ -50,8 +50,8 @@ public class AppModule {
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
         } catch (Exception e) {
-            return context.getSharedPreferences("clawdroid_secure_prefs_fallback",
-                    Context.MODE_PRIVATE);
+            throw new RuntimeException("EncryptedSharedPreferences 초기화 실패. "
+                    + "암호화 저장소를 생성할 수 없습니다.", e);
         }
     }
 }

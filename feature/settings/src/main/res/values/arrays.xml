@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="auto_delete_options">
+        <item>사용 안 함</item>
+        <item>7일 후</item>
+        <item>30일 후</item>
+        <item>90일 후</item>
+        <item>180일 후</item>
+        <item>1년 후</item>
+    </string-array>
+</resources>

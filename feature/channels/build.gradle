@@ -19,6 +19,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+
+    hilt {
+        enableAggregatingTask = false
+    }
 }
 
 dependencies {
@@ -32,6 +36,8 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.lifecycle.viewmodel
     implementation libs.lifecycle.livedata
+    implementation libs.lifecycle.service
+    implementation libs.navigation.fragment
 
     implementation libs.hilt.android
     annotationProcessor libs.hilt.compiler

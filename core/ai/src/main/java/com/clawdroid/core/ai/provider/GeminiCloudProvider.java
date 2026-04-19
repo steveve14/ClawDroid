@@ -69,10 +69,11 @@ public class GeminiCloudProvider implements AiProvider {
             String modelId = request.getModelId() != null ? request.getModelId() : "gemini-2.5-flash";
 
             JsonObject body = buildRequestBody(request);
-            String url = BASE_URL + modelId + ":generateContent?key=" + apiKey;
+            String url = BASE_URL + modelId + ":generateContent";
 
             Request httpRequest = new Request.Builder()
                     .url(url)
+                    .addHeader("x-goog-api-key", apiKey)
                     .post(RequestBody.create(gson.toJson(body),
                             MediaType.parse("application/json")))
                     .build();
@@ -94,10 +95,11 @@ public class GeminiCloudProvider implements AiProvider {
             String modelId = request.getModelId() != null ? request.getModelId() : "gemini-2.5-flash";
 
             JsonObject body = buildRequestBody(request);
-            String url = BASE_URL + modelId + ":streamGenerateContent?alt=sse&key=" + apiKey;
+            String url = BASE_URL + modelId + ":streamGenerateContent?alt=sse";
 
             Request httpRequest = new Request.Builder()
                     .url(url)
+                    .addHeader("x-goog-api-key", apiKey)
                     .post(RequestBody.create(gson.toJson(body),
                             MediaType.parse("application/json")))
                     .build();

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.clawdroid.core.data.db.entity.MessageEntity;
+import com.clawdroid.core.ui.markdown.MarkdownRenderer;
 import com.clawdroid.feature.chat.R;
 import com.google.android.material.chip.Chip;
 
@@ -68,7 +69,7 @@ public class MessageAdapter extends ListAdapter<MessageAdapter.MessageItem, Mess
                 // Streaming AI response
                 userBubble.setVisibility(View.GONE);
                 aiBubble.setVisibility(View.VISIBLE);
-                tvAiContent.setText(item.streamingContent);
+                MarkdownRenderer.render(tvAiContent, item.streamingContent);
                 tvAiMeta.setText("생성 중...");
                 chipToolCall.setVisibility(View.GONE);
                 return;
@@ -90,7 +91,8 @@ public class MessageAdapter extends ListAdapter<MessageAdapter.MessageItem, Mess
                     tvUserTime.setText("");
                 }
             } else {
-                tvAiContent.setText(msg.getContent());
+                // Render Markdown for AI responses
+                MarkdownRenderer.render(tvAiContent, msg.getContent());
                 // Meta info
                 StringBuilder meta = new StringBuilder();
                 if (msg.getDurationMs() != null) {

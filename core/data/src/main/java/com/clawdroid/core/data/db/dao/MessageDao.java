@@ -36,4 +36,10 @@ public interface MessageDao {
 
     @Query("SELECT * FROM messages WHERE conversation_id = :convId AND content LIKE '%' || :query || '%' ORDER BY created_at ASC")
     Flowable<List<MessageEntity>> search(String convId, String query);
+
+    @Query("SELECT messages.* FROM messages JOIN messages_fts ON messages.rowid = messages_fts.rowid WHERE messages_fts MATCH :query ORDER BY messages.created_at ASC")
+    Flowable<List<MessageEntity>> searchFts(String query);
+
+    @Query("SELECT messages.* FROM messages JOIN messages_fts ON messages.rowid = messages_fts.rowid WHERE messages_fts MATCH :query AND messages.conversation_id = :convId ORDER BY messages.created_at ASC")
+    Flowable<List<MessageEntity>> searchFtsInConversation(String convId, String query);
 }

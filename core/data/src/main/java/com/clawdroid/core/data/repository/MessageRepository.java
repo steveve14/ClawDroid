@@ -69,4 +69,12 @@ public class MessageRepository {
     public Flowable<List<MessageEntity>> search(String conversationId, String query) {
         return messageDao.search(conversationId, query);
     }
+
+    public Flowable<List<MessageEntity>> searchFts(String query) {
+        return messageDao.searchFts(query);
+    }
+
+    public Flowable<List<MessageEntity>> searchFtsInConversation(String conversationId, String query) {
+        return messageDao.searchFtsInConversation(conversationId, query);
+    }
 }

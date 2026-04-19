@@ -4,4 +4,5 @@
     <string name="nav_voice">Voice</string>
     <string name="nav_channels">Channels</string>
     <string name="nav_settings">Settings</string>
+    <string name="widget_description">ClawDroid 빠른 질문 위젯</string>
 </resources>

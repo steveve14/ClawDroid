@@ -1,6 +1,7 @@
 package com.clawdroid.app.di;
 
 import com.clawdroid.core.ai.AiProvider;
+import com.clawdroid.core.ai.provider.CustomProvider;
 import com.clawdroid.core.ai.provider.GeminiCloudProvider;
 import com.clawdroid.core.ai.provider.GeminiNanoProvider;
 import com.clawdroid.core.ai.provider.OllamaProvider;
@@ -26,12 +27,14 @@ public class AiModule {
             GeminiNanoProvider nano,
             GeminiCloudProvider geminiCloud,
             OpenAiProvider openAi,
-            OllamaProvider ollama) {
+            OllamaProvider ollama,
+            CustomProvider custom) {
         Map<String, AiProvider> map = new HashMap<>();
         map.put(nano.getId(), nano);
         map.put(geminiCloud.getId(), geminiCloud);
         map.put(openAi.getId(), openAi);
         map.put(ollama.getId(), ollama);
+        map.put(custom.getId(), custom);
         return map;
     }
 }

@@ -91,4 +91,72 @@ public class SettingsRepository {
     public void setConversationStyle(String style) {
         prefs.edit().putString("conversation_style", style).apply();
     }
+
+    // Ollama settings
+    public String getOllamaEndpoint() {
+        return prefs.getString("ollama_endpoint", "http://localhost:11434");
+    }
+
+    public void setOllamaEndpoint(String endpoint) {
+        prefs.edit().putString("ollama_endpoint", endpoint).apply();
+    }
+
+    // Model parameter settings
+    public float getTemperature() {
+        return prefs.getFloat("model_temperature", 0.7f);
+    }
+
+    public void setTemperature(float temperature) {
+        prefs.edit().putFloat("model_temperature", temperature).apply();
+    }
+
+    public float getTopP() {
+        return prefs.getFloat("model_top_p", 0.95f);
+    }
+
+    public void setTopP(float topP) {
+        prefs.edit().putFloat("model_top_p", topP).apply();
+    }
+
+    public int getMaxTokens() {
+        return prefs.getInt("model_max_tokens", 4096);
+    }
+
+    public void setMaxTokens(int maxTokens) {
+        prefs.edit().putInt("model_max_tokens", maxTokens).apply();
+    }
+
+    // TTS settings
+    public String getTtsProvider() {
+        return prefs.getString("tts_provider", "android");
+    }
+
+    public void setTtsProvider(String provider) {
+        prefs.edit().putString("tts_provider", provider).apply();
+    }
+
+    public String getElevenLabsApiKey() {
+        return securePrefs.getString("elevenlabs_api_key", "");
+    }
+
+    public void setElevenLabsApiKey(String apiKey) {
+        securePrefs.edit().putString("elevenlabs_api_key", apiKey).apply();
+    }
+
+    public String getElevenLabsVoiceId() {
+        return prefs.getString("elevenlabs_voice_id", "21m00Tcm4TlvDq8ikWAM");
+    }
+
+    public void setElevenLabsVoiceId(String voiceId) {
+        prefs.edit().putString("elevenlabs_voice_id", voiceId).apply();
+    }
+
+    // Wake Word settings
+    public boolean isWakeWordEnabled() {
+        return prefs.getBoolean("wake_word_enabled", false);
+    }
+
+    public void setWakeWordEnabled(boolean enabled) {
+        prefs.edit().putBoolean("wake_word_enabled", enabled).apply();
+    }
 }

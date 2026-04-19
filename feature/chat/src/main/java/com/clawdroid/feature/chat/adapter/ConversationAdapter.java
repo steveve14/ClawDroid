@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +33,14 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
 
     public void setOnClickListener(OnConversationClickListener listener) {
         this.listener = listener;
+    }
+
+    @Nullable
+    public ConversationEntity getItemAt(int position) {
+        if (position >= 0 && position < getCurrentList().size()) {
+            return getItem(position);
+        }
+        return null;
     }
 
     @NonNull
@@ -71,13 +80,20 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
             tvPreview.setText(item.getLastMessagePreview() != null
                     ? item.getLastMessagePreview() : "");
 
-            // Icon
-            if (item.getChannelId() != null) {
+            // Icon — pinned or channel or default
+            if (item.getIsPinned() == 1) {
+                tvIcon.setText("📌");
+            } else if (item.getChannelId() != null) {
                 tvIcon.setText("📡");
+            } else {
+                tvIcon.setText("💬");
+            }
+
+            // Channel chip
+            if (item.getChannelId() != null) {
                 chipChannel.setVisibility(View.VISIBLE);
                 chipChannel.setText("📡 채널");
             } else {
-                tvIcon.setText("💬");
                 chipChannel.setVisibility(View.GONE);
             }
 
@@ -121,7 +137,8 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
                 @Override
                 public boolean areContentsTheSame(@NonNull ConversationEntity oldItem,
                                                    @NonNull ConversationEntity newItem) {
-                    return oldItem.getUpdatedAt().equals(newItem.getUpdatedAt());
+                    return oldItem.getUpdatedAt().equals(newItem.getUpdatedAt())
+                            && oldItem.getIsPinned() == newItem.getIsPinned();
                 }
             };
 }
