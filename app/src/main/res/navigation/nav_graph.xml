@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/conversationListFragment">
+
+    <!-- Chat Flow -->
+    <fragment
+        android:id="@+id/conversationListFragment"
+        android:name="com.clawdroid.feature.chat.ui.ConversationListFragment"
+        android:label="@string/nav_chat"
+        tools:layout="@layout/fragment_conversation_list">
+        <action
+            android:id="@+id/action_conversationList_to_chat"
+            app:destination="@id/chatFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.clawdroid.feature.chat.ui.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="conversationId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <!-- Voice Flow -->
+    <fragment
+        android:id="@+id/voiceChatFragment"
+        android:name="com.clawdroid.feature.voice.ui.VoiceChatFragment"
+        android:label="@string/nav_voice"
+        tools:layout="@layout/fragment_voice_chat" />
+
+    <!-- Channel Flow -->
+    <fragment
+        android:id="@+id/channelListFragment"
+        android:name="com.clawdroid.feature.channels.ui.ChannelListFragment"
+        android:label="@string/nav_channels"
+        tools:layout="@layout/fragment_channel_list" />
+
+    <!-- Settings Flow -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.clawdroid.feature.settings.ui.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settings_to_modelSettings"
+            app:destination="@id/modelSettingsFragment" />
+        <action
+            android:id="@+id/action_settings_to_personaSettings"
+            app:destination="@id/personaSettingsFragment" />
+        <action
+            android:id="@+id/action_settings_to_securitySettings"
+            app:destination="@id/securitySettingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/modelSettingsFragment"
+        android:name="com.clawdroid.feature.settings.ui.ModelSettingsFragment"
+        android:label="AI Models"
+        tools:layout="@layout/fragment_model_settings" />
+
+    <fragment
+        android:id="@+id/personaSettingsFragment"
+        android:name="com.clawdroid.feature.settings.ui.PersonaSettingsFragment"
+        android:label="Persona"
+        tools:layout="@layout/fragment_persona_settings" />
+
+    <fragment
+        android:id="@+id/securitySettingsFragment"
+        android:name="com.clawdroid.feature.settings.ui.SecuritySettingsFragment"
+        android:label="Security"
+        tools:layout="@layout/fragment_security_settings" />
+
+</navigation>

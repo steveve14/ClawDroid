@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClawDroid - Persona Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#cfbcff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#ede6ee",
+                        "surface-container-low": "#f8f1f9",
+                        "secondary-fixed-dim": "#ccc2dc",
+                        "on-secondary-fixed": "#1e192b",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#7d5260",
+                        "secondary": "#625b71",
+                        "on-primary-container": "#e0d2ff",
+                        "on-tertiary-container": "#ffcbda",
+                        "surface-tint": "#6750a4",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#22005d",
+                        "surface-bright": "#fef7ff",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#e8def9",
+                        "surface-dim": "#ded8e0",
+                        "tertiary": "#633b48",
+                        "tertiary-fixed-dim": "#eeb8c8",
+                        "outline": "#7a7582",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "primary-container": "#6750a4",
+                        "primary": "#4f378a",
+                        "on-surface": "#1d1b20",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#633b48",
+                        "tertiary-fixed": "#ffd9e3",
+                        "inverse-surface": "#322f35",
+                        "surface-container-highest": "#e7e0e8",
+                        "surface-container": "#f2ecf4",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1d1b20",
+                        "on-tertiary-fixed": "#31111d",
+                        "inverse-primary": "#cfbcff",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e7e0e8",
+                        "secondary-fixed": "#e8def9",
+                        "primary-fixed": "#e9ddff",
+                        "outline-variant": "#cbc4d2",
+                        "background": "#fef7ff",
+                        "surface": "#fef7ff",
+                        "inverse-on-surface": "#f5eff6",
+                        "on-secondary-container": "#686177",
+                        "on-secondary-fixed-variant": "#4a4358",
+                        "on-surface-variant": "#494551"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            font-family: theme('fontFamily.body');
+        }
+        .signature-gradient {
+            background: linear-gradient(135deg, theme('colors.primary'), theme('colors.primary-container'));
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col pb-safe md:flex-row">
+<!-- TopAppBar (Mobile & Web Header) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-[#FEF7FF]/80 backdrop-blur-2xl dark:bg-[#1C1B1F]/80 shadow-[0_8px_32px_rgba(79,55,138,0.06)] md:hidden">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with soft natural lighting and a neutral expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyyiMVtaSwSnU8BKcEZrnWSYzAtkoiWQr6p0S5C4IgV9Xlt4NzwH7eXJcxCWhIXpiKtALgXEYBsTD3XtRJhFfB3JpDj1ELJnVOpAlBY5aqtl7c0AMkVhdxXwMfp7CDXcAeY4HPoyC19UMkOUaLhZmzX88Ok_CDylil9_UjiNaDqI9eZ4UqVh_DAPTUWF51tvdiXReUXh2dEt2_YREN1_rPAAFjyxfXQNqGIlF3fq1orOGumzAgUg2ojEn4dCWrVCvDIyQs0NfGVvM"/>
+</div>
+<h1 class="font-manrope font-bold text-[1.375rem] tracking-tight text-[#6750A4] dark:text-[#D0BCFF]">ClawDroid</h1>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full text-[#6750A4] hover:bg-[#E7E0E8]/50 transition-colors scale-95 active:scale-90">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</header>
+<!-- Side Navigation (Web) -->
+<nav class="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 bg-[#FEF7FF]/90 backdrop-blur-2xl z-40 px-4 py-8 shadow-[8px_0_32px_rgba(79,55,138,0.06)]">
+<div class="flex items-center gap-3 mb-12 px-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with soft natural lighting and a neutral expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_jmwKtiEgLCGd9PpAt8mt5WchVw5QRw3726agGa5g9OrCEvcTVno3VpIlATbAyVpKtd3T8LrqRLlbwRyn81b5fjKErzkcNAt0Fn-V6dqVBZlpAx9hHZb0b5io-YcNn21ts4COZpWLJcALia5s9pM0MASYUSGPAZeDiKwhwHMcJqsDAEhb3yy2beyjqIRXbb-AwqwlIUMsSV4DuCl-lmVg5JXxO79GJdnbmIjbDuz4z6WNlN6ISkd7WuOZfhrcJ-4ntXHrSZTxdRU"/>
+</div>
+<h1 class="font-headline font-bold text-2xl tracking-tight text-primary">ClawDroid</h1>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#49454F] font-medium hover:bg-[#EADDFF]/40 transition-all" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label">Chat</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#49454F] font-medium hover:bg-[#EADDFF]/40 transition-all" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span class="font-label">Voice</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#49454F] font-medium hover:bg-[#EADDFF]/40 transition-all" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-label">Channels</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#E8DEF8] text-[#1D192B] font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 mt-20 md:mt-0 md:ml-64 px-4 py-8 md:p-12 max-w-4xl mx-auto w-full">
+<header class="mb-10">
+<h2 class="font-headline text-[2rem] font-bold text-on-surface mb-2">Persona</h2>
+<p class="text-on-surface-variant font-body">Customize the identity and behavior of your AI assistant.</p>
+</header>
+<div class="space-y-8">
+<!-- Basic Info Section -->
+<section class="bg-surface-container-low rounded-xl p-6 md:p-8">
+<h3 class="font-headline text-[1.375rem] font-bold text-on-surface mb-6">Basic Info</h3>
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="w-24 h-24 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 border border-outline-variant/20 relative group cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-primary opacity-50 group-hover:opacity-100 transition-opacity">smart_toy</span>
+<div class="absolute inset-0 bg-primary/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary">edit</span>
+</div>
+</div>
+<div class="flex-1 w-full space-y-4">
+<div>
+<label class="block text-sm font-medium text-on-surface-variant mb-2">AI Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 font-body transition-shadow shadow-[0_4px_16px_rgba(79,55,138,0.02)]" type="text" value="ClawDroid"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-on-surface-variant mb-2">Role/Title (Optional)</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 font-body transition-shadow shadow-[0_4px_16px_rgba(79,55,138,0.02)]" placeholder="e.g. Creative Director, Data Analyst" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- System Prompt Section -->
+<section class="bg-surface-container-low rounded-xl p-6 md:p-8">
+<h3 class="font-headline text-[1.375rem] font-bold text-on-surface mb-2">System Prompt</h3>
+<p class="text-sm text-on-surface-variant mb-6 font-body">Define the core instructions and constraints for the AI.</p>
+<div class="relative">
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg px-4 py-3 text-on-surface font-body text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow shadow-[0_4px_16px_rgba(79,55,138,0.02)] resize-y" placeholder="You are a helpful and intelligent assistant. Your goal is to provide accurate and concise information..." rows="6"></textarea>
+<div class="absolute bottom-3 right-3 text-xs text-on-surface-variant font-mono">
+                         0 / 2000
+                     </div>
+</div>
+</section>
+<!-- Conversation Style Section -->
+<section class="bg-surface-container-low rounded-xl p-6 md:p-8">
+<h3 class="font-headline text-[1.375rem] font-bold text-on-surface mb-2">Conversation Style</h3>
+<p class="text-sm text-on-surface-variant mb-6 font-body">Select the tone you prefer for responses.</p>
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface font-medium text-sm hover:bg-surface-variant transition-colors border border-transparent focus:outline-none focus:ring-2 focus:ring-primary/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">sentiment_satisfied</span>
+                        Friendly
+                    </button>
+<button class="px-5 py-2.5 rounded-full bg-secondary-container text-on-secondary-fixed font-medium text-sm border border-transparent focus:outline-none focus:ring-2 focus:ring-primary/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">work</span>
+                        Professional
+                    </button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface font-medium text-sm hover:bg-surface-variant transition-colors border border-transparent focus:outline-none focus:ring-2 focus:ring-primary/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">theater_comedy</span>
+                        Humorous
+                    </button>
+<button class="px-5 py-2.5 rounded-full bg-surface-container-highest text-on-surface font-medium text-sm hover:bg-surface-variant transition-colors border border-transparent focus:outline-none focus:ring-2 focus:ring-primary/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">compress</span>
+                        Concise
+                    </button>
+</div>
+</section>
+<!-- Actions -->
+<div class="flex justify-end pt-4 pb-24 md:pb-8">
+<button class="signature-gradient text-on-primary font-medium px-8 py-3.5 rounded-xl shadow-[0_8px_32px_rgba(79,55,138,0.2)] hover:shadow-[0_12px_40px_rgba(79,55,138,0.3)] transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Changes
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-safe bg-[#FEF7FF]/90 backdrop-blur-2xl rounded-t-[24px] z-50 shadow-[0_-8px_32px_rgba(79,55,138,0.06)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#49454F] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454F] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Voice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454F] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Channels</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#E8DEF8] text-[#1D192B] rounded-[1.5rem] px-5 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

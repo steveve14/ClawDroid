@@ -1,0 +1,21 @@
+# Android
+*.iml
+.gradle/
+/local.properties
+/.idea/
+/build/
+/captures/
+.externalNativeBuild/
+
+# Keystore
+*.keystore
+*.jks
+keystore.properties
+
+# Generated
+/app/build/
+/**/build/
+
+# OS
+.DS_Store
+Thumbs.db

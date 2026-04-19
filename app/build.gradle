@@ -1,0 +1,76 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
+}
+
+android {
+    namespace 'com.clawdroid.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.clawdroid.app"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def properties = new Properties()
+        def localFile = rootProject.file("local.properties")
+        if (localFile.exists()) {
+            properties.load(localFile.newDataInputStream())
+        }
+
+        buildConfigField "String", "GEMINI_API_KEY",
+            "\"${properties.getProperty('GEMINI_API_KEY', '')}\""
+        buildConfigField "String", "OPENAI_API_KEY",
+            "\"${properties.getProperty('OPENAI_API_KEY', '')}\""
+    }
+
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation project(':core:model')
+    implementation project(':core:data')
+    implementation project(':core:ai')
+    implementation project(':core:ui')
+    implementation project(':feature:chat')
+    implementation project(':feature:voice')
+    implementation project(':feature:channels')
+    implementation project(':feature:tools')
+    implementation project(':feature:settings')
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    implementation libs.lifecycle.viewmodel
+    implementation libs.lifecycle.livedata
+
+    implementation libs.hilt.android
+    annotationProcessor libs.hilt.compiler
+
+    testImplementation libs.junit5
+    testImplementation libs.mockito.core
+    androidTestImplementation libs.espresso.core
+}

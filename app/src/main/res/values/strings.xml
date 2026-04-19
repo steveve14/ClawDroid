@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ClawDroid</string>
+    <string name="nav_chat">Chat</string>
+    <string name="nav_voice">Voice</string>
+    <string name="nav_channels">Channels</string>
+    <string name="nav_settings">Settings</string>
+</resources>

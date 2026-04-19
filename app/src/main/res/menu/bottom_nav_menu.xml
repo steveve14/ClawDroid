@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/conversationListFragment"
+        android:icon="@android:drawable/sym_action_chat"
+        android:title="@string/nav_chat" />
+
+    <item
+        android:id="@+id/voiceChatFragment"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="@string/nav_voice" />
+
+    <item
+        android:id="@+id/channelListFragment"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/nav_channels" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/nav_settings" />
+
+</menu>

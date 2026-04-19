@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>보안 및 권한 - ClawDroid</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#ede6ee",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f5eff6",
+                        "tertiary": "#633b48",
+                        "outline": "#7a7582",
+                        "primary-container": "#6750a4",
+                        "primary": "#4f378a",
+                        "surface-bright": "#fef7ff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "tertiary-fixed": "#ffd9e3",
+                        "on-tertiary-fixed": "#31111d",
+                        "on-secondary-fixed": "#1e192b",
+                        "surface-container-highest": "#e7e0e8",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#e8def9",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1d1b20",
+                        "surface-dim": "#ded8e0",
+                        "background": "#fef7ff",
+                        "on-error-container": "#93000a",
+                        "on-background": "#1d1b20",
+                        "inverse-surface": "#322f35",
+                        "surface-variant": "#e7e0e8",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#7d5260",
+                        "surface-container-low": "#f8f1f9",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#494551",
+                        "primary-fixed-dim": "#cfbcff",
+                        "surface-container": "#f2ecf4",
+                        "secondary-fixed": "#e8def9",
+                        "primary-fixed": "#e9ddff",
+                        "outline-variant": "#cbc4d2",
+                        "on-tertiary-fixed-variant": "#633b48",
+                        "on-primary-fixed": "#22005d",
+                        "on-primary-container": "#e0d2ff",
+                        "secondary": "#625b71",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#686177",
+                        "on-secondary-fixed-variant": "#4a4358",
+                        "secondary-fixed-dim": "#ccc2dc",
+                        "on-tertiary-container": "#ffcbda",
+                        "inverse-primary": "#cfbcff",
+                        "surface": "#fef7ff",
+                        "tertiary-fixed-dim": "#eeb8c8",
+                        "surface-tint": "#6750a4"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Manrope", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+        }
+        /* Custom Switch Styling */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: theme('colors.primary');
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: theme('colors.primary');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body antialiased min-h-screen flex flex-col overflow-x-hidden relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 w-full bg-[#FEF7FF]/80 backdrop-blur-xl flex justify-between items-center px-6 py-4 no-border shadow-[0_1px_3px_rgba(79,55,138,0.05)]">
+<div class="flex items-center gap-4">
+<button class="text-[#6750A4] scale-95 active:scale-90 transition-transform duration-200 hover:bg-[#EDE6EE] p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline font-black text-[#4F378A] text-xl tracking-tighter">ClawDroid</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="scale-95 active:scale-90 transition-transform duration-200 w-10 h-10 rounded-full overflow-hidden border-[0.5px] border-outline-variant/20 shadow-sm flex items-center justify-center bg-surface-container-high">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person">person</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-32 px-6 max-w-4xl mx-auto w-full flex flex-col gap-8">
+<!-- Header -->
+<div class="flex flex-col gap-2">
+<h2 class="font-headline font-extrabold text-[2rem] leading-tight text-primary">보안 및 권한</h2>
+<p class="text-on-surface-variant font-body text-base">ClawDroid의 보안 설정과 시스템 접근 권한을 관리합니다.</p>
+</div>
+<!-- Section 1: Biometric Lock -->
+<section class="flex flex-col gap-4">
+<h3 class="font-headline font-bold text-xl text-on-surface">생체 인식 잠금</h3>
+<div class="bg-surface-container-low rounded-xl p-6 flex items-center justify-between transition-colors hover:bg-surface-container">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="fingerprint" data-weight="fill">fingerprint</span>
+</div>
+<div>
+<h4 class="font-body font-semibold text-base text-on-surface">FaceID / 지문 인식</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">앱 실행 시 생체 인식으로 잠금 해제</p>
+</div>
+</div>
+<!-- Toggle Switch -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-primary transition-all duration-300 right-0 z-10" id="biometric-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer transition-colors duration-300" for="biometric-toggle"></label>
+</div>
+</div>
+</section>
+<!-- Section 2: Privacy (System Permissions) -->
+<section class="flex flex-col gap-4">
+<h3 class="font-headline font-bold text-xl text-on-surface">시스템 권한 (Privacy)</h3>
+<div class="bg-surface-container-low rounded-xl overflow-hidden">
+<!-- Permission: Microphone -->
+<div class="p-6 flex items-center justify-between border-b-[0.5px] border-outline-variant/20 transition-colors hover:bg-surface-container">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+</div>
+<div>
+<h4 class="font-body font-semibold text-base text-on-surface">마이크</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">음성 명령 및 오디오 녹음 허용</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-surface-variant transition-all duration-300 left-0 z-10" id="mic-toggle" name="toggle-mic" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-300" for="mic-toggle"></label>
+</div>
+</div>
+<!-- Permission: Notifications -->
+<div class="p-6 flex items-center justify-between border-b-[0.5px] border-outline-variant/20 transition-colors hover:bg-surface-container">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</div>
+<div>
+<h4 class="font-body font-semibold text-base text-on-surface">알림</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">중요한 업데이트 및 시스템 경고 수신</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-primary transition-all duration-300 right-0 z-10" id="notif-toggle" name="toggle-notif" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer transition-colors duration-300" for="notif-toggle"></label>
+</div>
+</div>
+<!-- Permission: Media Access -->
+<div class="p-6 flex items-center justify-between transition-colors hover:bg-surface-container">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined" data-icon="perm_media">perm_media</span>
+</div>
+<div>
+<h4 class="font-body font-semibold text-base text-on-surface">미디어 및 파일</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">기기의 사진, 동영상, 파일 접근 허용</p>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer border-surface-variant transition-all duration-300 left-0 z-10" id="media-toggle" name="toggle-media" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-300" for="media-toggle"></label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Data Encryption -->
+<section class="flex flex-col gap-4">
+<h3 class="font-headline font-bold text-xl text-on-surface">데이터 암호화</h3>
+<div class="bg-surface-container-lowest rounded-xl p-6 border-[0.5px] border-outline-variant/20 flex flex-col gap-4 shadow-[0_8px_32px_rgba(79,55,138,0.06)]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="lock" data-weight="fill">lock</span>
+<h4 class="font-body font-semibold text-base text-primary">엔드투엔드 암호화 활성화됨</h4>
+</div>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                    모든 통신 및 로컬 저장 데이터는 256-bit AES 규격으로 암호화되어 안전하게 보호됩니다. ClawDroid는 사용자의 개인 데이터에 직접 접근할 수 없습니다.
+                </p>
+<div class="mt-2">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-body font-semibold text-sm px-6 py-3 rounded-full hover:shadow-[0_4px_12px_rgba(79,55,138,0.3)] transition-all active:scale-95 inline-flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="security_update_good">security_update_good</span>
+                        보안 키 관리
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#FEF7FF]/90 backdrop-blur-2xl shadow-[0_-8px_32px_rgba(79,55,138,0.06)] rounded-t-[32px] no-border">
+<button class="flex flex-col items-center justify-center bg-[#E8DEF8] text-[#1D192B] rounded-[24px] px-5 py-2.5 transition-all scale-105 active:scale-95 cubic-bezier(0.4, 0, 0.2, 1)">
+<span class="material-symbols-outlined mb-1" data-icon="security" data-weight="fill">security</span>
+<span class="font-headline font-semibold text-[11px] uppercase tracking-widest">Security</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#494551] px-5 py-2.5 hover:text-[#6750A4] transition-all active:scale-95 cubic-bezier(0.4, 0, 0.2, 1)">
+<span class="material-symbols-outlined mb-1" data-icon="hub">hub</span>
+<span class="font-headline font-semibold text-[11px] uppercase tracking-widest">Channels</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#494551] px-5 py-2.5 hover:text-[#6750A4] transition-all active:scale-95 cubic-bezier(0.4, 0, 0.2, 1)">
+<span class="material-symbols-outlined mb-1" data-icon="info">info</span>
+<span class="font-headline font-semibold text-[11px] uppercase tracking-widest">About</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#494551] px-5 py-2.5 hover:text-[#6750A4] transition-all active:scale-95 cubic-bezier(0.4, 0, 0.2, 1)">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-headline font-semibold text-[11px] uppercase tracking-widest">Settings</span>
+</button>
+</nav>
+<!-- Spacer for bottom nav on mobile -->
+<div class="h-24"></div>
+</body></html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tools &amp; Skills</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#cfbcff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#ede6ee",
+                        "surface-container-low": "#f8f1f9",
+                        "secondary-fixed-dim": "#ccc2dc",
+                        "on-secondary-fixed": "#1e192b",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#7d5260",
+                        "secondary": "#625b71",
+                        "on-primary-container": "#e0d2ff",
+                        "on-tertiary-container": "#ffcbda",
+                        "surface-tint": "#6750a4",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#22005d",
+                        "surface-bright": "#fef7ff",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#e8def9",
+                        "surface-dim": "#ded8e0",
+                        "tertiary": "#633b48",
+                        "tertiary-fixed-dim": "#eeb8c8",
+                        "outline": "#7a7582",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#4f378a",
+                        "primary-container": "#6750a4",
+                        "primary": "#4f378a",
+                        "on-surface": "#1d1b20",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#633b48",
+                        "tertiary-fixed": "#ffd9e3",
+                        "inverse-surface": "#322f35",
+                        "surface-container-highest": "#e7e0e8",
+                        "surface-container": "#f2ecf4",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#1d1b20",
+                        "on-tertiary-fixed": "#31111d",
+                        "inverse-primary": "#cfbcff",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e7e0e8",
+                        "secondary-fixed": "#e8def9",
+                        "primary-fixed": "#e9ddff",
+                        "outline-variant": "#cbc4d2",
+                        "background": "#fef7ff",
+                        "surface": "#fef7ff",
+                        "inverse-on-surface": "#f5eff6",
+                        "on-secondary-container": "#686177",
+                        "on-secondary-fixed-variant": "#4a4358",
+                        "on-surface-variant": "#494551"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"],
+                        "code": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #FEF7FF; color: #1d1b20; }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Manrope', sans-serif; }
+        .font-code { font-family: 'JetBrains Mono', monospace; }
+        
+        /* The Ghost Border Rule */
+        .ghost-border { border: 1px solid rgba(203, 196, 210, 0.2); }
+        
+        /* Ethereal Gradient */
+        .bg-ethereal-gradient { background: linear-gradient(135deg, #4f378a 0%, #6750a4 100%); }
+        
+        /* Custom Scrollbar for a cleaner look */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ded8e0; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #cbc4d2; }
+        
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col pt-[72px] md:pt-[80px] pb-[80px] md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-[#FEF7FF]/80 backdrop-blur-2xl dark:bg-[#1C1B1F]/80 shadow-[0_8px_32px_rgba(79,55,138,0.06)] no-border bg-[#EDE6EE] dark:bg-[#2B2930]">
+<div class="flex items-center gap-4">
+<button class="text-on-surface hover:bg-[#E7E0E8]/50 p-2 rounded-full transition-colors scale-95 active:scale-90 md:hidden">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden flex-shrink-0 ghost-border">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with natural makeup in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm5hRlvlClcUIdN9zeYScKDDZpGkTB2N2e4MdqNfE0jnM2Gj8nIa4oGY-gzhxS3MSVkK7tlaeLAkOB4g7G94cih0oYBwWXISqXRGnV--uZJ8VNH_sK62aVKbHJRhuwI4Pp1JbbR1R9FfzjRsK3VJMku7CbBzXZqOcSLt73kHTt-aHJAiSRQEf_l9HTaiA4EnLqpN0kBhFjwmKMqzv8Sv4wX5wxMl1rJY6QH6xNR4PQ0YrSxPbRSxJPqipmwUtpZs-Y8FHU4W7-tb4"/>
+</div>
+<span class="font-manrope font-bold text-[1.375rem] tracking-tight text-[#4F378A] dark:text-[#EADDFF]">ClawDroid</span>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-2">
+<a class="text-[#49454F] dark:text-[#CAC4D0] font-medium hover:bg-[#E7E0E8]/50 dark:hover:bg-[#49454F]/50 transition-colors px-4 py-2 rounded-full" href="#">Chat</a>
+<a class="text-[#49454F] dark:text-[#CAC4D0] font-medium hover:bg-[#E7E0E8]/50 dark:hover:bg-[#49454F]/50 transition-colors px-4 py-2 rounded-full" href="#">Voice</a>
+<a class="text-[#49454F] dark:text-[#CAC4D0] font-medium hover:bg-[#E7E0E8]/50 dark:hover:bg-[#49454F]/50 transition-colors px-4 py-2 rounded-full" href="#">Channels</a>
+<a class="text-[#21005D] dark:text-[#EADDFF] font-bold bg-[#E8DEF8] dark:bg-[#4A4458] hover:bg-[#E7E0E8]/50 dark:hover:bg-[#49454F]/50 transition-colors px-4 py-2 rounded-full flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span> Settings
+            </a>
+</nav>
+<button class="text-[#6750A4] dark:text-[#D0BCFF] hover:bg-[#E7E0E8]/50 dark:hover:bg-[#49454F]/50 p-2 rounded-full transition-colors scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow container mx-auto px-4 md:px-8 max-w-5xl py-8">
+<!-- Header Section -->
+<div class="mb-12">
+<h1 class="font-headline text-[2rem] leading-tight font-extrabold text-on-surface mb-2">Tools &amp; Skills</h1>
+<p class="font-body text-on-surface-variant text-base">Enhance ClawDroid's capabilities by enabling built-in tools or adding custom external skills.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Content -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Built-in Tools Section -->
+<section>
+<h2 class="font-headline text-[1.375rem] font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="build_circle">build_circle</span>
+                        Built-in Tools
+                    </h2>
+<div class="space-y-4">
+<!-- Tool Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-start gap-4 ghost-border transition-all hover:shadow-[0_8px_32px_rgba(79,55,138,0.06)]">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="calculate">calculate</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center justify-between mb-1">
+<h3 class="font-headline font-bold text-lg text-on-surface">Calculator</h3>
+<label class="relative inline-flex items-center cursor-pointer scale-90">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="font-body text-sm text-on-surface-variant">Perform complex mathematical calculations directly within the chat.</p>
+</div>
+</div>
+<!-- Tool Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-start gap-4 ghost-border transition-all hover:shadow-[0_8px_32px_rgba(79,55,138,0.06)]">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0 text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="travel_explore">travel_explore</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center justify-between mb-1">
+<h3 class="font-headline font-bold text-lg text-on-surface">Web Search</h3>
+<label class="relative inline-flex items-center cursor-pointer scale-90">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="font-body text-sm text-on-surface-variant">Browse the internet in real-time to answer questions about recent events.</p>
+</div>
+</div>
+<!-- Tool Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-5 flex items-start gap-4 ghost-border transition-all hover:shadow-[0_8px_32px_rgba(79,55,138,0.06)]">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center flex-shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+</div>
+<div class="flex-grow">
+<div class="flex items-center justify-between mb-1">
+<h3 class="font-headline font-bold text-lg text-on-surface">Image Generation</h3>
+<label class="relative inline-flex items-center cursor-pointer scale-90">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<p class="font-body text-sm text-on-surface-variant">Create images from text descriptions using the latest diffusion models.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Custom Skills Section -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline text-[1.375rem] font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="extension">extension</span>
+                            Custom Skills
+                        </h2>
+<button class="bg-ethereal-gradient text-on-primary font-headline font-bold text-sm px-5 py-2.5 rounded-xl shadow-sm hover:opacity-90 active:scale-95 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                            Add New Skill
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Custom Skill Card 1 -->
+<div class="bg-surface-container-low rounded-xl p-5 ghost-border relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-error bg-surface-container-lowest rounded-full p-1 shadow-sm"><span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span></button>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">GitHub Integration</h3>
+<p class="font-body text-sm text-on-surface-variant mb-4 line-clamp-2">Access repositories, read issues, and propose code changes directly via API.</p>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 bg-surface-container-highest rounded-md font-code text-[11px] text-on-surface-variant">OAuth2</span>
+<span class="flex items-center gap-1 text-[12px] font-medium text-[#4f378a]">
+<span class="w-2 h-2 rounded-full bg-[#4f378a]"></span> Active
+                                </span>
+</div>
+</div>
+<!-- Custom Skill Card 2 -->
+<div class="bg-surface-container-low rounded-xl p-5 ghost-border relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-on-surface-variant hover:text-error bg-surface-container-lowest rounded-full p-1 shadow-sm"><span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span></button>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+</div>
+<h3 class="font-headline font-bold text-lg text-on-surface mb-1">Data Analysis</h3>
+<p class="font-body text-sm text-on-surface-variant mb-4 line-clamp-2">Connect to local CSVs and SQL databases to run queries and visualize data.</p>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 bg-surface-container-highest rounded-md font-code text-[11px] text-on-surface-variant">Local API</span>
+<span class="flex items-center gap-1 text-[12px] font-medium text-secondary">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span> Inactive
+                                </span>
+</div>
+</div>
+</div>
+</section>
+<!-- Advanced Settings Section -->
+<section class="mt-12 pt-8 border-t border-outline-variant/20">
+<h3 class="font-headline text-lg font-bold text-on-surface mb-4">Advanced Settings</h3>
+<div class="bg-surface-container-low rounded-xl p-5 ghost-border flex items-center justify-between">
+<div>
+<h4 class="font-headline font-semibold text-base text-on-surface">Verify Permissions</h4>
+<p class="font-body text-sm text-on-surface-variant mt-1">Always ask for confirmation before a skill accesses external networks or modifies files.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer scale-90 flex-shrink-0 ml-4">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column: Context/Info Panel (Bento Style) -->
+<div class="lg:col-span-4 hidden lg:block">
+<div class="sticky top-[104px] space-y-6">
+<div class="bg-surface-container-low rounded-[1.5rem] p-6 ghost-border">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-4">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<h4 class="font-headline font-bold text-lg mb-2">How Skills Work</h4>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed mb-4">
+                            Skills allow the AI to interact with external services via APIs. When an intent is recognized, ClawDroid uses the active skills to fetch data or execute actions on your behalf.
+                        </p>
+<a class="text-primary font-medium text-sm hover:underline flex items-center gap-1" href="#">
+                            Read the Documentation <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="bg-surface-container-high rounded-[1.5rem] p-6 ghost-border">
+<h4 class="font-headline font-bold text-sm text-on-surface-variant uppercase tracking-wider mb-3">System Resources</h4>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs font-body text-on-surface-variant mb-1">
+<span>Active Tools Compute</span>
+<span class="font-code">12%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 12%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-body text-on-surface-variant mb-1">
+<span>API Rate Limits</span>
+<span class="font-code">45/100</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-safe bg-[#FEF7FF]/90 backdrop-blur-2xl dark:bg-[#1C1B1F]/90 shadow-[0_-8px_32px_rgba(79,55,138,0.06)] no-border tonal-shift-surface rounded-t-[24px] z-50">
+<a class="flex flex-col items-center justify-center text-[#49454F] dark:text-[#CAC4D0] px-5 py-1 hover:bg-[#EADDFF]/40 dark:hover:bg-[#4A4458]/40 transition-all active:scale-95 duration-150 rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454F] dark:text-[#CAC4D0] px-5 py-1 hover:bg-[#EADDFF]/40 dark:hover:bg-[#4A4458]/40 transition-all active:scale-95 duration-150 rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Voice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454F] dark:text-[#CAC4D0] px-5 py-1 hover:bg-[#EADDFF]/40 dark:hover:bg-[#4A4458]/40 transition-all active:scale-95 duration-150 rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Channels</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#E8DEF8] dark:bg-[#4A4458] text-[#1D192B] dark:text-[#EADDFF] rounded-[1.5rem] px-5 py-1 hover:bg-[#EADDFF]/40 dark:hover:bg-[#4A4458]/40 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide mt-1">Settings</span>
+</a>
+</nav>
+</body></html>

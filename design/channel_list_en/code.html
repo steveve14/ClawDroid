@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClawDroid - Channels</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#cfbcff",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#ede6ee",
+                    "surface-container-low": "#f8f1f9",
+                    "secondary-fixed-dim": "#ccc2dc",
+                    "on-secondary-fixed": "#1e192b",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary-container": "#7d5260",
+                    "secondary": "#625b71",
+                    "on-primary-container": "#e0d2ff",
+                    "on-tertiary-container": "#ffcbda",
+                    "surface-tint": "#6750a4",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed": "#22005d",
+                    "surface-bright": "#fef7ff",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#e8def9",
+                    "surface-dim": "#ded8e0",
+                    "tertiary": "#633b48",
+                    "tertiary-fixed-dim": "#eeb8c8",
+                    "outline": "#7a7582",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#4f378a",
+                    "primary-container": "#6750a4",
+                    "primary": "#4f378a",
+                    "on-surface": "#1d1b20",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#633b48",
+                    "tertiary-fixed": "#ffd9e3",
+                    "inverse-surface": "#322f35",
+                    "surface-container-highest": "#e7e0e8",
+                    "surface-container": "#f2ecf4",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#1d1b20",
+                    "on-tertiary-fixed": "#31111d",
+                    "inverse-primary": "#cfbcff",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e7e0e8",
+                    "secondary-fixed": "#e8def9",
+                    "primary-fixed": "#e9ddff",
+                    "outline-variant": "#cbc4d2",
+                    "background": "#fef7ff",
+                    "surface": "#fef7ff",
+                    "inverse-on-surface": "#f5eff6",
+                    "on-secondary-container": "#686177",
+                    "on-secondary-fixed-variant": "#4a4358",
+                    "on-surface-variant": "#494551"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": [
+                            "Manrope"
+                    ],
+                    "body": [
+                            "Inter"
+                    ],
+                    "label": [
+                            "Inter"
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEF7FF;
+            color: #1d1b20;
+        }
+        h1, h2, h3, h4, h5, h6, .font-headline {
+            font-family: 'Manrope', sans-serif;
+        }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-[#FEF7FF]/80 backdrop-blur-2xl shadow-[0_8px_32px_rgba(79,55,138,0.06)] no-border">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a young woman with natural makeup in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2hOl_TM4LnfDNMLGjFbhZ-IOmi03C7v8nBnR33YQo5AON0zaoEi_2--xkPhuNRauQIONvsZKlIsKUW0MRHAhK6XQVCSjdFocExwxcUpjI8KJDZ0Dy4iy-3ZcX1y7JKiXd8M7I5xe9tgh3REogu3ah13pUzwwkfVdazT6WkiLppp14dxRAxDIk3UpI_kp6NXwoOzHNxd8kI_BjEm3zpzCJIL9PiKiuKK2IYMJlMdGUaeLP-advHw4OvZN7Bv4EBkeJNRY-KdaCpYw"/>
+</div>
+<h1 class="font-manrope font-bold text-[1.375rem] tracking-tight text-[#6750A4]">Channels</h1>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-[#6750A4] hover:bg-[#E7E0E8]/50 transition-colors scale-95 active:scale-90 duration-200">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-24 pb-24 px-6 max-w-4xl mx-auto w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Telegram Bot Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_8px_32px_rgba(79,55,138,0.03)] border border-outline-variant/20 flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+<div class="flex items-start justify-between mb-6 relative z-10">
+<div class="w-14 h-14 rounded-2xl bg-[#0088cc]/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px] text-[#0088cc]" style="font-variation-settings: 'FILL' 1;">send</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed/30 text-on-primary-fixed text-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                        Connected
+                    </span>
+</div>
+<div class="relative z-10">
+<h2 class="font-headline font-bold text-xl text-on-surface mb-2">Telegram Bot</h2>
+<p class="text-on-surface-variant text-sm mb-6">Active connection to @clawdroid_bot. Handling 24 active sessions.</p>
+</div>
+<div class="mt-auto flex items-center justify-between relative z-10 pt-4 border-t border-outline-variant/10">
+<span class="text-xs text-on-surface-variant font-medium">Last synced: 2m ago</span>
+<button class="text-primary font-medium text-sm hover:text-primary-container transition-colors">Configure</button>
+</div>
+</div>
+<!-- Discord Bot Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_8px_32px_rgba(79,55,138,0.03)] border border-outline-variant/20 flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+<div class="flex items-start justify-between mb-6 relative z-10">
+<div class="w-14 h-14 rounded-2xl bg-[#5865F2]/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px] text-[#5865F2]" style="font-variation-settings: 'FILL' 1;">chat</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-sm font-medium border border-outline-variant/20">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Disconnected
+                    </span>
+</div>
+<div class="relative z-10">
+<h2 class="font-headline font-bold text-xl text-on-surface mb-2">Discord Bot</h2>
+<p class="text-on-surface-variant text-sm mb-6">Currently offline. Awaiting token verification and server permissions.</p>
+</div>
+<div class="mt-auto flex items-center justify-between relative z-10 pt-4 border-t border-outline-variant/10">
+<span class="text-xs text-on-surface-variant font-medium">Last synced: 3d ago</span>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm">Connect</button>
+</div>
+</div>
+<!-- Slack Bot Card -->
+<div class="bg-surface-container-lowest rounded-[24px] p-6 shadow-[0_8px_32px_rgba(79,55,138,0.03)] border border-outline-variant/20 flex flex-col relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110"></div>
+<div class="flex items-start justify-between mb-6 relative z-10">
+<div class="w-14 h-14 rounded-2xl bg-[#E01E5A]/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px] text-[#E01E5A]" style="font-variation-settings: 'FILL' 1;">tag</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed/30 text-on-primary-fixed text-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                        Connected
+                    </span>
+</div>
+<div class="relative z-10">
+<h2 class="font-headline font-bold text-xl text-on-surface mb-2">Slack App</h2>
+<p class="text-on-surface-variant text-sm mb-6">Installed in 'Engineering Workspace'. Monitoring 3 channels.</p>
+</div>
+<div class="mt-auto flex items-center justify-between relative z-10 pt-4 border-t border-outline-variant/10">
+<span class="text-xs text-on-surface-variant font-medium">Last synced: 15m ago</span>
+<button class="text-primary font-medium text-sm hover:text-primary-container transition-colors">Configure</button>
+</div>
+</div>
+<!-- Empty State Card (for visual balance) -->
+<div class="bg-surface-container-low/50 rounded-[24px] p-6 border border-dashed border-outline-variant/40 flex flex-col items-center justify-center text-center min-h-[240px] hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-surface-container-highest flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</div>
+<h3 class="font-headline font-semibold text-lg text-on-surface mb-1">Add New Channel</h3>
+<p class="text-on-surface-variant text-sm">Connect WhatsApp, Webhooks, or Custom APIs.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-safe bg-[#FEF7FF]/90 backdrop-blur-2xl rounded-t-[24px] z-50 shadow-[0_-8px_32px_rgba(79,55,138,0.06)] no-border">
+<a class="flex flex-col items-center justify-center text-[#49454F] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all active:scale-95 duration-150 rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined mb-1">chat_bubble</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454F] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all active:scale-95 duration-150 rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined mb-1">mic</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide">Voice</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#E8DEF8] text-[#1D192B] rounded-[1.5rem] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">hub</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide">Channels</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#49454F] px-5 py-1 hover:bg-[#EADDFF]/40 transition-all active:scale-95 duration-150 rounded-[1.5rem]" href="#">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-manrope text-[12px] font-medium tracking-wide">Settings</span>
+</a>
+</nav>
+<!-- Desktop Side Nav (Hidden on mobile) -->
+<aside class="hidden md:flex flex-col w-64 fixed left-0 top-0 h-full bg-surface-container-low border-r border-outline-variant/10 pt-24 px-4 z-40">
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-medium">Chat</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span class="font-medium">Voice</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-secondary-container text-on-secondary-container font-semibold transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+<span>Channels</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+</aside>
+</body></html>

@@ -1,0 +1,39 @@
+plugins {
+    alias(libs.plugins.android.library)
+}
+
+android {
+    namespace 'com.clawdroid.core.ui'
+    compileSdk 35
+
+    defaultConfig {
+        minSdk 26
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation project(':core:model')
+
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.glide
+    annotationProcessor libs.glide.compiler
+
+    implementation libs.markwon.core
+    implementation libs.markwon.html
+    implementation libs.markwon.syntax
+    implementation libs.markwon.tables
+
+    implementation libs.rxjava3
+    implementation libs.rxandroid
+}
