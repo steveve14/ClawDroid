@@ -5,12 +5,18 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.clawdroid.core.data.db.ClawDroidDatabase;
+import com.clawdroid.core.data.db.DatabaseKeyManager;
 import com.clawdroid.core.data.db.migration.Migrations;
 import com.clawdroid.core.data.db.dao.AiProviderDao;
 import com.clawdroid.core.data.db.dao.ChannelDao;
 import com.clawdroid.core.data.db.dao.ConversationDao;
 import com.clawdroid.core.data.db.dao.MessageDao;
 import com.clawdroid.core.data.db.dao.ToolCallDao;
+
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import javax.inject.Singleton;
 
@@ -24,14 +30,28 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 public class DatabaseModule {
 
+    static {
+        // SQLCipher 네이티브 라이브러리 로드 (한 번만)
+        System.loadLibrary("sqlcipher");
+    }
+
     @Provides
     @Singleton
     public ClawDroidDatabase provideDatabase(@ApplicationContext Context context) {
+        // SEC-H1: Room + SQLCipher 통합 — 데이터베이스 전체를 AES-256으로 암호화
+        char[] passphrase = DatabaseKeyManager.getOrCreatePassphrase(context);
+        byte[] passBytes = new String(passphrase).getBytes(StandardCharsets.UTF_8);
+        // 원본 char[] 제로화 (메모리 상주 축소)
+        Arrays.fill(passphrase, '0');
+
+        SupportOpenHelperFactory factory = new SupportOpenHelperFactory(passBytes);
+
         return Room.databaseBuilder(
                 context,
                 ClawDroidDatabase.class,
                 "clawdroid.db"
         )
+        .openHelperFactory(factory)
         .addMigrations(Migrations.MIGRATION_1_2, Migrations.MIGRATION_2_3)
         .fallbackToDestructiveMigration()
         .build();

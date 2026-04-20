@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ClawDroid data extraction rules (Android 12+ / API 31+)
+  - cloud-backup: Google Drive 등 클라우드 백업 대상 (전체 제외)
+  - device-transfer: 디바이스 이전(D2D) 대상 (전체 제외)
+  민감한 대화 내용, API 키, PIN, 채널 토큰이 평문으로 빠져나가는 것을 원천 차단.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="sharedpref" path="." />
+        <exclude domain="database" path="." />
+        <exclude domain="file" path="." />
+        <exclude domain="external" path="." />
+        <exclude domain="root" path="." />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="sharedpref" path="." />
+        <exclude domain="database" path="." />
+        <exclude domain="file" path="." />
+        <exclude domain="external" path="." />
+        <exclude domain="root" path="." />
+    </device-transfer>
+</data-extraction-rules>

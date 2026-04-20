@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Release 빌드 전용: localhost cleartext 예외 없음.
+  Ollama 로컬 서버와 같은 개발용 평문 HTTP는 debug 빌드에서만 허용.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

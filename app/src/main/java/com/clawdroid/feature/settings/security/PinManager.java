@@ -20,6 +20,18 @@ public class PinManager {
     private static final String KEY_BIOMETRIC_ENABLED = "biometric_enabled";
     private static final String KEY_AUTO_DELETE_DAYS = "auto_delete_days";
 
+    // SEC-M4: Brute-force protection
+    private static final String KEY_FAIL_COUNT = "pin_fail_count";
+    private static final String KEY_LOCKED_UNTIL = "pin_locked_until";
+    /** [실패횟수 임계, 잠금 지속 ms] */
+    private static final long[][] LOCKOUT_SCHEDULE = {
+            {5,   60_000L},           // 5회 → 1분
+            {10,  5 * 60_000L},       // 10회 → 5분
+            {15,  15 * 60_000L},      // 15회 → 15분
+            {20,  60 * 60_000L},      // 20회 → 1시간
+            {30,  24 * 60 * 60_000L}  // 30회 → 24시간
+    };
+
     private final SharedPreferences prefs;
 
     @Inject
@@ -60,18 +72,63 @@ public class PinManager {
         prefs.edit()
                 .putString(KEY_PIN_SALT, saltBase64)
                 .putString(KEY_PIN_HASH, hash)
+                .remove(KEY_FAIL_COUNT)
+                .remove(KEY_LOCKED_UNTIL)
                 .apply();
         return true;
     }
 
+    /**
+     * 지수 백오프가 반영된 PIN 검증.
+     * 잠금 중이면 PIN이 일치하더라도 false를 반환한다.
+     * 호출 전에 {@link #getLockRemainingMillis()}로 상태를 먼저 확인할 것.
+     */
     public boolean verifyPin(String pin) {
+        if (getLockRemainingMillis() > 0) {
+            return false;
+        }
         String storedHash = prefs.getString(KEY_PIN_HASH, null);
         String saltBase64 = prefs.getString(KEY_PIN_SALT, null);
         if (storedHash == null || saltBase64 == null) return false;
 
         byte[] salt = Base64.getDecoder().decode(saltBase64);
         String hash = hashPin(pin, salt);
-        return storedHash.equals(hash);
+        boolean ok = storedHash.equals(hash);
+
+        if (ok) {
+            prefs.edit()
+                    .remove(KEY_FAIL_COUNT)
+                    .remove(KEY_LOCKED_UNTIL)
+                    .apply();
+        } else {
+            recordFailure();
+        }
+        return ok;
+    }
+
+    /** 남은 잠금 시간(ms). 0이면 잠겨있지 않음. */
+    public long getLockRemainingMillis() {
+        long until = prefs.getLong(KEY_LOCKED_UNTIL, 0L);
+        long now = System.currentTimeMillis();
+        return Math.max(0L, until - now);
+    }
+
+    public int getFailCount() {
+        return prefs.getInt(KEY_FAIL_COUNT, 0);
+    }
+
+    private void recordFailure() {
+        int count = prefs.getInt(KEY_FAIL_COUNT, 0) + 1;
+        long lockUntil = 0L;
+        for (long[] entry : LOCKOUT_SCHEDULE) {
+            if (count >= entry[0]) {
+                lockUntil = System.currentTimeMillis() + entry[1];
+            }
+        }
+        prefs.edit()
+                .putInt(KEY_FAIL_COUNT, count)
+                .putLong(KEY_LOCKED_UNTIL, lockUntil)
+                .apply();
     }
 
     public void clearPin() {
@@ -80,6 +137,8 @@ public class PinManager {
                 .remove(KEY_PIN_SALT)
                 .remove(KEY_APP_LOCK_ENABLED)
                 .remove(KEY_BIOMETRIC_ENABLED)
+                .remove(KEY_FAIL_COUNT)
+                .remove(KEY_LOCKED_UNTIL)
                 .apply();
     }
 

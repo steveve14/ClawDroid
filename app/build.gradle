@@ -14,8 +14,8 @@ android {
     }
 
     signingConfigs {
-        release {
-            if (keystorePropertiesFile.exists()) {
+        if (keystorePropertiesFile.exists()) {
+            release {
                 storeFile file(keystoreProperties['storeFile'] ?: 'release-keystore.jks')
                 storePassword keystoreProperties['storePassword'] ?: ''
                 keyAlias keystoreProperties['keyAlias'] ?: 'clawdroid'
@@ -54,7 +54,9 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            signingConfig signingConfigs.release
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                 'proguard-rules.pro'
         }
@@ -107,6 +109,7 @@ dependencies {
     // Security
     implementation libs.security.crypto
     implementation libs.biometric
+    implementation libs.sqlcipher.android
 
     // Image
     implementation libs.glide

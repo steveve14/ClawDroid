@@ -46,6 +46,13 @@ public class SecuritySettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // SEC-M2: PIN/생체 설정 화면 스크린샷·오버레이 차단
+        if (getActivity() != null) {
+            getActivity().getWindow().setFlags(
+                    android.view.WindowManager.LayoutParams.FLAG_SECURE,
+                    android.view.WindowManager.LayoutParams.FLAG_SECURE);
+        }
+
         binding.toolbar.setNavigationOnClickListener(v ->
                 Navigation.findNavController(requireView()).navigateUp());
 
@@ -228,6 +235,10 @@ public class SecuritySettingsFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        if (getActivity() != null) {
+            getActivity().getWindow().clearFlags(
+                    android.view.WindowManager.LayoutParams.FLAG_SECURE);
+        }
         super.onDestroyView();
         binding = null;
     }
