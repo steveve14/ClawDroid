@@ -26,6 +26,9 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_chat_to_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <!-- Voice Flow -->

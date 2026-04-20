@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingBottom="@dimen/spacing_2xl">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textSize="@dimen/text_3xl"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:letterSpacing="-0.02" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configure your AI companion experience"
+            android:textSize="@dimen/text_base"
+            android:textColor="@color/md_on_surface_variant"
+            android:layout_marginTop="@dimen/spacing_xs" />
+
+        <!-- Section: Intelligence Core -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intelligence Core"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:textColor="@color/md_primary_container"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_sm"
+            android:letterSpacing="0.05" />
+
+        <!-- AI Models -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low"
+            android:layout_marginBottom="@dimen/spacing_sm">
+
+            <LinearLayout
+                android:id="@+id/btnModelSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_settings_gear"
+                        android:contentDescription="AI"
+                        app:tint="@color/md_on_primary_fixed" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AI Models"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:id="@+id/tvCurrentModel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gemini Nano"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Persona -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low"
+            android:layout_marginBottom="@dimen/spacing_sm">
+
+            <LinearLayout
+                android:id="@+id/btnPersonaSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        android:contentDescription="Persona"
+                        app:tint="@color/md_on_primary_fixed"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Persona"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name, personality, system prompt"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Tools & Skills -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low">
+
+            <LinearLayout
+                android:id="@+id/btnToolSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_compass"
+                        android:contentDescription="Tools"
+                        app:tint="@color/md_on_primary_fixed"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tools &amp; Skills"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Built-in tools, custom skills"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Section: Integrations -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Integrations"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface_variant"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_sm"
+            android:letterSpacing="0.05" />
+
+        <!-- Channels -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low">
+
+            <LinearLayout
+                android:id="@+id/btnApiKeys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/stat_notify_sync"
+                        android:contentDescription="Channels"
+                        app:tint="@color/md_on_primary_fixed"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Channels"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Telegram, Discord, Slack"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Section: Application -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:textColor="@color/md_on_surface_variant"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_sm"
+            android:letterSpacing="0.05" />
+
+        <!-- Security -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low"
+            android:layout_marginBottom="@dimen/spacing_sm">
+
+            <LinearLayout
+                android:id="@+id/btnSecuritySettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_lock_lock"
+                        android:contentDescription="Security"
+                        app:tint="@color/md_on_primary_fixed"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="App Lock"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PIN, biometric, security"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchAppLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- About -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_lg"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/md_surface_container_low">
+
+            <LinearLayout
+                android:id="@+id/btnAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_lg"
+                android:background="?attr/selectableItemBackground">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_lg"
+                    android:layout_height="@dimen/avatar_lg"
+                    android:background="@drawable/bg_chip_surface">
+
+                    <ImageView
+                        android:layout_width="@dimen/icon_md"
+                        android:layout_height="@dimen/icon_md"
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        android:contentDescription="About"
+                        app:tint="@color/md_on_primary_fixed"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ClawDroid v1.0.0"
+                        android:textSize="@dimen/text_sm"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:layout_marginTop="2dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@android:drawable/ic_media_play"
+                    android:contentDescription="navigate"
+                    android:alpha="0.5" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

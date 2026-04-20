@@ -17,12 +17,3 @@ dependencyResolutionManagement {
 rootProject.name = "ClawDroid"
 
 include ':app'
-include ':core:model'
-include ':core:data'
-include ':core:ai'
-include ':core:ui'
-include ':feature:chat'
-include ':feature:voice'
-include ':feature:channels'
-include ':feature:tools'
-include ':feature:settings'
