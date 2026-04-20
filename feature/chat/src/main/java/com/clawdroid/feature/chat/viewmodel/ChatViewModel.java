@@ -91,19 +91,38 @@ public class ChatViewModel extends ViewModel {
     public void sendMessage(String content) {
         if (content == null || content.trim().isEmpty() || conversationId == null) return;
 
+        // AI 프로바이더 연결 확인
+        disposables.add(
+            providerManager.isAnyProviderAvailable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    available -> {
+                        if (!available) {
+                            error.setValue("AI가 연결되지 않았습니다. 설정에서 API 키를 입력해주세요.");
+                            return;
+                        }
+                        doSendMessage(content.trim());
+                    },
+                    e -> error.setValue(e.getMessage())
+                )
+        );
+    }
+
+    private void doSendMessage(String content) {
         isGenerating.setValue(true);
         streamingText.setValue("");
 
         disposables.add(
-            messageRepository.saveUserMessage(conversationId, content.trim())
+            messageRepository.saveUserMessage(conversationId, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     userMsg -> {
-                        conversationRepository.updateLastMessage(conversationId, content.trim())
+                        conversationRepository.updateLastMessage(conversationId, content)
                                 .subscribeOn(Schedulers.io())
                                 .subscribe();
-                        generateAiResponse(content.trim());
+                        generateAiResponse(content);
                     },
                     e -> {
                         error.setValue(e.getMessage());
@@ -116,6 +135,25 @@ public class ChatViewModel extends ViewModel {
     public void sendMessageWithImage(String content, byte[] imageData) {
         if (conversationId == null) return;
 
+        // AI 프로바이더 연결 확인
+        disposables.add(
+            providerManager.isAnyProviderAvailable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    available -> {
+                        if (!available) {
+                            error.setValue("AI가 연결되지 않았습니다. 설정에서 API 키를 입력해주세요.");
+                            return;
+                        }
+                        doSendMessageWithImage(content, imageData);
+                    },
+                    e -> error.setValue(e.getMessage())
+                )
+        );
+    }
+
+    private void doSendMessageWithImage(String content, byte[] imageData) {
         isGenerating.setValue(true);
         streamingText.setValue("");
 

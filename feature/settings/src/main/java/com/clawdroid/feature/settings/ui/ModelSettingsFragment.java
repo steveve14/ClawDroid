@@ -1,35 +1,53 @@
 package com.clawdroid.feature.settings.ui;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.clawdroid.core.ai.AiProvider;
+import com.clawdroid.core.ai.AiProviderManager;
 import com.clawdroid.core.data.repository.SettingsRepository;
+import com.clawdroid.core.model.ModelInfo;
+import com.clawdroid.feature.settings.R;
 import com.clawdroid.feature.settings.databinding.FragmentModelSettingsBinding;
-import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class ModelSettingsFragment extends Fragment {
 
     private FragmentModelSettingsBinding binding;
+    private final CompositeDisposable disposables = new CompositeDisposable();
+    private final List<String> connectedProviderIds = new ArrayList<>();
 
     @Inject
     SettingsRepository settingsRepository;
+
+    @Inject
+    AiProviderManager providerManager;
 
     @Nullable
     @Override
@@ -46,185 +64,382 @@ public class ModelSettingsFragment extends Fragment {
         binding.toolbar.setNavigationOnClickListener(v ->
                 Navigation.findNavController(requireView()).navigateUp());
 
-        setupProviderCards();
+        binding.btnAddApi.setOnClickListener(v -> showAddApiDialog());
+        binding.btnAddModel.setOnClickListener(v -> showAddModelDialog());
+
+        setupFallback();
+        setupSliders();
+        refreshConnectedApis();
     }
 
-    private void setupProviderCards() {
-        LinearLayout container = new LinearLayout(requireContext());
-        container.setOrientation(LinearLayout.VERTICAL);
-        container.setPadding(24, 16, 24, 16);
+    private void refreshConnectedApis() {
+        connectedProviderIds.clear();
+        binding.connectedApiContainer.removeAllViews();
 
-        // OpenAI
-        container.addView(createProviderCard("OpenAI", "GPT-4o, GPT-4o Mini",
-                () -> showApiKeyDialog("OpenAI API Key", "openai_api_key")));
+        List<String> allIds = providerManager.getAllProviderIds();
+        List<Single<Boolean>> checks = new ArrayList<>();
+        for (String id : allIds) {
+            AiProvider provider = providerManager.getProvider(id);
+            if (provider != null) {
+                checks.add(provider.isAvailable().map(avail -> {
+                    if (avail) {
+                        synchronized (connectedProviderIds) {
+                            connectedProviderIds.add(id);
+                        }
+                    }
+                    return avail;
+                }));
+            }
+        }
 
-        // Gemini Cloud
-        container.addView(createProviderCard("Gemini Cloud", "Gemini 2.5 Flash / Pro",
-                () -> showApiKeyDialog("Gemini API Key", "gemini_api_key")));
+        if (checks.isEmpty()) {
+            updateModelSectionState();
+            return;
+        }
 
-        // Gemini Nano
-        container.addView(createProviderCard("Gemini Nano", "온디바이스 (API 키 불필요)", null));
-
-        // Ollama
-        container.addView(createProviderCard("Ollama", "로컬 서버",
-                () -> showOllamaDialog()));
-
-        // Custom Endpoint
-        container.addView(createProviderCard("Custom", "OpenAI 호환 엔드포인트",
-                () -> showCustomEndpointDialog()));
-
-        // Model Parameters section
-        container.addView(createSectionHeader("모델 파라미터"));
-        container.addView(createSlider("Temperature", 0f, 2f,
-                settingsRepository.getTemperature(),
-                v -> settingsRepository.setTemperature(v)));
-        container.addView(createSlider("Top P", 0f, 1f,
-                settingsRepository.getTopP(),
-                v -> settingsRepository.setTopP(v)));
-        container.addView(createSlider("Max Tokens", 256, 8192,
-                settingsRepository.getMaxTokens(),
-                v -> settingsRepository.setMaxTokens((int) v)));
-
-        // TTS section
-        container.addView(createSectionHeader("TTS 설정"));
-        container.addView(createProviderCard("ElevenLabs", "고품질 음성 합성",
-                () -> showApiKeyDialog("ElevenLabs API Key", "elevenlabs_api_key")));
-
-        // Wrap in ScrollView-like behavior via RecyclerView replacement
-        binding.contentContainer.addView(container);
+        disposables.add(
+                Single.zip(checks, results -> results)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(results -> {
+                            populateConnectedApis();
+                            updateModelSectionState();
+                        }, err -> updateModelSectionState())
+        );
     }
 
-    private View createProviderCard(String name, String desc, @Nullable Runnable onConfigure) {
-        LinearLayout card = new LinearLayout(requireContext());
-        card.setOrientation(LinearLayout.VERTICAL);
-        card.setPadding(24, 20, 24, 20);
-        card.setBackgroundResource(android.R.drawable.dialog_holo_light_frame);
+    private void populateConnectedApis() {
+        binding.connectedApiContainer.removeAllViews();
+
+        if (connectedProviderIds.isEmpty()) {
+            binding.tvNoApiConnected.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        binding.tvNoApiConnected.setVisibility(View.GONE);
+
+        for (String id : connectedProviderIds) {
+            AiProvider provider = providerManager.getProvider(id);
+            if (provider == null) continue;
+
+            float dp = getResources().getDisplayMetrics().density;
+
+            MaterialCardView card = new MaterialCardView(requireContext());
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.bottomMargin = (int) (8 * dp);
+            card.setLayoutParams(lp);
+            card.setCardElevation(0);
+            card.setStrokeWidth((int) dp);
+            card.setStrokeColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_outline_variant, null));
+            card.setRadius(12 * dp);
+            card.setCardBackgroundColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_surface, null));
+
+            LinearLayout inner = new LinearLayout(requireContext());
+            inner.setOrientation(LinearLayout.HORIZONTAL);
+            inner.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            int pad = (int) (16 * dp);
+            inner.setPadding(pad, pad, pad, pad);
+
+            TextView tvName = new TextView(requireContext());
+            tvName.setText(provider.getName());
+            tvName.setTextSize(16);
+            tvName.setTextColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_on_surface, null));
+            LinearLayout.LayoutParams tvLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+            tvName.setLayoutParams(tvLp);
+
+            TextView tvStatus = new TextView(requireContext());
+            tvStatus.setText("\u2713 \uc5f0\uacb0\ub428");
+            tvStatus.setTextSize(13);
+            tvStatus.setTextColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_primary, null));
+
+            inner.addView(tvName);
+            inner.addView(tvStatus);
+            card.addView(inner);
+            binding.connectedApiContainer.addView(card);
+        }
+    }
+
+    private void updateModelSectionState() {
+        boolean hasApi = !connectedProviderIds.isEmpty();
+        binding.btnAddModel.setEnabled(hasApi);
+        binding.btnAddModel.setAlpha(hasApi ? 1f : 0.5f);
+        binding.tvModelDisabled.setVisibility(hasApi ? View.GONE : View.VISIBLE);
+        binding.modelListContainer.setVisibility(hasApi ? View.VISIBLE : View.GONE);
+
+        if (hasApi) {
+            loadSelectedModel();
+        }
+    }
+
+    private void loadSelectedModel() {
+        String activeProvider = settingsRepository.getActiveProvider();
+        if (activeProvider == null || activeProvider.isEmpty()) return;
+
+        binding.modelListContainer.removeAllViews();
+        AiProvider provider = providerManager.getProvider(activeProvider);
+        if (provider == null) return;
+
+        MaterialCardView card = createModelCard(provider.getName(), "\ud65c\uc131 \ubaa8\ub378", true);
+        binding.modelListContainer.addView(card);
+    }
+
+    private void showAddModelDialog() {
+        if (connectedProviderIds.isEmpty()) {
+            Toast.makeText(requireContext(), "API\ub97c \uba3c\uc800 \uc5f0\uacb0\ud574\uc8fc\uc138\uc694.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        List<Single<List<ModelInfo>>> modelQueries = new ArrayList<>();
+        List<String> providerLabels = new ArrayList<>();
+
+        for (String id : connectedProviderIds) {
+            AiProvider provider = providerManager.getProvider(id);
+            if (provider != null) {
+                modelQueries.add(provider.listModels());
+                providerLabels.add(provider.getName());
+            }
+        }
+
+        disposables.add(
+                Single.zip(modelQueries, results -> {
+                    List<String[]> items = new ArrayList<>();
+                    for (int i = 0; i < results.length; i++) {
+                        @SuppressWarnings("unchecked")
+                        List<ModelInfo> models = (List<ModelInfo>) results[i];
+                        String provName = providerLabels.get(i);
+                        String provId = connectedProviderIds.get(i);
+                        for (ModelInfo m : models) {
+                            items.add(new String[]{provName + " - " + m.getName(), provId});
+                        }
+                    }
+                    return items;
+                })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(items -> {
+                            if (items.isEmpty()) {
+                                Toast.makeText(requireContext(), "\uc0ac\uc6a9 \uac00\ub2a5\ud55c \ubaa8\ub378\uc774 \uc5c6\uc2b5\ub2c8\ub2e4.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String[] names = new String[items.size()];
+                            for (int i = 0; i < items.size(); i++) {
+                                names[i] = items.get(i)[0];
+                            }
+                            new MaterialAlertDialogBuilder(requireContext())
+                                    .setTitle("\ubaa8\ub378 \uc120\ud0dd")
+                                    .setItems(names, (dlg, which) -> {
+                                        String selectedProvider = items.get(which)[1];
+                                        settingsRepository.setActiveProvider(selectedProvider);
+                                        loadSelectedModel();
+                                        Toast.makeText(requireContext(), names[which] + " \uc120\ud0dd\ub428", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .setNegativeButton("\ucde8\uc18c", null)
+                                    .show();
+                        }, err -> Toast.makeText(requireContext(), "\ubaa8\ub378 \ubaa9\ub85d \ub85c\ub4dc \uc2e4\ud328", Toast.LENGTH_SHORT).show())
+        );
+    }
+
+    private MaterialCardView createModelCard(String name, String subtitle, boolean active) {
+        float dp = getResources().getDisplayMetrics().density;
+
+        MaterialCardView card = new MaterialCardView(requireContext());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 8, 0, 8);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.bottomMargin = (int) (8 * dp);
         card.setLayoutParams(lp);
+        card.setCardElevation(0);
+        card.setStrokeWidth((int) dp);
+        card.setStrokeColor(getResources().getColor(
+                active ? com.clawdroid.core.ui.R.color.md_primary : com.clawdroid.core.ui.R.color.md_outline_variant, null));
+        card.setRadius(12 * dp);
+        card.setCardBackgroundColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_surface, null));
+
+        LinearLayout inner = new LinearLayout(requireContext());
+        inner.setOrientation(LinearLayout.VERTICAL);
+        int pad = (int) (16 * dp);
+        inner.setPadding(pad, pad, pad, pad);
 
         TextView tvName = new TextView(requireContext());
         tvName.setText(name);
-        tvName.setTextSize(16);
-        tvName.setTextColor(0xFF000000);
-        card.addView(tvName);
+        tvName.setTextSize(15);
+        tvName.setTextColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_on_surface, null));
 
-        TextView tvDesc = new TextView(requireContext());
-        tvDesc.setText(desc);
-        tvDesc.setTextSize(12);
-        tvDesc.setTextColor(0xFF888888);
-        card.addView(tvDesc);
+        TextView tvSub = new TextView(requireContext());
+        tvSub.setText(subtitle);
+        tvSub.setTextSize(13);
+        tvSub.setTextColor(getResources().getColor(com.clawdroid.core.ui.R.color.md_on_surface_variant, null));
 
-        if (onConfigure != null) {
-            card.setOnClickListener(v -> onConfigure.run());
-        }
-
+        inner.addView(tvName);
+        inner.addView(tvSub);
+        card.addView(inner);
         return card;
     }
 
-    private View createSectionHeader(String title) {
-        TextView tv = new TextView(requireContext());
-        tv.setText(title);
-        tv.setTextSize(14);
-        tv.setTextColor(0xFF6200EE);
-        tv.setPadding(0, 32, 0, 8);
-        return tv;
-    }
+    private void showAddApiDialog() {
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_add_api, null);
 
-    private View createSlider(String label, float min, float max, float current,
-                              SliderCallback callback) {
-        LinearLayout row = new LinearLayout(requireContext());
-        row.setOrientation(LinearLayout.VERTICAL);
-        row.setPadding(0, 8, 0, 8);
+        LinearLayout stepProvider = dialogView.findViewById(R.id.stepSelectProvider);
+        LinearLayout stepApiKey = dialogView.findViewById(R.id.stepApiKey);
+        LinearLayout stepResult = dialogView.findViewById(R.id.stepTestResult);
+        RadioGroup rgProvider = dialogView.findViewById(R.id.rgProvider);
+        TextInputEditText etApiKey = dialogView.findViewById(R.id.etDialogApiKey);
+        TextInputEditText etEndpoint = dialogView.findViewById(R.id.etDialogEndpoint);
+        View tilEndpoint = dialogView.findViewById(R.id.tilDialogEndpoint);
+        TextView tvTitle = dialogView.findViewById(R.id.tvApiDialogTitle);
+        View progressTest = dialogView.findViewById(R.id.progressTest);
+        TextView tvTestStatus = dialogView.findViewById(R.id.tvTestStatus);
+        TextView tvTestDetail = dialogView.findViewById(R.id.tvTestDetail);
 
-        TextView tvLabel = new TextView(requireContext());
-        tvLabel.setText(label + ": " + String.format("%.2f", current));
-        row.addView(tvLabel);
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
+                .setView(dialogView)
+                .setPositiveButton("\ub2e4\uc74c", null)
+                .setNegativeButton("\ucde8\uc18c", null)
+                .create();
 
-        Slider slider = new Slider(requireContext());
-        slider.setValueFrom(min);
-        slider.setValueTo(max);
-        slider.setValue(Math.min(Math.max(current, min), max));
-        slider.addOnChangeListener((s, value, fromUser) -> {
-            if (fromUser) {
-                tvLabel.setText(label + ": " + String.format("%.2f", value));
-                callback.onChanged(value);
-            }
-        });
-        row.addView(slider);
+        dialog.show();
 
-        return row;
-    }
+        final String[] selectedProviderId = {null};
+        final int[] currentStep = {1};
 
-    private void showApiKeyDialog(String title, String prefKey) {
-        EditText input = new EditText(requireContext());
-        input.setHint("API Key 입력...");
-        input.setPadding(40, 20, 40, 20);
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            if (currentStep[0] == 1) {
+                int checkedId = rgProvider.getCheckedRadioButtonId();
+                if (checkedId == R.id.rbProviderOpenAi) {
+                    selectedProviderId[0] = "openai";
+                    tvTitle.setText("OpenAI API Key \uc785\ub825");
+                    tilEndpoint.setVisibility(View.GONE);
+                } else if (checkedId == R.id.rbProviderGemini) {
+                    selectedProviderId[0] = "gemini-cloud";
+                    tvTitle.setText("Gemini API Key \uc785\ub825");
+                    tilEndpoint.setVisibility(View.GONE);
+                } else if (checkedId == R.id.rbProviderOllama) {
+                    selectedProviderId[0] = "ollama";
+                    tvTitle.setText("Ollama \uc124\uc815");
+                    tilEndpoint.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.rbProviderCustom) {
+                    selectedProviderId[0] = "custom";
+                    tvTitle.setText("Custom API \uc124\uc815");
+                    tilEndpoint.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(requireContext(), "\ud504\ub85c\ubc14\uc774\ub354\ub97c \uc120\ud0dd\ud574\uc8fc\uc138\uc694.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle(title)
-                .setView(input)
-                .setPositiveButton("저장", (d, w) -> {
-                    String key = input.getText().toString().trim();
-                    if (!key.isEmpty()) {
-                        settingsRepository.saveApiKey(prefKey, key);
-                    }
-                })
-                .setNegativeButton("취소", null)
-                .show();
-    }
+                stepProvider.setVisibility(View.GONE);
+                stepApiKey.setVisibility(View.VISIBLE);
+                currentStep[0] = 2;
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText("\uc5f0\uacb0 \ud14c\uc2a4\ud2b8");
 
-    private void showOllamaDialog() {
-        EditText input = new EditText(requireContext());
-        input.setHint("http://localhost:11434");
-        input.setText(settingsRepository.getOllamaEndpoint());
-        input.setPadding(40, 20, 40, 20);
+            } else if (currentStep[0] == 2) {
+                String apiKey = etApiKey.getText() != null ? etApiKey.getText().toString().trim() : "";
+                if (apiKey.isEmpty() && !"ollama".equals(selectedProviderId[0])) {
+                    Toast.makeText(requireContext(), "API Key\ub97c \uc785\ub825\ud574\uc8fc\uc138\uc694.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Ollama 서버 설정")
-                .setView(input)
-                .setPositiveButton("저장", (d, w) -> {
-                    String endpoint = input.getText().toString().trim();
+                if (!apiKey.isEmpty()) {
+                    settingsRepository.saveApiKey(selectedProviderId[0], apiKey);
+                }
+
+                if (tilEndpoint.getVisibility() == View.VISIBLE) {
+                    String endpoint = etEndpoint.getText() != null ? etEndpoint.getText().toString().trim() : "";
                     if (!endpoint.isEmpty()) {
                         settingsRepository.setOllamaEndpoint(endpoint);
                     }
-                })
-                .setNegativeButton("취소", null)
-                .show();
+                }
+
+                stepApiKey.setVisibility(View.GONE);
+                stepResult.setVisibility(View.VISIBLE);
+                progressTest.setVisibility(View.VISIBLE);
+                tvTestStatus.setText("\uc5f0\uacb0 \ud14c\uc2a4\ud2b8 \uc911...");
+                tvTestDetail.setText("");
+                currentStep[0] = 3;
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText("\uc644\ub8cc");
+
+                AiProvider provider = providerManager.getProvider(selectedProviderId[0]);
+                if (provider != null) {
+                    disposables.add(
+                            provider.isAvailable()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(available -> {
+                                        progressTest.setVisibility(View.GONE);
+                                        if (available) {
+                                            tvTestStatus.setText("\u2713 \uc5f0\uacb0 \uc131\uacf5!");
+                                            tvTestDetail.setText(provider.getName() + " \uc5f0\uacb0\uc774 \ud655\uc778\ub418\uc5c8\uc2b5\ub2c8\ub2e4.");
+                                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                        } else {
+                                            tvTestStatus.setText("\u2717 \uc5f0\uacb0 \uc2e4\ud328");
+                                            tvTestDetail.setText("API \ud0a4 \ub610\ub294 \uc5d4\ub4dc\ud3ec\uc778\ud2b8\ub97c \ud655\uc778\ud574\uc8fc\uc138\uc694.");
+                                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                        }
+                                    }, err -> {
+                                        progressTest.setVisibility(View.GONE);
+                                        tvTestStatus.setText("\u2717 \uc5f0\uacb0 \uc2e4\ud328");
+                                        tvTestDetail.setText(err.getMessage() != null ? err.getMessage() : "\uc54c \uc218 \uc5c6\ub294 \uc624\ub958");
+                                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                                    })
+                    );
+                }
+
+            } else if (currentStep[0] == 3) {
+                dialog.dismiss();
+                refreshConnectedApis();
+            }
+        });
     }
 
-    private void showCustomEndpointDialog() {
-        LinearLayout layout = new LinearLayout(requireContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(40, 20, 40, 20);
+    private void setupFallback() {
+        binding.switchFallback.setChecked(settingsRepository.isFallbackEnabled());
+        binding.switchFallback.setOnCheckedChangeListener((btn, checked) ->
+                settingsRepository.setFallbackEnabled(checked));
+    }
 
-        EditText etUrl = new EditText(requireContext());
-        etUrl.setHint("엔드포인트 URL");
-        layout.addView(etUrl);
+    private void setupSliders() {
+        float temp = settingsRepository.getTemperature();
+        float topP = settingsRepository.getTopP();
+        int maxTokens = settingsRepository.getMaxTokens();
 
-        EditText etKey = new EditText(requireContext());
-        etKey.setHint("API Key (선택)");
-        layout.addView(etKey);
+        binding.sliderTemperature.setValue(snapToStep(Math.max(0f, Math.min(2f, temp)), 0.05f));
+        binding.tvTemperature.setText(String.format("Temperature: %.2f", temp));
+        binding.sliderTemperature.addOnChangeListener((s, value, fromUser) -> {
+            if (fromUser) {
+                binding.tvTemperature.setText(String.format("Temperature: %.2f", value));
+                settingsRepository.setTemperature(value);
+            }
+        });
 
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Custom 엔드포인트 설정")
-                .setView(layout)
-                .setPositiveButton("저장", (d, w) -> {
-                    settingsRepository.saveApiKey("custom_endpoint", etUrl.getText().toString().trim());
-                    settingsRepository.saveApiKey("custom_api_key", etKey.getText().toString().trim());
-                })
-                .setNegativeButton("취소", null)
-                .show();
+        binding.sliderTopP.setValue(snapToStep(Math.max(0f, Math.min(1f, topP)), 0.05f));
+        binding.tvTopP.setText(String.format("Top P: %.2f", topP));
+        binding.sliderTopP.addOnChangeListener((s, value, fromUser) -> {
+            if (fromUser) {
+                binding.tvTopP.setText(String.format("Top P: %.2f", value));
+                settingsRepository.setTopP(value);
+            }
+        });
+
+        float tokenVal = snapToStep(Math.max(256, Math.min(8192, maxTokens)), 256f);
+        binding.sliderMaxTokens.setValue(tokenVal);
+        binding.tvMaxTokens.setText(String.format("Max Tokens: %d", maxTokens));
+        binding.sliderMaxTokens.addOnChangeListener((s, value, fromUser) -> {
+            if (fromUser) {
+                binding.tvMaxTokens.setText(String.format("Max Tokens: %d", (int) value));
+                settingsRepository.setMaxTokens((int) value);
+            }
+        });
+    }
+
+    private float snapToStep(float value, float step) {
+        return Math.round(value / step) * step;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        disposables.clear();
         binding = null;
-    }
-
-    private interface SliderCallback {
-        void onChanged(float value);
     }
 }

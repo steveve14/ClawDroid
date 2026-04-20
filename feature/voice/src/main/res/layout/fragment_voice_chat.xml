@@ -56,15 +56,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Pulse background -->
-        <View
-            android:id="@+id/pulseBackground"
-            android:layout_width="@dimen/voice_orb_pulse_size"
-            android:layout_height="@dimen/voice_orb_pulse_size"
-            android:layout_gravity="center"
-            android:alpha="0.3"
-            android:background="@drawable/bg_gradient_primary_circle" />
-
         <!-- Main orb -->
         <View
             android:id="@+id/ivMic"
@@ -190,7 +181,7 @@
                 android:layout_width="@dimen/icon_md"
                 android:layout_height="@dimen/icon_md"
                 android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_manage"
+                android:src="@drawable/ic_settings_gear"
                 android:contentDescription="settings" />
 
         </FrameLayout>

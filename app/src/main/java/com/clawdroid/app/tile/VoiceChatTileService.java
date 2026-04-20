@@ -1,5 +1,6 @@
 package com.clawdroid.app.tile;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
@@ -21,6 +22,7 @@ public class VoiceChatTileService extends TileService {
         }
     }
 
+    @SuppressLint("StartActivityAndCollapseDeprecated")
     @SuppressWarnings("deprecation")
     @Override
     public void onClick() {

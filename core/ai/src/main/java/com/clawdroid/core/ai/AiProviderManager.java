@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -18,6 +19,8 @@ import io.reactivex.rxjava3.core.Single;
 
 @Singleton
 public class AiProviderManager {
+
+    private static final int MAX_RETRY_COUNT = 10;
 
     private final Map<String, AiProvider> providers;
     private final SettingsRepository settingsRepository;
@@ -29,14 +32,65 @@ public class AiProviderManager {
         this.settingsRepository = settingsRepository;
     }
 
+    public Single<Boolean> isAnyProviderAvailable() {
+        return buildProviderChain()
+                .map(chain -> !chain.isEmpty());
+    }
+
     public Observable<String> generateStream(AiRequest request) {
         return buildProviderChain()
-                .flatMapObservable(chain -> tryProviders(chain, request));
+                .flatMapObservable(chain -> {
+                    if (chain.isEmpty()) {
+                        return Observable.error(
+                                new AiProviderException("AI 프로바이더가 연결되지 않았습니다. API 키를 설정해주세요."));
+                    }
+                    return tryProviders(chain, request);
+                })
+                .retryWhen(errors -> errors.zipWith(
+                        Observable.range(1, MAX_RETRY_COUNT),
+                        (error, retryCount) -> {
+                            if (retryCount >= MAX_RETRY_COUNT) {
+                                throw new RuntimeException(
+                                        new AiProviderException("최대 재시도 횟수(" + MAX_RETRY_COUNT + "회)를 초과했습니다."));
+                            }
+                            if (error instanceof AiProviderException &&
+                                    error.getMessage() != null &&
+                                    error.getMessage().contains("연결되지 않았습니다")) {
+                                throw new RuntimeException(error);
+                            }
+                            return retryCount;
+                        })
+                        .flatMap(retryCount ->
+                                Observable.timer(Math.min(retryCount * 2L, 10), TimeUnit.SECONDS))
+                );
     }
 
     public Single<AiResponse> generate(AiRequest request) {
         return buildProviderChain()
-                .flatMap(chain -> tryProvidersSync(chain, request));
+                .flatMap(chain -> {
+                    if (chain.isEmpty()) {
+                        return Single.error(
+                                new AiProviderException("AI 프로바이더가 연결되지 않았습니다. API 키를 설정해주세요."));
+                    }
+                    return tryProvidersSync(chain, request);
+                })
+                .retryWhen(errors -> errors.zipWith(
+                        io.reactivex.rxjava3.core.Flowable.range(1, MAX_RETRY_COUNT),
+                        (error, retryCount) -> {
+                            if (retryCount >= MAX_RETRY_COUNT) {
+                                throw new RuntimeException(
+                                        new AiProviderException("최대 재시도 횟수(" + MAX_RETRY_COUNT + "회)를 초과했습니다."));
+                            }
+                            if (error instanceof AiProviderException &&
+                                    error.getMessage() != null &&
+                                    error.getMessage().contains("연결되지 않았습니다")) {
+                                throw new RuntimeException(error);
+                            }
+                            return retryCount;
+                        })
+                        .flatMap(retryCount ->
+                                io.reactivex.rxjava3.core.Flowable.timer(Math.min(retryCount * 2L, 10), TimeUnit.SECONDS))
+                );
     }
 
     public Single<AiProvider> getActiveProvider() {
@@ -48,6 +102,14 @@ public class AiProviderManager {
                     }
                     return Single.just(chain.get(0));
                 });
+    }
+
+    public AiProvider getProvider(String id) {
+        return providers.get(id);
+    }
+
+    public List<String> getAllProviderIds() {
+        return new ArrayList<>(providers.keySet());
     }
 
     private Single<List<AiProvider>> buildProviderChain() {

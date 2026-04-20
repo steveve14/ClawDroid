@@ -159,4 +159,22 @@ public class SettingsRepository {
     public void setWakeWordEnabled(boolean enabled) {
         prefs.edit().putBoolean("wake_word_enabled", enabled).apply();
     }
+
+    // Active provider shortcut
+    public String getActiveProvider() {
+        return getDefaultModelProvider();
+    }
+
+    public void setActiveProvider(String providerId) {
+        setDefaultModelProvider(providerId);
+    }
+
+    // Fallback settings
+    public boolean isFallbackEnabled() {
+        return prefs.getBoolean("fallback_enabled", true);
+    }
+
+    public void setFallbackEnabled(boolean enabled) {
+        prefs.edit().putBoolean("fallback_enabled", enabled).apply();
+    }
 }

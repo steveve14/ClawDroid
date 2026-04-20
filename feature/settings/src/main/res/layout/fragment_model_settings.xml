@@ -13,7 +13,7 @@
         android:layout_height="@dimen/toolbar_height"
         android:background="@color/surface_80"
         android:elevation="0dp"
-        app:navigationIcon="@android:drawable/ic_menu_revert"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:navigationIconTint="@color/md_on_surface" />
 
     <androidx.core.widget.NestedScrollView
@@ -29,11 +29,10 @@
             android:paddingHorizontal="@dimen/spacing_lg"
             android:paddingBottom="@dimen/spacing_2xl">
 
-            <!-- Title -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AI Models"
+                android:text="AI 모델 설정"
                 android:textSize="@dimen/text_3xl"
                 android:textStyle="bold"
                 android:textColor="@color/md_on_surface"
@@ -42,10 +41,261 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select and configure AI providers"
+                android:text="AI 프로바이더와 모델을 관리합니다"
                 android:textSize="@dimen/text_base"
                 android:textColor="@color/md_on_surface_variant"
                 android:layout_marginTop="@dimen/spacing_xs" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:background="@drawable/bg_card_ghost_large"
+                android:padding="@dimen/spacing_lg">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_md">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@android:drawable/ic_lock_idle_lock"
+                        app:tint="@color/md_primary" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="연결된 API"
+                        android:textSize="@dimen/text_xl"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface"
+                        android:layout_marginStart="@dimen/spacing_sm" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAddApi"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="+ API 추가"
+                        android:textSize="@dimen/text_sm"
+                        app:cornerRadius="@dimen/radius_lg" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/connectedApiContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/tvNoApiConnected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="연결된 API가 없습니다.\nAPI 추가 버튼을 눌러 프로바이더를 연결하세요."
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_lg" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sectionModelSelection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:background="@drawable/bg_card_ghost_large"
+                android:padding="@dimen/spacing_lg">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_md">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_settings_gear"
+                        app:tint="@color/md_primary" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="모델 선택"
+                        android:textSize="@dimen/text_xl"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface"
+                        android:layout_marginStart="@dimen/spacing_sm" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAddModel"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="+ 모델 추가"
+                        android:textSize="@dimen/text_sm"
+                        app:cornerRadius="@dimen/radius_lg" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/modelListContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/tvModelDisabled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="API를 먼저 연결해야 모델을 선택할 수 있습니다."
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_lg" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:background="@drawable/bg_card_ghost_large"
+                android:padding="@dimen/spacing_lg">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_sm">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_rotate"
+                        app:tint="@color/md_secondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="폴백"
+                        android:textSize="@dimen/text_lg"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_on_surface"
+                        android:layout_marginStart="@dimen/spacing_sm" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="클라우드 연결 실패 시 로컬 모델로 자동 전환합니다."
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_surface_container_low"
+                    android:padding="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="폴백 활성화"
+                        android:textSize="@dimen/text_base"
+                        android:textColor="@color/md_on_surface" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchFallback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:background="@drawable/bg_card_ghost_large"
+                android:padding="@dimen/spacing_lg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="모델 파라미터"
+                    android:textSize="@dimen/text_lg"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_on_surface"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <TextView
+                    android:id="@+id/tvTemperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature: 0.70"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/md_on_surface_variant" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderTemperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0.0"
+                    android:valueTo="2.0"
+                    android:stepSize="0.05" />
+
+                <TextView
+                    android:id="@+id/tvTopP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Top P: 0.90"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:layout_marginTop="@dimen/spacing_sm" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderTopP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0.0"
+                    android:valueTo="1.0"
+                    android:stepSize="0.05" />
+
+                <TextView
+                    android:id="@+id/tvMaxTokens"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Max Tokens: 4096"
+                    android:textSize="@dimen/text_sm"
+                    android:textColor="@color/md_on_surface_variant"
+                    android:layout_marginTop="@dimen/spacing_sm" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/sliderMaxTokens"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="256"
+                    android:valueTo="8192"
+                    android:stepSize="256" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

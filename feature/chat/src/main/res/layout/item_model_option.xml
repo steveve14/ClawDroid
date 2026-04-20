@@ -20,7 +20,7 @@
             android:id="@+id/ivProviderIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@android:drawable/ic_menu_manage"
+            android:src="@drawable/ic_settings_gear"
             android:contentDescription="provider icon" />
 
         <LinearLayout

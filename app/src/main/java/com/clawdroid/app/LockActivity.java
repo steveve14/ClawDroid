@@ -149,9 +149,10 @@ public class LockActivity extends AppCompatActivity {
         biometricPrompt.authenticate(promptInfo);
     }
 
+    @SuppressWarnings("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        // Prevent back button from bypassing lock
+        // Prevent back button from bypassing lock — intentionally not calling super
         finishAffinity();
     }
 }

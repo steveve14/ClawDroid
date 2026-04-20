@@ -28,7 +28,7 @@
                 android:layout_width="@dimen/icon_md"
                 android:layout_height="@dimen/icon_md"
                 android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_manage"
+                android:src="@drawable/ic_settings_gear"
                 android:contentDescription="tool" />
 
         </FrameLayout>
