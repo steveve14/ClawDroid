@@ -98,7 +98,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Generating..."
+            android:text="생성 중..."
             android:textSize="@dimen/text_sm"
             android:textColor="@color/md_on_surface_variant"
             android:layout_marginStart="8dp" />
@@ -148,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginHorizontal="@dimen/spacing_sm"
-            android:hint="Message ClawDroid..."
+            android:hint="메시지를 입력하세요..."
             android:maxLines="5"
             android:inputType="textMultiLine"
             android:background="@android:color/transparent"

@@ -61,6 +61,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_search"
                 android:contentDescription="검색"
+                app:tint="@color/md_primary_container"
                 android:padding="8dp" />
 
             <!-- New Chat -->
@@ -72,6 +73,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_input_add"
                 android:contentDescription="새 채팅"
+                app:tint="@color/md_primary_container"
                 android:padding="8dp" />
 
         </LinearLayout>
@@ -83,7 +85,7 @@
         android:id="@+id/searchBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Search chats..."
+        android:hint="채팅 검색..."
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +139,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="The Ethereal Intelligence"
+            android:text="아직 대화가 없어요"
             android:textSize="@dimen/text_2xl"
             android:textStyle="bold"
             android:textColor="@color/md_on_surface"
@@ -148,7 +150,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start a conversation to explore\nthe boundaries of intelligence."
+            android:text="새로운 대화를 시작해
+지능의 경계를 탐험해보세요."
             android:textSize="@dimen/text_md"
             android:textColor="@color/md_on_surface_variant"
             android:gravity="center"
@@ -157,7 +160,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Conversation"
+            android:text="대화 시작"
             android:textSize="@dimen/text_base"
             android:textStyle="bold"
             android:textColor="@color/md_on_primary"

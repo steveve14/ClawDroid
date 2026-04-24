@@ -45,4 +45,19 @@ public final class Migrations {
                 + "VALUES (NEW.rowid, NEW.content, NEW.conversation_id); END");
         }
     };
+
+    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL(
+                "CREATE TABLE IF NOT EXISTS personas ("
+                + "id TEXT NOT NULL PRIMARY KEY, "
+                + "name TEXT NOT NULL, "
+                + "system_prompt TEXT, "
+                + "conversation_style TEXT, "
+                + "is_active INTEGER NOT NULL DEFAULT 0, "
+                + "created_at INTEGER NOT NULL DEFAULT 0)"
+            );
+        }
+    };
 }

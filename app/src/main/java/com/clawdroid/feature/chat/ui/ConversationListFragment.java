@@ -6,6 +6,8 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -16,11 +18,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.clawdroid.core.data.db.entity.ConversationEntity;
+import com.clawdroid.core.data.db.entity.PersonaEntity;
 import com.clawdroid.app.R;
 import com.clawdroid.feature.chat.adapter.ConversationAdapter;
 import com.clawdroid.app.databinding.FragmentConversationListBinding;
 import com.clawdroid.feature.chat.viewmodel.ConversationListViewModel;
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -168,27 +170,52 @@ public class ConversationListFragment extends Fragment {
                 .inflate(R.layout.dialog_new_conversation, null);
 
         TextInputEditText etChatName = dialogView.findViewById(R.id.etChatName);
-        MaterialCheckBox cbPersona = dialogView.findViewById(R.id.cbPersona);
+        AutoCompleteTextView actvPersona = dialogView.findViewById(R.id.actvPersona);
 
-        // 페르소나 이름을 체크박스 라벨에 동적 설정
-        String personaName = viewModel.getPersonaName();
-        cbPersona.setText("\ud398\ub974\uc18c\ub098 \uc801\uc6a9 (" + personaName + ")");
+        // 페르소나 목록 구성 (없음 + 등록된 페르소나들)
+        java.util.List<PersonaEntity> personaList = viewModel.getPersonas().getValue();
+        String[] personaNames;
+        int activeIndex = 0;
+        if (personaList == null || personaList.isEmpty()) {
+            personaNames = new String[]{"없음"};
+        } else {
+            personaNames = new String[personaList.size() + 1];
+            personaNames[0] = "없음";
+            for (int i = 0; i < personaList.size(); i++) {
+                personaNames[i + 1] = personaList.get(i).getName();
+                if (personaList.get(i).isActive()) activeIndex = i + 1;
+            }
+        }
 
-        etChatName.setText("\uc0c8 \ub300\ud654");
+        ArrayAdapter<String> personaAdapter = new ArrayAdapter<>(
+                requireContext(), android.R.layout.simple_dropdown_item_1line, personaNames);
+        actvPersona.setAdapter(personaAdapter);
+        actvPersona.setText(personaNames[activeIndex], false);
+
+        etChatName.setText("새 대화");
         etChatName.selectAll();
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("\uc0c8 \uccb4\ud305 \ub9cc\ub4e4\uae30")
+                .setTitle("새 체팅 만들기")
                 .setView(dialogView)
-                .setPositiveButton("\uc2dc\uc791", (d, w) -> {
+                .setPositiveButton("시작", (d, w) -> {
                     String title = etChatName.getText() != null
                             ? etChatName.getText().toString().trim() : "";
-                    if (title.isEmpty()) title = "\uc0c8 \ub300\ud654";
-                    String systemPrompt = cbPersona.isChecked()
-                            ? viewModel.getPersonaSystemPrompt() : null;
+                    if (title.isEmpty()) title = "새 대화";
+
+                    String selected = actvPersona.getText().toString();
+                    String systemPrompt = null;
+                    if (!"없음".equals(selected) && personaList != null) {
+                        for (PersonaEntity p : personaList) {
+                            if (p.getName().equals(selected)) {
+                                systemPrompt = p.getSystemPrompt();
+                                break;
+                            }
+                        }
+                    }
                     viewModel.createNewConversation(title, null, null, systemPrompt);
                 })
-                .setNegativeButton("\ucde8\uc18c", null)
+                .setNegativeButton("취소", null)
                 .show();
     }
 

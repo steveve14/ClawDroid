@@ -12,6 +12,9 @@ import androidx.navigation.Navigation;
 
 import com.clawdroid.app.R;
 import com.clawdroid.app.databinding.FragmentSettingsBinding;
+import com.clawdroid.core.data.repository.SettingsRepository;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -19,6 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
+
+    @Inject
+    SettingsRepository settingsRepository;
 
     @Nullable
     @Override
@@ -44,10 +50,6 @@ public class SettingsFragment extends Fragment {
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_settings_to_securitySettings));
 
-        binding.btnApiKeys.setOnClickListener(v ->
-                Navigation.findNavController(requireView())
-                        .navigate(R.id.action_settings_to_modelSettings));
-
         binding.btnToolSettings.setOnClickListener(v -> {
             Navigation.findNavController(requireView())
                     .navigate(R.id.action_settings_to_toolSettings);
@@ -56,6 +58,13 @@ public class SettingsFragment extends Fragment {
         binding.btnAbout.setOnClickListener(v ->
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_settings_to_about));
+
+        binding.btnLanguageSettings.setOnClickListener(v ->
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.action_settings_to_languageSettings));
+
+        String lang = settingsRepository.getAppLanguage();
+        binding.tvCurrentLanguage.setText(getString("en".equals(lang) ? R.string.language_english : R.string.language_korean));
     }
 
     @Override

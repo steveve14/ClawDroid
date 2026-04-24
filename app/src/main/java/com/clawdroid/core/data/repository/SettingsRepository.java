@@ -101,7 +101,7 @@ public class SettingsRepository {
         prefs.edit().putString("ollama_endpoint", endpoint).apply();
     }
 
-    // Model parameter settings
+    // Model parameter settings (global defaults)
     public float getTemperature() {
         return prefs.getFloat("model_temperature", 0.7f);
     }
@@ -124,6 +124,36 @@ public class SettingsRepository {
 
     public void setMaxTokens(int maxTokens) {
         prefs.edit().putInt("model_max_tokens", maxTokens).apply();
+    }
+
+    // Per-model parameter settings (fall back to global defaults)
+    public String buildModelKey(String providerId, String modelId) {
+        String key = (providerId != null ? providerId : "") + "_" + (modelId != null ? modelId : "");
+        return key.replaceAll("[^a-zA-Z0-9_\\-]", "_");
+    }
+
+    public float getTemperatureForModel(String modelKey) {
+        return prefs.getFloat("model_temperature_" + modelKey, getTemperature());
+    }
+
+    public void setTemperatureForModel(String modelKey, float temperature) {
+        prefs.edit().putFloat("model_temperature_" + modelKey, temperature).apply();
+    }
+
+    public float getTopPForModel(String modelKey) {
+        return prefs.getFloat("model_top_p_" + modelKey, getTopP());
+    }
+
+    public void setTopPForModel(String modelKey, float topP) {
+        prefs.edit().putFloat("model_top_p_" + modelKey, topP).apply();
+    }
+
+    public int getMaxTokensForModel(String modelKey) {
+        return prefs.getInt("model_max_tokens_" + modelKey, getMaxTokens());
+    }
+
+    public void setMaxTokensForModel(String modelKey, int maxTokens) {
+        prefs.edit().putInt("model_max_tokens_" + modelKey, maxTokens).apply();
     }
 
     // TTS settings
@@ -185,5 +215,34 @@ public class SettingsRepository {
 
     public void setFallbackEnabled(boolean enabled) {
         prefs.edit().putBoolean("fallback_enabled", enabled).apply();
+    }
+
+    // App language settings ("ko" or "en")
+    public String getAppLanguage() {
+        return prefs.getString("app_language", "ko");
+    }
+
+    public void setAppLanguage(String languageTag) {
+        prefs.edit().putString("app_language", languageTag).apply();
+    }
+
+    // Added models list (providerId|modelId entries)
+    public java.util.Set<String> getAddedModels() {
+        java.util.Set<String> stored = prefs.getStringSet("added_models", null);
+        if (stored == null) return new java.util.LinkedHashSet<>();
+        return new java.util.LinkedHashSet<>(stored);
+    }
+
+    public void addModel(String providerId, String modelId) {
+        if (providerId == null || providerId.isEmpty()) return;
+        java.util.Set<String> current = new java.util.LinkedHashSet<>(getAddedModels());
+        current.add(providerId + "|" + (modelId == null ? "" : modelId));
+        prefs.edit().putStringSet("added_models", current).apply();
+    }
+
+    public void removeModel(String providerId, String modelId) {
+        java.util.Set<String> current = new java.util.LinkedHashSet<>(getAddedModels());
+        current.remove(providerId + "|" + (modelId == null ? "" : modelId));
+        prefs.edit().putStringSet("added_models", current).apply();
     }
 }

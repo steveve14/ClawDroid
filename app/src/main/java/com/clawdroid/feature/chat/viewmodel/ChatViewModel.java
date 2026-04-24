@@ -303,8 +303,13 @@ public class ChatViewModel extends ViewModel {
         status.append("- 모델: ").append(conv != null && conv.getModelId() != null ? conv.getModelId() : "기본").append("\n");
         status.append("- 프로바이더: ").append(conv != null && conv.getModelProvider() != null ? conv.getModelProvider() : "기본").append("\n");
         status.append("- Think 레벨: ").append(thinkLevel).append("\n");
-        status.append("- Temperature: ").append(settingsRepository.getTemperature()).append("\n");
-        status.append("- Max Tokens: ").append(settingsRepository.getMaxTokens()).append("\n");
+        ConversationEntity convForStatus = conversation.getValue();
+        String provForStatus = convForStatus != null ? convForStatus.getModelProvider() : settingsRepository.getActiveProvider();
+        String midForStatus = convForStatus != null ? convForStatus.getModelId() : null;
+        if (midForStatus == null && provForStatus != null) midForStatus = settingsRepository.getDefaultModelId(provForStatus);
+        String mkForStatus = settingsRepository.buildModelKey(provForStatus, midForStatus);
+        status.append("- Temperature: ").append(settingsRepository.getTemperatureForModel(mkForStatus)).append("\n");
+        status.append("- Max Tokens: ").append(settingsRepository.getMaxTokensForModel(mkForStatus)).append("\n");
 
         // Add as a system-style message by saving as assistant message
         disposables.add(
@@ -377,11 +382,17 @@ public class ChatViewModel extends ViewModel {
         List<AiMessage> history = buildHistory();
         List<AiMessage> prompt = promptBuilder.build(systemPrompt, history, userMessage, null);
 
+        String modelProvider = conv != null ? conv.getModelProvider() : settingsRepository.getActiveProvider();
+        String modelId2 = conv != null ? conv.getModelId() : null;
+        if (modelId2 == null && modelProvider != null) {
+            modelId2 = settingsRepository.getDefaultModelId(modelProvider);
+        }
+        String modelKey = settingsRepository.buildModelKey(modelProvider, modelId2);
         AiConfig config = new AiConfig(
-                settingsRepository.getTemperature(),
-                settingsRepository.getTopP(),
+                settingsRepository.getTemperatureForModel(modelKey),
+                settingsRepository.getTopPForModel(modelKey),
                 40,
-                settingsRepository.getMaxTokens());
+                settingsRepository.getMaxTokensForModel(modelKey));
 
         AiRequest request = new AiRequest(
                 prompt,
@@ -448,11 +459,17 @@ public class ChatViewModel extends ViewModel {
         prompt.add(new AiMessage("system", systemPrompt));
         prompt.addAll(history);
 
+        String modelProviderImg = conv != null ? conv.getModelProvider() : settingsRepository.getActiveProvider();
+        String modelIdImg = conv != null ? conv.getModelId() : null;
+        if (modelIdImg == null && modelProviderImg != null) {
+            modelIdImg = settingsRepository.getDefaultModelId(modelProviderImg);
+        }
+        String modelKeyImg = settingsRepository.buildModelKey(modelProviderImg, modelIdImg);
         AiConfig config = new AiConfig(
-                settingsRepository.getTemperature(),
-                settingsRepository.getTopP(),
+                settingsRepository.getTemperatureForModel(modelKeyImg),
+                settingsRepository.getTopPForModel(modelKeyImg),
                 40,
-                settingsRepository.getMaxTokens());
+                settingsRepository.getMaxTokensForModel(modelKeyImg));
 
         AiRequest request = new AiRequest(
                 prompt,

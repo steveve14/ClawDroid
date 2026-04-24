@@ -217,11 +217,14 @@ public class FloatingOverlayService extends Service {
         List<AiMessage> prompt = promptBuilder.build(
                 systemPrompt, Collections.emptyList(), userText, null);
 
+        String overlayProvider = settingsRepository.getActiveProvider();
+        String overlayModel = overlayProvider != null ? settingsRepository.getDefaultModelId(overlayProvider) : null;
+        String overlayModelKey = settingsRepository.buildModelKey(overlayProvider, overlayModel);
         AiConfig config = new AiConfig(
-                settingsRepository.getTemperature(),
-                settingsRepository.getTopP(),
+                settingsRepository.getTemperatureForModel(overlayModelKey),
+                settingsRepository.getTopPForModel(overlayModelKey),
                 40,
-                settingsRepository.getMaxTokens());
+                settingsRepository.getMaxTokensForModel(overlayModelKey));
 
         AiRequest request = new AiRequest(prompt, null, config, null);
 

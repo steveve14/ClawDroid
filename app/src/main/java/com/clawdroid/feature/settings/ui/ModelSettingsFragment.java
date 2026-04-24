@@ -1,9 +1,11 @@
 package com.clawdroid.feature.settings.ui;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,10 +25,12 @@ import com.clawdroid.app.R;
 import com.clawdroid.app.databinding.FragmentModelSettingsBinding;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -42,6 +46,7 @@ public class ModelSettingsFragment extends Fragment {
     private FragmentModelSettingsBinding binding;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final List<String> connectedProviderIds = new ArrayList<>();
+    private String currentModelKey = "";
 
     @Inject
     SettingsRepository settingsRepository;
@@ -68,7 +73,7 @@ public class ModelSettingsFragment extends Fragment {
         binding.btnAddModel.setOnClickListener(v -> showAddModelDialog());
 
         setupFallback();
-        setupSliders();
+        // 슬라이더는 loadSelectedModel() 내에서 모델키 확정 후 초기화
         refreshConnectedApis();
     }
 
@@ -182,19 +187,39 @@ public class ModelSettingsFragment extends Fragment {
     }
 
     private void loadSelectedModel() {
-        String activeProvider = settingsRepository.getActiveProvider();
-        if (activeProvider == null || activeProvider.isEmpty()) return;
-
         binding.modelListContainer.removeAllViews();
-        AiProvider provider = providerManager.getProvider(activeProvider);
-        if (provider == null) return;
 
-        String savedModelId = settingsRepository.getDefaultModelId(activeProvider);
-        String subtitle = (savedModelId != null && !savedModelId.isEmpty())
-                ? savedModelId
-                : "기본 모델";
-        MaterialCardView card = createModelCard(provider.getName(), subtitle, true);
-        binding.modelListContainer.addView(card);
+        java.util.Set<String> added = settingsRepository.getAddedModels();
+        String activeProvider = settingsRepository.getActiveProvider();
+        String activeModelId = activeProvider != null ? settingsRepository.getDefaultModelId(activeProvider) : "";
+
+        // 기존 사용자가 추가한 모델 목록이 비어있고 이미 active 모델이 있으면 멀이그레이션
+        if (added.isEmpty() && activeProvider != null && !activeProvider.isEmpty()) {
+            settingsRepository.addModel(activeProvider, activeModelId);
+            added = settingsRepository.getAddedModels();
+        }
+
+        if (added.isEmpty()) {
+            return;
+        }
+
+        for (String entry : added) {
+            int sep = entry.indexOf('|');
+            if (sep < 0) continue;
+            String pid = entry.substring(0, sep);
+            String mid = entry.substring(sep + 1);
+
+            AiProvider provider = providerManager.getProvider(pid);
+            if (provider == null) continue;
+
+            boolean isActive = pid.equals(activeProvider) && mid.equals(activeModelId == null ? "" : activeModelId);
+            String subtitle = !mid.isEmpty() ? mid : getString(R.string.default_model);
+            MaterialCardView card = createModelCard(provider.getName(), subtitle, isActive, pid, mid);
+            binding.modelListContainer.addView(card);
+        }
+
+        // 현재 active 모델 기준
+        currentModelKey = settingsRepository.buildModelKey(activeProvider, activeModelId);
     }
 
     private void showAddModelDialog() {
@@ -245,6 +270,7 @@ public class ModelSettingsFragment extends Fragment {
                                     .setItems(names, (dlg, which) -> {
                                         String selectedProvider = items.get(which)[1];
                                         String selectedModelId = items.get(which)[2];
+                                        settingsRepository.addModel(selectedProvider, selectedModelId);
                                         settingsRepository.setActiveProvider(selectedProvider);
                                         settingsRepository.setDefaultModelId(selectedProvider, selectedModelId);
                                         loadSelectedModel();
@@ -256,7 +282,8 @@ public class ModelSettingsFragment extends Fragment {
         );
     }
 
-    private MaterialCardView createModelCard(String name, String subtitle, boolean active) {
+    private MaterialCardView createModelCard(String name, String subtitle, boolean active,
+                                               String providerId, String modelId) {
         float dp = getResources().getDisplayMetrics().density;
 
         MaterialCardView card = new MaterialCardView(requireContext());
@@ -270,11 +297,31 @@ public class ModelSettingsFragment extends Fragment {
                 active ? R.color.md_primary : R.color.md_outline_variant, null));
         card.setRadius(12 * dp);
         card.setCardBackgroundColor(getResources().getColor(R.color.md_surface, null));
+        card.setClickable(true);
+        card.setFocusable(true);
+        android.util.TypedValue tv = new android.util.TypedValue();
+        requireContext().getTheme().resolveAttribute(
+                android.R.attr.selectableItemBackground, tv, true);
+        card.setForeground(requireContext().getDrawable(tv.resourceId));
+
+        // 카드 클릭 = 해당 모델을 active로 설정
+        card.setOnClickListener(v -> {
+            settingsRepository.setActiveProvider(providerId);
+            settingsRepository.setDefaultModelId(providerId, modelId);
+            loadSelectedModel();
+        });
 
         LinearLayout inner = new LinearLayout(requireContext());
-        inner.setOrientation(LinearLayout.VERTICAL);
+        inner.setOrientation(LinearLayout.HORIZONTAL);
+        inner.setGravity(Gravity.CENTER_VERTICAL);
         int pad = (int) (16 * dp);
         inner.setPadding(pad, pad, pad, pad);
+
+        LinearLayout textWrap = new LinearLayout(requireContext());
+        textWrap.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams textLp = new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        textWrap.setLayoutParams(textLp);
 
         TextView tvName = new TextView(requireContext());
         tvName.setText(name);
@@ -286,10 +333,88 @@ public class ModelSettingsFragment extends Fragment {
         tvSub.setTextSize(13);
         tvSub.setTextColor(getResources().getColor(R.color.md_on_surface_variant, null));
 
-        inner.addView(tvName);
-        inner.addView(tvSub);
+        textWrap.addView(tvName);
+        textWrap.addView(tvSub);
+
+        ImageView ivChevron = new ImageView(requireContext());
+        int iconSize = (int) (24 * dp);
+        LinearLayout.LayoutParams ivLp = new LinearLayout.LayoutParams(iconSize, iconSize);
+        ivLp.leftMargin = (int) (8 * dp);
+        ivChevron.setLayoutParams(ivLp);
+        ivChevron.setImageResource(R.drawable.ic_settings_gear);
+        ivChevron.setColorFilter(getResources().getColor(R.color.md_on_surface_variant, null));
+        ivChevron.setClickable(true);
+        ivChevron.setFocusable(true);
+        ivChevron.setContentDescription(getString(R.string.configure_model_params));
+        ivChevron.setBackgroundResource(tv.resourceId);
+        ivChevron.setOnClickListener(v -> showModelParamsDialog(name, providerId, modelId));
+
+        inner.addView(textWrap);
+        inner.addView(ivChevron);
         card.addView(inner);
         return card;
+    }
+
+    private void showModelParamsDialog(String modelName, String providerId, String modelId) {
+        View dialogView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.dialog_model_params, null);
+
+        TextView tvName = dialogView.findViewById(R.id.tvDialogModelName);
+        TextView tvTemp = dialogView.findViewById(R.id.tvDialogTemperature);
+        TextView tvTopP = dialogView.findViewById(R.id.tvDialogTopP);
+        TextView tvMax = dialogView.findViewById(R.id.tvDialogMaxTokens);
+        Slider sTemp = dialogView.findViewById(R.id.sliderDialogTemperature);
+        Slider sTopP = dialogView.findViewById(R.id.sliderDialogTopP);
+        Slider sMax = dialogView.findViewById(R.id.sliderDialogMaxTokens);
+
+        String key = settingsRepository.buildModelKey(providerId, modelId);
+        float temp = settingsRepository.getTemperatureForModel(key);
+        float topP = settingsRepository.getTopPForModel(key);
+        int maxTokens = settingsRepository.getMaxTokensForModel(key);
+
+        tvName.setText(modelName + (modelId != null && !modelId.isEmpty() ? " / " + modelId : ""));
+        sTemp.setValue(snapToStep(Math.max(0f, Math.min(2f, temp)), 0.05f));
+        tvTemp.setText(String.format(Locale.US, "Temperature: %.2f", temp));
+        sTemp.addOnChangeListener((s, value, fromUser) -> {
+            tvTemp.setText(String.format(Locale.US, "Temperature: %.2f", value));
+            settingsRepository.setTemperatureForModel(key, value);
+        });
+
+        sTopP.setValue(snapToStep(Math.max(0f, Math.min(1f, topP)), 0.05f));
+        tvTopP.setText(String.format(Locale.US, "Top P: %.2f", topP));
+        sTopP.addOnChangeListener((s, value, fromUser) -> {
+            tvTopP.setText(String.format(Locale.US, "Top P: %.2f", value));
+            settingsRepository.setTopPForModel(key, value);
+        });
+
+        sMax.setValue(snapToStep(Math.max(256, Math.min(8192, maxTokens)), 256f));
+        tvMax.setText(String.format(Locale.US, "Max Tokens: %d", maxTokens));
+        sMax.addOnChangeListener((s, value, fromUser) -> {
+            tvMax.setText(String.format(Locale.US, "Max Tokens: %d", (int) value));
+            settingsRepository.setMaxTokensForModel(key, (int) value);
+        });
+
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.model_params_title)
+                .setView(dialogView)
+                .setNeutralButton(R.string.remove_model, (dlg, w) -> {
+                    settingsRepository.removeModel(providerId, modelId);
+                    // active가 제거된 모델이었다면 남은 중 첫 번째를 active로
+                    java.util.Set<String> remain = settingsRepository.getAddedModels();
+                    if (remain.isEmpty()) {
+                        settingsRepository.setActiveProvider("");
+                    } else {
+                        String first = remain.iterator().next();
+                        int sp = first.indexOf('|');
+                        if (sp >= 0) {
+                            settingsRepository.setActiveProvider(first.substring(0, sp));
+                            settingsRepository.setDefaultModelId(first.substring(0, sp), first.substring(sp + 1));
+                        }
+                    }
+                    loadSelectedModel();
+                })
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     private void showAddApiDialog() {
@@ -412,40 +537,6 @@ public class ModelSettingsFragment extends Fragment {
         binding.switchFallback.setChecked(settingsRepository.isFallbackEnabled());
         binding.switchFallback.setOnCheckedChangeListener((btn, checked) ->
                 settingsRepository.setFallbackEnabled(checked));
-    }
-
-    private void setupSliders() {
-        float temp = settingsRepository.getTemperature();
-        float topP = settingsRepository.getTopP();
-        int maxTokens = settingsRepository.getMaxTokens();
-
-        binding.sliderTemperature.setValue(snapToStep(Math.max(0f, Math.min(2f, temp)), 0.05f));
-        binding.tvTemperature.setText(String.format("Temperature: %.2f", temp));
-        binding.sliderTemperature.addOnChangeListener((s, value, fromUser) -> {
-            if (fromUser) {
-                binding.tvTemperature.setText(String.format("Temperature: %.2f", value));
-                settingsRepository.setTemperature(value);
-            }
-        });
-
-        binding.sliderTopP.setValue(snapToStep(Math.max(0f, Math.min(1f, topP)), 0.05f));
-        binding.tvTopP.setText(String.format("Top P: %.2f", topP));
-        binding.sliderTopP.addOnChangeListener((s, value, fromUser) -> {
-            if (fromUser) {
-                binding.tvTopP.setText(String.format("Top P: %.2f", value));
-                settingsRepository.setTopP(value);
-            }
-        });
-
-        float tokenVal = snapToStep(Math.max(256, Math.min(8192, maxTokens)), 256f);
-        binding.sliderMaxTokens.setValue(tokenVal);
-        binding.tvMaxTokens.setText(String.format("Max Tokens: %d", maxTokens));
-        binding.sliderMaxTokens.addOnChangeListener((s, value, fromUser) -> {
-            if (fromUser) {
-                binding.tvMaxTokens.setText(String.format("Max Tokens: %d", (int) value));
-                settingsRepository.setMaxTokens((int) value);
-            }
-        });
     }
 
     private float snapToStep(float value, float step) {

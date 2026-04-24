@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_settings_to_about"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settings_to_languageSettings"
+            app:destination="@id/languageSettingsFragment" />
     </fragment>
 
     <fragment
@@ -126,5 +129,11 @@
         android:name="com.clawdroid.feature.settings.ui.AboutFragment"
         android:label="앱 정보"
         tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/languageSettingsFragment"
+        android:name="com.clawdroid.feature.settings.ui.LanguageSettingsFragment"
+        android:label="언어 설정"
+        tools:layout="@layout/fragment_language_settings" />
 
 </navigation>

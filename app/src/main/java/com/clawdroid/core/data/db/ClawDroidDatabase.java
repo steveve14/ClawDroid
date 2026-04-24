@@ -7,12 +7,14 @@ import com.clawdroid.core.data.db.dao.AiProviderDao;
 import com.clawdroid.core.data.db.dao.ChannelDao;
 import com.clawdroid.core.data.db.dao.ConversationDao;
 import com.clawdroid.core.data.db.dao.MessageDao;
+import com.clawdroid.core.data.db.dao.PersonaDao;
 import com.clawdroid.core.data.db.dao.ToolCallDao;
 import com.clawdroid.core.data.db.entity.AiProviderEntity;
 import com.clawdroid.core.data.db.entity.ChannelEntity;
 import com.clawdroid.core.data.db.entity.ConversationEntity;
 import com.clawdroid.core.data.db.entity.MessageEntity;
 import com.clawdroid.core.data.db.entity.MessageFtsEntity;
+import com.clawdroid.core.data.db.entity.PersonaEntity;
 import com.clawdroid.core.data.db.entity.ToolCallEntity;
 
 @Database(
@@ -22,9 +24,10 @@ import com.clawdroid.core.data.db.entity.ToolCallEntity;
         MessageFtsEntity.class,
         ToolCallEntity.class,
         ChannelEntity.class,
-        AiProviderEntity.class
+        AiProviderEntity.class,
+        PersonaEntity.class
     },
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 public abstract class ClawDroidDatabase extends RoomDatabase {
@@ -34,4 +37,5 @@ public abstract class ClawDroidDatabase extends RoomDatabase {
     public abstract ToolCallDao toolCallDao();
     public abstract ChannelDao channelDao();
     public abstract AiProviderDao aiProviderDao();
+    public abstract PersonaDao personaDao();
 }

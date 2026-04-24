@@ -43,6 +43,12 @@ android {
             "\"${properties.getProperty('GEMINI_API_KEY', '')}\""
         buildConfigField "String", "OPENAI_API_KEY",
             "\"${properties.getProperty('OPENAI_API_KEY', '')}\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildFeatures {

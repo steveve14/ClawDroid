@@ -25,13 +25,21 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/cbPersona"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPersona"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="페르소나 적용"
-        android:textSize="14sp"
-        android:checked="false" />
+        android:layout_marginTop="12dp"
+        android:hint="페르소나">
+
+        <AutoCompleteTextView
+            android:id="@+id/actvPersona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

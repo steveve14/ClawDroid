@@ -120,11 +120,14 @@ public class VoiceChatViewModel extends ViewModel {
         List<AiMessage> history = buildHistory();
         List<AiMessage> prompt = promptBuilder.build(systemPrompt, history, text, null);
 
+        String activeProvider = settingsRepository.getActiveProvider();
+        String activeModel = activeProvider != null ? settingsRepository.getDefaultModelId(activeProvider) : null;
+        String modelKey = settingsRepository.buildModelKey(activeProvider, activeModel);
         AiConfig config = new AiConfig(
-                settingsRepository.getTemperature(),
-                settingsRepository.getTopP(),
+                settingsRepository.getTemperatureForModel(modelKey),
+                settingsRepository.getTopPForModel(modelKey),
                 40,
-                settingsRepository.getMaxTokens());
+                settingsRepository.getMaxTokensForModel(modelKey));
 
         AiRequest request = new AiRequest(prompt, null, config, null);
 

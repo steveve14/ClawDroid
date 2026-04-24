@@ -162,12 +162,32 @@
                 android:text="🚫 차단" />
         </com.google.android.material.chip.ChipGroup>
 
+        <!-- Test Result -->
+        <TextView
+            android:id="@+id/tvTestResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="12dp"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <!-- Test Connection Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTestConnection"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="API 연결 테스트" />
+
         <!-- Save Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
+            android:enabled="false"
             android:text="채널 추가" />
 
     </LinearLayout>

@@ -6,11 +6,13 @@ import androidx.room.Room;
 
 import com.clawdroid.core.data.db.ClawDroidDatabase;
 import com.clawdroid.core.data.db.DatabaseKeyManager;
+import com.clawdroid.core.data.db.DatabaseMigrationHelper;
 import com.clawdroid.core.data.db.migration.Migrations;
 import com.clawdroid.core.data.db.dao.AiProviderDao;
 import com.clawdroid.core.data.db.dao.ChannelDao;
 import com.clawdroid.core.data.db.dao.ConversationDao;
 import com.clawdroid.core.data.db.dao.MessageDao;
+import com.clawdroid.core.data.db.dao.PersonaDao;
 import com.clawdroid.core.data.db.dao.ToolCallDao;
 
 import net.zetetic.database.sqlcipher.SupportOpenHelperFactory;
@@ -38,6 +40,9 @@ public class DatabaseModule {
     @Provides
     @Singleton
     public ClawDroidDatabase provideDatabase(@ApplicationContext Context context) {
+        // SQLCipher 도입 이전의 평문 DB가 기기에 남아 있으면 삭제 (HMAC 실패 방지)
+        DatabaseMigrationHelper.deleteIfPlainSQLite(context, "clawdroid.db");
+
         // SEC-H1: Room + SQLCipher 통합 — 데이터베이스 전체를 AES-256으로 암호화
         char[] passphrase = DatabaseKeyManager.getOrCreatePassphrase(context);
         byte[] passBytes = new String(passphrase).getBytes(StandardCharsets.UTF_8);
@@ -52,7 +57,7 @@ public class DatabaseModule {
                 "clawdroid.db"
         )
         .openHelperFactory(factory)
-        .addMigrations(Migrations.MIGRATION_1_2, Migrations.MIGRATION_2_3)
+        .addMigrations(Migrations.MIGRATION_1_2, Migrations.MIGRATION_2_3, Migrations.MIGRATION_3_4)
         .fallbackToDestructiveMigration()
         .build();
     }
@@ -80,5 +85,10 @@ public class DatabaseModule {
     @Provides
     public AiProviderDao provideAiProviderDao(ClawDroidDatabase db) {
         return db.aiProviderDao();
+    }
+
+    @Provides
+    public PersonaDao providePersonaDao(ClawDroidDatabase db) {
+        return db.personaDao();
     }
 }

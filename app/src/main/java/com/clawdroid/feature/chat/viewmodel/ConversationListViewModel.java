@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.clawdroid.core.data.db.entity.ConversationEntity;
+import com.clawdroid.core.data.db.entity.PersonaEntity;
 import com.clawdroid.core.data.repository.ConversationRepository;
+import com.clawdroid.core.data.repository.PersonaRepository;
 import com.clawdroid.core.data.repository.SettingsRepository;
 
 import java.util.List;
@@ -23,9 +25,11 @@ public class ConversationListViewModel extends ViewModel {
 
     private final ConversationRepository repository;
     private final SettingsRepository settingsRepository;
+    private final PersonaRepository personaRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     private final MutableLiveData<List<ConversationEntity>> conversations = new MutableLiveData<>();
+    private final MutableLiveData<List<PersonaEntity>> personas = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(true);
     private final MutableLiveData<String> error = new MutableLiveData<>();
     private final MutableLiveData<String> navigateToConversationId = new MutableLiveData<>();
@@ -34,10 +38,13 @@ public class ConversationListViewModel extends ViewModel {
 
     @Inject
     public ConversationListViewModel(ConversationRepository repository,
-                                     SettingsRepository settingsRepository) {
+                                     SettingsRepository settingsRepository,
+                                     PersonaRepository personaRepository) {
         this.repository = repository;
         this.settingsRepository = settingsRepository;
+        this.personaRepository = personaRepository;
         loadConversations();
+        loadPersonas();
     }
 
     public LiveData<List<ConversationEntity>> getConversations() { return conversations; }
@@ -47,8 +54,21 @@ public class ConversationListViewModel extends ViewModel {
 
     public String getPersonaName() { return settingsRepository.getPersonaName(); }
     public String getPersonaSystemPrompt() { return settingsRepository.getSystemPrompt(); }
+    public LiveData<List<PersonaEntity>> getPersonas() { return personas; }
 
     public void clearNavigateToConversation() { navigateToConversationId.setValue(null); }
+
+    private void loadPersonas() {
+        disposables.add(
+            personaRepository.getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    list -> personas.setValue(list),
+                    e -> {}
+                )
+        );
+    }
 
     private void loadConversations() {
         disposables.add(
