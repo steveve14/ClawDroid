@@ -26,6 +26,7 @@ cssclass: dashboard
 | 🧰 도구·스킬 | [[08_도구_스킬_시스템]] | Function Calling + 내장/커스텀 도구 |
 | 🖥️ 화면 설계 | [[09_UI_화면_설계]] | 화면 구성 & 와이어프레임 |
 | 💻 개발 환경 | [[10_개발환경_설정]] | Android Studio + Gemini Nano 설정 |
+| 🚀 출시 준비 | [[14_Play_Store_출시_체크리스트]] | Play Store 등록 정보, 내부 테스트, 프로덕션 게이트 |
 
 ---
 
@@ -65,10 +66,10 @@ cssclass: dashboard
 
 ### Phase 5 — 고급 기능 & 배포
 
-- [ ] 멀티 세션 + 명령어 시스템
-- [ ] 보안 (PIN, 생체인증, prompt injection 방어)
-- [ ] App Widget (RemoteViews)
-- [ ] GitHub Actions CI/CD
+- [x] 멀티 세션 + 명령어 시스템
+- [x] 보안 (PIN, 생체인증, prompt injection 방어)
+- [x] App Widget (RemoteViews)
+- [x] GitHub Actions CI/CD
 - [ ] Play Store 배포
 
 ---

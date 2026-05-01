@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Persona"
+                    android:text="@string/persona_title"
                     android:textSize="@dimen/text_3xl"
                     android:textStyle="bold"
                     android:textColor="@color/md_on_surface"
@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="여러 AI 페르소나를 만들고 전환할 수 있습니다"
+                    android:text="@string/persona_subtitle"
                     android:textSize="@dimen/text_base"
                     android:textColor="@color/md_on_surface_variant"
                     android:layout_marginTop="@dimen/spacing_xs"
@@ -62,7 +62,7 @@
                     android:id="@+id/tvEmpty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="아직 페르소나가 없습니다.\n아래 + 버튼으로 추가해 보세요."
+                    android:text="@string/persona_empty"
                     android:textSize="@dimen/text_base"
                     android:textColor="@color/md_on_surface_variant"
                     android:gravity="center"
@@ -82,8 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/spacing_xl"
-        android:text="페르소나 추가"
+        android:text="@string/persona_add"
         app:icon="@android:drawable/ic_input_add"
+        app:iconSize="@dimen/icon_md"
+        app:iconTint="@color/md_on_primary"
         app:layout_anchorGravity="bottom|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

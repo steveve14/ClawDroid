@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/ivOverlayMic"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/icon_md"
+        android:layout_height="@dimen/icon_md"
         android:layout_gravity="center"
         android:src="@android:drawable/ic_btn_speak_now"
         android:contentDescription="음성 대화" />

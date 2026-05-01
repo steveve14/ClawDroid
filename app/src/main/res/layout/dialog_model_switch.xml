@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="모델 전환"
+        android:text="@string/model_switch_title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="12dp" />
@@ -33,7 +33,7 @@
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="+ 모델 추가 (설정으로 이동)"
+        android:text="@string/model_switch_add"
         android:textColor="?attr/colorPrimary" />
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import com.clawdroid.core.model.AiConfig;
 import com.clawdroid.core.model.AiMessage;
 import com.clawdroid.core.model.AiRequest;
 import com.clawdroid.core.model.ModelInfo;
+import com.clawdroid.feature.tools.engine.FunctionCallingEngine;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class ChatViewModel extends ViewModel {
     private final SettingsRepository settingsRepository;
     private final AiProviderManager providerManager;
     private final PromptBuilder promptBuilder;
+    private final FunctionCallingEngine functionCallingEngine;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     private final MutableLiveData<ConversationEntity> conversation = new MutableLiveData<>();
@@ -52,12 +54,14 @@ public class ChatViewModel extends ViewModel {
                          MessageRepository messageRepository,
                          SettingsRepository settingsRepository,
                          AiProviderManager providerManager,
-                         PromptBuilder promptBuilder) {
+                         PromptBuilder promptBuilder,
+                         FunctionCallingEngine functionCallingEngine) {
         this.conversationRepository = conversationRepository;
         this.messageRepository = messageRepository;
         this.settingsRepository = settingsRepository;
         this.providerManager = providerManager;
         this.promptBuilder = promptBuilder;
+        this.functionCallingEngine = functionCallingEngine;
     }
 
     public LiveData<ConversationEntity> getConversation() { return conversation; }
@@ -107,23 +111,7 @@ public class ChatViewModel extends ViewModel {
 
     public void sendMessage(String content) {
         if (content == null || content.trim().isEmpty() || conversationId == null) return;
-
-        // AI 프로바이더 연결 확인
-        disposables.add(
-            providerManager.isAnyProviderAvailable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    available -> {
-                        if (!available) {
-                            error.setValue("AI가 연결되지 않았습니다. 설정에서 API 키를 입력해주세요.");
-                            return;
-                        }
-                        doSendMessage(content.trim());
-                    },
-                    e -> error.setValue(e.getMessage())
-                )
-        );
+        doSendMessage(content.trim());
     }
 
     private void doSendMessage(String content) {
@@ -139,7 +127,7 @@ public class ChatViewModel extends ViewModel {
                         conversationRepository.updateLastMessage(conversationId, content)
                                 .subscribeOn(Schedulers.io())
                                 .subscribe();
-                        generateAiResponse(content);
+                        generateAiResponse(content, userMsg.getId());
                     },
                     e -> {
                         error.setValue(e.getMessage());
@@ -151,23 +139,7 @@ public class ChatViewModel extends ViewModel {
 
     public void sendMessageWithImage(String content, byte[] imageData) {
         if (conversationId == null) return;
-
-        // AI 프로바이더 연결 확인
-        disposables.add(
-            providerManager.isAnyProviderAvailable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    available -> {
-                        if (!available) {
-                            error.setValue("AI가 연결되지 않았습니다. 설정에서 API 키를 입력해주세요.");
-                            return;
-                        }
-                        doSendMessageWithImage(content, imageData);
-                    },
-                    e -> error.setValue(e.getMessage())
-                )
-        );
+        doSendMessageWithImage(content, imageData);
     }
 
     private void doSendMessageWithImage(String content, byte[] imageData) {
@@ -354,7 +326,7 @@ public class ChatViewModel extends ViewModel {
         );
     }
 
-    private void generateAiResponse(String userMessage) {
+    private void generateAiResponse(String userMessage, String auditMessageId) {
         ConversationEntity conv = conversation.getValue();
         String systemPrompt = conv != null && conv.getSystemPrompt() != null
                 ? conv.getSystemPrompt()
@@ -394,18 +366,11 @@ public class ChatViewModel extends ViewModel {
                 40,
                 settingsRepository.getMaxTokensForModel(modelKey));
 
-        AiRequest request = new AiRequest(
-                prompt,
-                conv != null ? conv.getModelId() : null,
-                config,
-                null
-        );
-
         StringBuilder responseBuilder = new StringBuilder();
         long startTime = System.currentTimeMillis();
 
         disposables.add(
-            providerManager.generateStream(request)
+            functionCallingEngine.processWithTools(prompt, modelId2, config, auditMessageId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

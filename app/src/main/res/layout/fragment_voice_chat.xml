@@ -2,12 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_surface">
 
-    <!-- 공통 헤더 -->
     <include
         android:id="@+id/commonHeader"
         layout="@layout/layout_common_header"
@@ -17,234 +15,301 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 대화방 선택 칩 -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardConversationSelector"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/voiceContent"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_xl"
-        android:layout_marginTop="@dimen/spacing_sm"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardCornerRadius="@dimen/radius_2xl"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/md_surface_container_lowest"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/outline_variant_10"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/commonHeader"
+        app:layout_constraintBottom_toTopOf="@id/controlPanel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:orientation="vertical"
             android:paddingHorizontal="@dimen/spacing_lg"
-            android:paddingVertical="@dimen/spacing_sm">
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingBottom="@dimen/spacing_xl">
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@android:drawable/ic_menu_agenda"
-                android:contentDescription="채팅방"
-                app:tint="@color/md_on_surface_variant" />
-
-            <TextView
-                android:id="@+id/tvSelectedConversation"
-                android:layout_width="0dp"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardConversationSelector"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/spacing_sm"
-                android:text="최근 채팅방 (자동 연결)"
-                android:textColor="@color/md_on_surface_variant"
-                android:textSize="@dimen/text_sm"
-                android:singleLine="true"
-                android:ellipsize="end" />
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/primary_15"
+                app:strokeWidth="1dp">
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@android:drawable/arrow_down_float"
-                android:contentDescription="선택"
-                app:tint="@color/md_on_surface_variant" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_md">
 
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_md"
+                        android:layout_height="@dimen/avatar_md"
+                        android:background="@drawable/bg_chip_surface">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/voice_conversation_content_desc"
+                            android:src="@android:drawable/ic_menu_agenda"
+                            app:tint="@color/md_on_primary_fixed" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tvSelectedConversation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_md"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/voice_recent_conversation"
+                        android:textColor="@color/md_on_surface"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
+                        android:layout_width="@dimen/avatar_md"
+                        android:layout_height="@dimen/avatar_md"
+                        android:background="?attr/selectableItemBackgroundBorderless">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/common_select"
+                            android:src="@android:drawable/arrow_down_float"
+                            app:tint="@color/md_on_primary_fixed" />
+                    </FrameLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:cardCornerRadius="@dimen/radius_2xl"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/primary_10"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/spacing_xl"
+                    android:paddingTop="@dimen/spacing_xl"
+                    android:paddingBottom="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/voice_stage_label"
+                        android:textColor="@color/md_primary"
+                        android:textSize="@dimen/text_xs"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@string/voice_status_ready"
+                        android:textColor="@color/md_on_surface"
+                        android:textSize="@dimen/text_3xl"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvStatusSubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:gravity="center"
+                        android:text="@string/voice_status_subtitle"
+                        android:textColor="@color/md_on_surface_variant"
+                        android:textSize="@dimen/text_base" />
+
+                    <FrameLayout
+                        android:id="@+id/visualizerArea"
+                        android:layout_width="@dimen/voice_orb_size"
+                        android:layout_height="@dimen/voice_orb_size"
+                        android:layout_marginTop="@dimen/spacing_lg">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_voice_soft_circle" />
+
+                        <View
+                            android:layout_width="132dp"
+                            android:layout_height="132dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_gradient_primary_circle" />
+
+                        <ImageView
+                            android:id="@+id/ivMic"
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/voice_record"
+                            android:src="@android:drawable/ic_btn_speak_now"
+                            app:tint="@color/md_on_primary" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/waveformArea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="@dimen/spacing_lg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View android:layout_width="4dp" android:layout_height="16dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="24dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="36dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="28dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="40dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="28dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="36dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="24dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                        <View android:layout_width="4dp" android:layout_height="16dp" android:layout_marginHorizontal="4dp" android:background="@drawable/bg_wave_bar" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/transcriptCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:cardBackgroundColor="@color/md_surface_container_lowest"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/outline_variant_20"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/spacing_lg"
+                        android:paddingTop="@dimen/spacing_lg"
+                        android:text="@string/voice_history_title"
+                        android:textColor="@color/md_on_surface"
+                        android:textSize="@dimen/text_base"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="136dp"
+                        android:clipToPadding="false"
+                        android:padding="@dimen/spacing_lg"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:stackFromEnd="true" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.core.widget.NestedScrollView>
 
-    <!-- Status Title -->
-    <TextView
-        android:id="@+id/tvStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="음성 대기 중"
-        android:textColor="@color/md_primary"
-        android:textSize="@dimen/text_4xl"
-        android:textStyle="bold"
-        android:letterSpacing="-0.03"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/cardConversationSelector"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/spacing_xl" />
-
-    <!-- Status Subtitle -->
-    <TextView
-        android:id="@+id/tvStatusSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="자연스럽게 말씀하세요. 실시간으로 처리합니다."
-        android:textColor="@color/md_on_surface_variant"
-        android:textSize="@dimen/text_base"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/spacing_sm"
-        app:layout_constraintTop_toBottomOf="@id/tvStatus"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Voice Orb Area -->
-    <FrameLayout
-        android:id="@+id/visualizerArea"
-        android:layout_width="@dimen/voice_orb_size"
-        android:layout_height="@dimen/voice_orb_size"
-        app:layout_constraintTop_toBottomOf="@id/tvStatusSubtitle"
-        app:layout_constraintBottom_toTopOf="@id/waveformArea"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Main orb -->
-        <View
-            android:id="@+id/ivMic"
-            android:layout_width="@dimen/voice_orb_size"
-            android:layout_height="@dimen/voice_orb_size"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_gradient_primary_circle" />
-
-    </FrameLayout>
-
-    <!-- Waveform placeholder -->
-    <LinearLayout
-        android:id="@+id/waveformArea"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/visualizerArea"
-        app:layout_constraintBottom_toTopOf="@id/transcriptCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <View android:layout_width="4dp" android:layout_height="16dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-        <View android:layout_width="4dp" android:layout_height="24dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-        <View android:layout_width="4dp" android:layout_height="32dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-        <View android:layout_width="4dp" android:layout_height="40dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-        <View android:layout_width="4dp" android:layout_height="32dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-        <View android:layout_width="4dp" android:layout_height="24dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-        <View android:layout_width="4dp" android:layout_height="16dp"
-            android:layout_marginHorizontal="4dp" android:background="@color/md_primary_container" />
-
-    </LinearLayout>
-
-    <!-- Transcript Card -->
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/transcriptCard"
+        android:id="@+id/controlPanel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/spacing_xl"
+        android:layout_marginHorizontal="@dimen/spacing_lg"
+        android:layout_marginBottom="@dimen/spacing_lg"
+        app:cardBackgroundColor="@color/md_surface_container_lowest"
         app:cardCornerRadius="@dimen/radius_2xl"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/md_surface_container_lowest"
+        app:strokeColor="@color/primary_10"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/outline_variant_10"
-        app:layout_constraintBottom_toTopOf="@id/controlBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/spacing_xl">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerHistory"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:padding="@dimen/spacing_lg"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:stackFromEnd="true" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Control Bar -->
-    <LinearLayout
-        android:id="@+id/controlBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingBottom="@dimen/spacing_3xl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Stop — same style as Settings -->
-        <FrameLayout
-            android:id="@+id/btnStop"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
-            android:background="@drawable/bg_voice_btn"
-            android:contentDescription="중지">
+        <LinearLayout
+            android:id="@+id/controlBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/spacing_xl"
+            android:paddingVertical="@dimen/spacing_md">
 
-            <ImageView
-                android:layout_width="@dimen/icon_md"
-                android:layout_height="@dimen/icon_md"
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_media_pause"
-                app:tint="?attr/colorControlNormal"
-                android:contentDescription="stop" />
+            <FrameLayout
+                android:id="@+id/btnStop"
+                android:layout_width="@dimen/fab_size"
+                android:layout_height="@dimen/fab_size"
+                android:background="@drawable/bg_voice_btn"
+                android:contentDescription="@string/voice_stop"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
-        </FrameLayout>
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/voice_stop"
+                    android:src="@android:drawable/ic_media_pause"
+                    app:tint="@color/md_on_primary_fixed" />
+            </FrameLayout>
 
-        <!-- Record (large center button) — mic icon white -->
-        <FrameLayout
-            android:id="@+id/btnRecord"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginHorizontal="@dimen/spacing_xl"
-            android:background="@drawable/bg_gradient_primary"
-            android:contentDescription="녹음">
+            <FrameLayout
+                android:id="@+id/btnRecord"
+                android:layout_width="@dimen/voice_btn_large"
+                android:layout_height="@dimen/voice_btn_large"
+                android:layout_marginHorizontal="@dimen/spacing_xl"
+                android:background="@drawable/bg_gradient_primary"
+                android:contentDescription="@string/voice_record"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
-            <ImageView
-                android:layout_width="@dimen/icon_lg"
-                android:layout_height="@dimen/icon_lg"
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_btn_speak_now"
-                app:tint="@android:color/white"
-                android:contentDescription="mic" />
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/voice_record"
+                    android:src="@android:drawable/ic_btn_speak_now"
+                    app:tint="@color/md_on_primary" />
+            </FrameLayout>
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/btnVoiceSettings"
+                android:layout_width="@dimen/fab_size"
+                android:layout_height="@dimen/fab_size"
+                android:background="@drawable/bg_voice_btn"
+                android:contentDescription="@string/voice_settings"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
-        <!-- Settings -->
-        <FrameLayout
-            android:id="@+id/btnVoiceSettings"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
-            android:background="@drawable/bg_voice_btn"
-            android:contentDescription="설정">
-
-            <ImageView
-                android:layout_width="@dimen/icon_md"
-                android:layout_height="@dimen/icon_md"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_settings_gear"
-                app:tint="?attr/colorControlNormal"
-                android:contentDescription="settings" />
-
-        </FrameLayout>
-
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/voice_settings"
+                    android:src="@android:drawable/ic_menu_manage"
+                    app:tint="@color/md_on_primary_fixed" />
+            </FrameLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

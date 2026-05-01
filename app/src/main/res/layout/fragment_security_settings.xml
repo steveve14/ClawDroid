@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Security &amp;\nPermissions"
+                android:text="@string/security_permissions_title"
                 android:textSize="@dimen/text_3xl"
                 android:textStyle="bold"
                 android:textColor="@color/md_primary"
@@ -60,11 +60,12 @@
                         android:background="@drawable/bg_chip_secondary">
 
                         <ImageView
-                            android:layout_width="@dimen/avatar_md"
-                            android:layout_height="@dimen/avatar_md"
+                            android:layout_width="@dimen/icon_md"
+                            android:layout_height="@dimen/icon_md"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_lock_lock"
-                            android:contentDescription="보안" />
+                            android:contentDescription="@string/security_icon_desc"
+                            app:tint="@color/md_on_primary_fixed" />
 
                     </FrameLayout>
 
@@ -78,7 +79,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Device Protected"
+                            android:text="@string/security_device_protected"
                             android:textSize="@dimen/text_lg"
                             android:textStyle="bold"
                             android:textColor="@color/md_on_surface" />
@@ -86,7 +87,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="All security systems active"
+                            android:text="@string/security_all_systems_active"
                             android:textSize="@dimen/text_sm"
                             android:textColor="@color/md_on_surface_variant"
                             android:layout_marginTop="4dp" />
@@ -126,7 +127,8 @@
                             android:layout_height="@dimen/icon_md"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_lock_lock"
-                            android:contentDescription="생체인증" />
+                            android:contentDescription="@string/security_biometric_icon_desc"
+                            app:tint="@color/md_on_primary_fixed" />
 
                     </FrameLayout>
 
@@ -140,7 +142,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Biometric Authentication"
+                            android:text="@string/security_biometric_title"
                             android:textSize="@dimen/text_base"
                             android:textStyle="bold"
                             android:textColor="@color/md_on_surface" />
@@ -149,7 +151,7 @@
                             android:id="@+id/tvBiometricDesc"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fingerprint or face recognition"
+                            android:text="@string/security_biometric_desc"
                             android:textSize="@dimen/text_sm"
                             android:textColor="@color/md_on_surface_variant"
                             android:layout_marginTop="4dp" />
@@ -193,7 +195,8 @@
                             android:layout_height="@dimen/icon_md"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_lock_lock"
-                            android:contentDescription="PIN" />
+                            android:contentDescription="PIN"
+                            app:tint="@color/md_on_primary_fixed" />
 
                     </FrameLayout>
 
@@ -207,7 +210,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="App Lock (PIN)"
+                            android:text="@string/security_app_lock_title"
                             android:textSize="@dimen/text_base"
                             android:textStyle="bold"
                             android:textColor="@color/md_on_surface" />
@@ -215,7 +218,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4-6 digit PIN lock"
+                            android:text="@string/security_app_lock_desc"
                             android:textSize="@dimen/text_sm"
                             android:textColor="@color/md_on_surface_variant"
                             android:layout_marginTop="4dp" />
@@ -259,7 +262,8 @@
                             android:layout_height="@dimen/icon_md"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_lock_lock"
-                            android:contentDescription="암호화" />
+                            android:contentDescription="@string/security_encryption_icon_desc"
+                            app:tint="@color/md_on_primary_fixed" />
 
                     </FrameLayout>
 
@@ -273,7 +277,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Data Encryption"
+                            android:text="@string/security_encryption_title"
                             android:textSize="@dimen/text_base"
                             android:textStyle="bold"
                             android:textColor="@color/md_on_surface" />
@@ -281,7 +285,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Local database encryption"
+                            android:text="@string/security_encryption_desc"
                             android:textSize="@dimen/text_sm"
                             android:textColor="@color/md_on_surface_variant"
                             android:layout_marginTop="4dp" />
@@ -325,7 +329,8 @@
                             android:layout_height="@dimen/icon_md"
                             android:layout_gravity="center"
                             android:src="@android:drawable/ic_menu_delete"
-                            android:contentDescription="자동삭제" />
+                            android:contentDescription="@string/security_auto_delete_icon_desc"
+                            app:tint="@color/md_on_primary_fixed" />
 
                     </FrameLayout>
 
@@ -339,7 +344,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Auto-Delete"
+                            android:text="@string/security_auto_delete_title"
                             android:textSize="@dimen/text_base"
                             android:textStyle="bold"
                             android:textColor="@color/md_on_surface" />
@@ -347,7 +352,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Automatically delete old conversations"
+                            android:text="@string/security_auto_delete_desc"
                             android:textSize="@dimen/text_sm"
                             android:textColor="@color/md_on_surface_variant"
                             android:layout_marginTop="4dp" />

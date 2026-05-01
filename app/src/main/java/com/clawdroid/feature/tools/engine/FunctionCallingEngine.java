@@ -1,7 +1,7 @@
 package com.clawdroid.feature.tools.engine;
 
 import com.clawdroid.core.ai.AiProviderManager;
-import com.clawdroid.core.ai.PromptBuilder;
+import com.clawdroid.core.model.AiConfig;
 import com.clawdroid.core.model.AiMessage;
 import com.clawdroid.core.model.AiRequest;
 import com.clawdroid.core.model.AiResponse;
@@ -10,6 +10,8 @@ import com.clawdroid.core.model.ToolDefinition;
 import com.clawdroid.core.model.ToolResult;
 import com.clawdroid.feature.tools.tool.ToolExecutor;
 import com.clawdroid.feature.tools.tool.ToolRegistry;
+
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +32,16 @@ public class FunctionCallingEngine {
     private final ToolRegistry toolRegistry;
     private final ToolExecutor toolExecutor;
     private final NanoFunctionCallingParser nanoParser;
-    private final PromptBuilder promptBuilder;
 
     @Inject
     public FunctionCallingEngine(AiProviderManager aiProviderManager,
                                   ToolRegistry toolRegistry,
                                   ToolExecutor toolExecutor,
-                                  NanoFunctionCallingParser nanoParser,
-                                  PromptBuilder promptBuilder) {
+                                  NanoFunctionCallingParser nanoParser) {
         this.aiProviderManager = aiProviderManager;
         this.toolRegistry = toolRegistry;
         this.toolExecutor = toolExecutor;
         this.nanoParser = nanoParser;
-        this.promptBuilder = promptBuilder;
     }
 
     /**
@@ -51,24 +50,39 @@ public class FunctionCallingEngine {
      */
     public Observable<String> processWithTools(List<AiMessage> messages,
                                                 String systemPrompt) {
+        return processWithTools(messages, null, new AiConfig());
+    }
+
+    public Observable<String> processWithTools(List<AiMessage> messages,
+                                                String modelId,
+                                                AiConfig config) {
+        return processWithTools(messages, modelId, config, null);
+    }
+
+    public Observable<String> processWithTools(List<AiMessage> messages,
+                                                String modelId,
+                                                AiConfig config,
+                                                @Nullable String auditMessageId) {
         List<ToolDefinition> tools = toolRegistry.getToolDefinitions();
         if (tools.isEmpty()) {
-            AiRequest request = new AiRequest(messages, null, null, null);
+            AiRequest request = new AiRequest(messages, modelId, config, null);
             return aiProviderManager.generateStream(request);
         }
 
-        return processRound(messages, systemPrompt, tools, 0);
+        return processRound(withToolInstructions(messages, tools), modelId, config, tools, auditMessageId, 0);
     }
 
     private Observable<String> processRound(List<AiMessage> messages,
-                                             String systemPrompt,
+                                             String modelId,
+                                             AiConfig config,
                                              List<ToolDefinition> tools,
+                                             @Nullable String auditMessageId,
                                              int round) {
         if (round >= MAX_TOOL_ROUNDS) {
             return Observable.just("[최대 도구 호출 횟수에 도달했습니다]");
         }
 
-        AiRequest request = new AiRequest(messages, null, null, tools);
+        AiRequest request = new AiRequest(messages, modelId, config, tools);
         return aiProviderManager.generate(request)
                 .subscribeOn(Schedulers.io())
                 .flatMapObservable(response -> {
@@ -94,7 +108,7 @@ public class FunctionCallingEngine {
                     }
 
                     // Execute tool calls
-                    return executeToolCalls(toolCalls)
+                        return executeToolCalls(toolCalls, auditMessageId)
                             .flatMapObservable(results -> {
                                 // Add assistant message and tool results to conversation
                                 List<AiMessage> newMessages = new ArrayList<>(messages);
@@ -115,15 +129,55 @@ public class FunctionCallingEngine {
                                 newMessages.add(new AiMessage("tool", toolResultStr.toString()));
 
                                 // Recursive call for next round
-                                return processRound(newMessages, systemPrompt, tools, round + 1);
+                                return processRound(newMessages, modelId, config, tools, auditMessageId, round + 1);
                             });
                 });
     }
 
-    private Single<List<ToolResult>> executeToolCalls(List<ToolCall> toolCalls) {
+    private List<AiMessage> withToolInstructions(List<AiMessage> messages,
+                                                  List<ToolDefinition> tools) {
+        List<AiMessage> result = new ArrayList<>();
+        String instructions = buildToolInstructions(tools);
+        boolean applied = false;
+
+        for (AiMessage message : messages) {
+            if (!applied && "system".equals(message.getRole())) {
+                result.add(new AiMessage("system", message.getContent() + "\n\n" + instructions));
+                applied = true;
+            } else {
+                result.add(message);
+            }
+        }
+
+        if (!applied) {
+            result.add(0, new AiMessage("system", instructions));
+        }
+        return result;
+    }
+
+    private String buildToolInstructions(List<ToolDefinition> tools) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[도구 사용 지침]\n");
+        builder.append("필요할 때만 다음 형식으로 도구 호출을 출력하세요. ");
+        builder.append("<tool_call>{\"name\":\"도구명\",\"params\":{...}}</tool_call>\n");
+        builder.append("사용 가능한 도구:\n");
+        for (ToolDefinition tool : tools) {
+            builder.append("- ")
+                    .append(tool.getName())
+                    .append(": ")
+                    .append(tool.getDescription())
+                    .append(" params=")
+                    .append(tool.getParametersSchema())
+                    .append("\n");
+        }
+        return builder.toString();
+    }
+
+    private Single<List<ToolResult>> executeToolCalls(List<ToolCall> toolCalls,
+                                                       @Nullable String auditMessageId) {
         List<Single<ToolResult>> singles = new ArrayList<>();
         for (ToolCall call : toolCalls) {
-            singles.add(toolExecutor.execute(call).subscribeOn(Schedulers.io()));
+            singles.add(toolExecutor.execute(call, auditMessageId).subscribeOn(Schedulers.io()));
         }
         return Single.zip(singles, results -> {
             List<ToolResult> list = new ArrayList<>();

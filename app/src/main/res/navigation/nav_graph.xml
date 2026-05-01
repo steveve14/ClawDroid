@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.clawdroid.feature.chat.ui.ChatFragment"
-        android:label="Chat"
+        android:label="@string/nav_chat"
         tools:layout="@layout/fragment_chat">
         <argument
             android:name="conversationId"
@@ -55,12 +55,12 @@
     <fragment
         android:id="@+id/channelAddFragment"
         android:name="com.clawdroid.feature.channels.ui.ChannelAddFragment"
-        android:label="채널 추가" />
+        android:label="@string/channel_add_title" />
 
     <fragment
         android:id="@+id/channelDetailFragment"
         android:name="com.clawdroid.feature.channels.ui.ChannelDetailFragment"
-        android:label="채널 상세">
+        android:label="@string/channel_detail_title">
         <argument
             android:name="channelId"
             app:argType="string" />
@@ -95,25 +95,25 @@
     <fragment
         android:id="@+id/modelSettingsFragment"
         android:name="com.clawdroid.feature.settings.ui.ModelSettingsFragment"
-        android:label="AI Models"
+        android:label="@string/settings_ai_models"
         tools:layout="@layout/fragment_model_settings" />
 
     <fragment
         android:id="@+id/personaSettingsFragment"
         android:name="com.clawdroid.feature.settings.ui.PersonaSettingsFragment"
-        android:label="Persona"
+        android:label="@string/settings_persona"
         tools:layout="@layout/fragment_persona_settings" />
 
     <fragment
         android:id="@+id/securitySettingsFragment"
         android:name="com.clawdroid.feature.settings.ui.SecuritySettingsFragment"
-        android:label="Security"
+        android:label="@string/security_title"
         tools:layout="@layout/fragment_security_settings" />
 
     <fragment
         android:id="@+id/toolSettingsFragment"
         android:name="com.clawdroid.feature.tools.ui.ToolSettingsFragment"
-        android:label="도구 · 스킬">
+        android:label="@string/settings_tools">
         <action
             android:id="@+id/action_toolSettings_to_skillSettings"
             app:destination="@id/skillSettingsFragment" />
@@ -122,18 +122,18 @@
     <fragment
         android:id="@+id/skillSettingsFragment"
         android:name="com.clawdroid.feature.tools.ui.SkillSettingsFragment"
-        android:label="스킬 관리" />
+        android:label="@string/skill_management_title" />
 
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.clawdroid.feature.settings.ui.AboutFragment"
-        android:label="앱 정보"
+        android:label="@string/settings_about"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/languageSettingsFragment"
         android:name="com.clawdroid.feature.settings.ui.LanguageSettingsFragment"
-        android:label="언어 설정"
+        android:label="@string/language_title"
         tools:layout="@layout/fragment_language_settings" />
 
 </navigation>

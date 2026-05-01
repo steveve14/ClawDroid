@@ -45,7 +45,7 @@ public class ChannelFlowE2ETest {
     }
 
     private void navigateToChannels() {
-        onView(withId(com.clawdroid.core.ui.R.id.channelListFragment)).perform(click());
+        onView(withId(R.id.channelListFragment)).perform(click());
     }
 
     @Test
@@ -54,8 +54,7 @@ public class ChannelFlowE2ETest {
             navigateToChannels();
 
             // 채널 목록 RecyclerView 또는 빈 상태 표시 확인
-            onView(withId(com.clawdroid.feature.channels.R.id.recyclerChannels))
-                    .check(matches(isDisplayed()));
+            assertChannelListOrEmptyStateDisplayed();
         }
     }
 
@@ -65,12 +64,11 @@ public class ChannelFlowE2ETest {
             navigateToChannels();
 
             // FAB 클릭 → 채널 추가 화면
-            onView(withId(com.clawdroid.feature.channels.R.id.fabAddChannel)).perform(click());
+            onView(withId(R.id.fabAddChannel)).perform(click());
 
             // 채널 추가 화면이 표시되는지 확인
-            // ChannelAddFragment 내 UI 요소 확인
-            onView(withId(com.clawdroid.feature.channels.R.id.fabAddChannel))
-                    .check(matches(org.hamcrest.Matchers.not(isDisplayed())));
+            onView(withId(R.id.etChannelName)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnTestConnection)).check(matches(isDisplayed()));
         }
     }
 
@@ -82,13 +80,21 @@ public class ChannelFlowE2ETest {
             // 채널이 없을 때 빈 상태 또는 RecyclerView 표시
             // 둘 중 하나는 반드시 표시됨
             try {
-                onView(withId(com.clawdroid.feature.channels.R.id.emptyState))
+                onView(withId(R.id.emptyState))
                         .check(matches(isDisplayed()));
             } catch (AssertionError e) {
                 // 채널이 있으면 RecyclerView 표시
-                onView(withId(com.clawdroid.feature.channels.R.id.recyclerChannels))
+                onView(withId(R.id.recyclerChannels))
                         .check(matches(isDisplayed()));
             }
+        }
+    }
+
+    private void assertChannelListOrEmptyStateDisplayed() {
+        try {
+            onView(withId(R.id.recyclerChannels)).check(matches(isDisplayed()));
+        } catch (AssertionError | RuntimeException e) {
+            onView(withId(R.id.emptyState)).check(matches(isDisplayed()));
         }
     }
 }

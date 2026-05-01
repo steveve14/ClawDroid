@@ -13,7 +13,7 @@
         android:layout_height="@dimen/toolbar_height"
         android:background="@color/surface_80"
         android:elevation="0dp"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@android:drawable/ic_menu_revert"
         app:navigationIconTint="@color/md_on_surface" />
 
     <androidx.core.widget.NestedScrollView

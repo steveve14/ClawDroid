@@ -84,12 +84,20 @@ public class ConversationListFragment extends Fragment {
     }
 
     private void showContextMenu(ConversationEntity conversation) {
-        String[] items = conversation.getIsPinned() == 1
-                ? new String[]{"고정 해제", "보관", "이름 수정", "삭제"}
-                : new String[]{"고정", "보관", "이름 수정", "삭제"};
+        String pinAction = conversation.getIsPinned() == 1
+            ? getString(R.string.conversation_action_unpin)
+            : getString(R.string.conversation_action_pin);
+        String[] items = new String[]{
+            pinAction,
+            getString(R.string.conversation_action_archive),
+            getString(R.string.conversation_action_rename),
+            getString(R.string.common_delete)
+        };
 
         new AlertDialog.Builder(requireContext())
-                .setTitle(conversation.getTitle() != null ? conversation.getTitle() : "대화")
+                .setTitle(conversation.getTitle() != null
+                        ? conversation.getTitle()
+                        : getString(R.string.conversation_context_default_title))
                 .setItems(items, (dialog, which) -> {
                     switch (which) {
                         case 0:
@@ -118,24 +126,25 @@ public class ConversationListFragment extends Fragment {
         input.setPadding(padding, padding, padding, padding);
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("이름 수정")
+                .setTitle(R.string.conversation_action_rename)
                 .setView(input)
-                .setPositiveButton("저장", (d, w) -> {
+                .setPositiveButton(R.string.common_save, (d, w) -> {
                     String newTitle = input.getText().toString().trim();
                     if (!newTitle.isEmpty()) {
                         viewModel.renameConversation(conversation.getId(), newTitle);
                     }
                 })
-                .setNegativeButton("취소", null)
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 
     private void showDeleteConfirmDialog(String conversationId) {
         new AlertDialog.Builder(requireContext())
-                .setTitle("채팅 삭제")
-                .setMessage("삭제하겠습니까?")
-                .setPositiveButton("삭제", (d, w) -> viewModel.deleteConversation(conversationId))
-                .setNegativeButton("취소", null)
+                .setTitle(R.string.conversation_delete_title)
+                .setMessage(R.string.conversation_delete_message)
+                .setPositiveButton(R.string.common_delete,
+                        (d, w) -> viewModel.deleteConversation(conversationId))
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 
@@ -177,10 +186,10 @@ public class ConversationListFragment extends Fragment {
         String[] personaNames;
         int activeIndex = 0;
         if (personaList == null || personaList.isEmpty()) {
-            personaNames = new String[]{"없음"};
+            personaNames = new String[]{getString(R.string.common_none)};
         } else {
             personaNames = new String[personaList.size() + 1];
-            personaNames[0] = "없음";
+            personaNames[0] = getString(R.string.common_none);
             for (int i = 0; i < personaList.size(); i++) {
                 personaNames[i + 1] = personaList.get(i).getName();
                 if (personaList.get(i).isActive()) activeIndex = i + 1;
@@ -192,20 +201,20 @@ public class ConversationListFragment extends Fragment {
         actvPersona.setAdapter(personaAdapter);
         actvPersona.setText(personaNames[activeIndex], false);
 
-        etChatName.setText("새 대화");
+        etChatName.setText(R.string.conversation_default_title);
         etChatName.selectAll();
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("새 체팅 만들기")
+                .setTitle(R.string.conversation_new_dialog_title)
                 .setView(dialogView)
-                .setPositiveButton("시작", (d, w) -> {
+                .setPositiveButton(R.string.common_start, (d, w) -> {
                     String title = etChatName.getText() != null
                             ? etChatName.getText().toString().trim() : "";
-                    if (title.isEmpty()) title = "새 대화";
+                    if (title.isEmpty()) title = getString(R.string.conversation_default_title);
 
                     String selected = actvPersona.getText().toString();
                     String systemPrompt = null;
-                    if (!"없음".equals(selected) && personaList != null) {
+                    if (!getString(R.string.common_none).equals(selected) && personaList != null) {
                         for (PersonaEntity p : personaList) {
                             if (p.getName().equals(selected)) {
                                 systemPrompt = p.getSystemPrompt();
@@ -215,7 +224,7 @@ public class ConversationListFragment extends Fragment {
                     }
                     viewModel.createNewConversation(title, null, null, systemPrompt);
                 })
-                .setNegativeButton("취소", null)
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 

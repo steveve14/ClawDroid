@@ -11,11 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.clawdroid.app.R;
 import com.clawdroid.core.data.db.dao.ChannelDao;
 import com.clawdroid.core.data.db.entity.ChannelEntity;
 import com.clawdroid.feature.channels.channel.ChannelManager;
 import com.clawdroid.feature.channels.channel.MessageRouter;
 import com.clawdroid.app.databinding.FragmentChannelDetailBinding;
+
+import java.time.Instant;
 
 import javax.inject.Inject;
 
@@ -25,6 +28,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class ChannelDetailFragment extends Fragment {
+
+    private static final int MAX_CHANNEL_SYSTEM_PROMPT_LENGTH = 2000;
 
     private FragmentChannelDetailBinding binding;
     @Inject ChannelDao channelDao;
@@ -65,18 +70,26 @@ public class ChannelDetailFragment extends Fragment {
                         .subscribe(channel -> {
                             currentChannel = channel;
                             if (getActivity() != null) {
-                                getActivity().runOnUiThread(() -> bindChannel(channel, view));
+                                getActivity().runOnUiThread(() -> {
+                                    if (isViewActive()) {
+                                        bindChannel(channel, view);
+                                    }
+                                });
                             }
                         }, e -> {
                             if (getActivity() != null) {
-                                getActivity().runOnUiThread(() ->
-                                        Navigation.findNavController(view).popBackStack());
+                                getActivity().runOnUiThread(() -> {
+                                    if (isViewActive()) {
+                                        Navigation.findNavController(view).popBackStack();
+                                    }
+                                });
                             }
                         })
         );
     }
 
     private void bindChannel(ChannelEntity channel, View view) {
+        if (!isViewActive()) return;
         binding.tvChannelName.setText(channel.getName());
 
         String typeLabel;
@@ -91,8 +104,14 @@ public class ChannelDetailFragment extends Fragment {
 
         updateStatus(channel.getStatus());
 
+        binding.etChannelSystemPrompt.setText(
+            channel.getSystemPrompt() != null ? channel.getSystemPrompt() : "");
+        binding.btnSavePersonaPrompt.setOnClickListener(v -> saveChannelPersonaPrompt(view));
+
         boolean isConnected = "connected".equals(channel.getStatus());
-        binding.btnToggleConnection.setText(isConnected ? "연결 해제" : "연결");
+    binding.btnToggleConnection.setText(isConnected
+        ? getString(R.string.channel_disconnect)
+        : getString(R.string.channel_connect));
 
         binding.btnToggleConnection.setOnClickListener(v -> {
             if ("connected".equals(currentChannel.getStatus())) {
@@ -132,8 +151,11 @@ public class ChannelDetailFragment extends Fragment {
                             .subscribe(
                                     () -> {
                                         if (getActivity() != null) {
-                                            getActivity().runOnUiThread(() ->
-                                                    Navigation.findNavController(view).popBackStack());
+                                            getActivity().runOnUiThread(() -> {
+                                                if (isViewActive()) {
+                                                    Navigation.findNavController(view).popBackStack();
+                                                }
+                                            });
                                         }
                                     },
                                     e -> showError(e.getMessage())
@@ -143,19 +165,20 @@ public class ChannelDetailFragment extends Fragment {
     }
 
     private void updateStatus(String status) {
+        if (!isViewActive()) return;
         String statusText;
         int statusColor;
         switch (status) {
             case "connected":
-                statusText = "✅ 연결됨";
+                statusText = getString(R.string.channel_status_connected);
                 statusColor = 0xFF4CAF50;
                 break;
             case "error":
-                statusText = "❌ 오류";
+                statusText = getString(R.string.channel_status_error);
                 statusColor = 0xFFF44336;
                 break;
             default:
-                statusText = "⏸️ 연결 해제";
+                statusText = getString(R.string.channel_status_disconnected);
                 statusColor = 0xFF9E9E9E;
                 break;
         }
@@ -170,17 +193,62 @@ public class ChannelDetailFragment extends Fragment {
                         .subscribe(channel -> {
                             currentChannel = channel;
                             if (getActivity() != null) {
-                                getActivity().runOnUiThread(() -> bindChannel(channel, view));
+                                getActivity().runOnUiThread(() -> {
+                                    if (isViewActive()) {
+                                        bindChannel(channel, view);
+                                    }
+                                });
                             }
-                        }, Throwable::printStackTrace)
+                        }, e -> showError(e.getMessage()))
+        );
+    }
+
+    private void saveChannelPersonaPrompt(View view) {
+        if (currentChannel == null || binding == null) return;
+        String prompt = binding.etChannelSystemPrompt.getText() != null
+                ? binding.etChannelSystemPrompt.getText().toString().trim()
+                : "";
+        if (prompt.length() > MAX_CHANNEL_SYSTEM_PROMPT_LENGTH) {
+            showError(getString(R.string.channel_persona_too_long));
+            return;
+        }
+        String channelId = currentChannel.getId();
+        currentChannel.setSystemPrompt(prompt.isEmpty() ? null : prompt);
+        currentChannel.setUpdatedAt(Instant.now().toString());
+
+        disposables.add(
+                channelDao.update(currentChannel)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(
+                                () -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() -> {
+                                            if (isAdded()) {
+                                                Toast.makeText(requireContext(), R.string.channel_persona_saved, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                    reloadChannel(channelId, view);
+                                },
+                                e -> showError(e.getMessage())
+                        )
         );
     }
 
     private void showError(String message) {
         if (getActivity() != null) {
-            getActivity().runOnUiThread(() ->
-                    Toast.makeText(getContext(), "오류: " + message, Toast.LENGTH_SHORT).show());
+            getActivity().runOnUiThread(() -> {
+                if (isAdded()) {
+                    Toast.makeText(requireContext(),
+                            getString(R.string.common_error_prefix, message),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+    }
+
+    private boolean isViewActive() {
+        return binding != null && isAdded();
     }
 
     @Override

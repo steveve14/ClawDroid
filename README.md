@@ -57,13 +57,13 @@ ClawDroid/
 
 ## 📋 개발 로드맵
 
-| Phase | 내용 |
-|---|---|
-| **Phase 1** | MVP AI 채팅 — 스트리밍 응답, Markdown 렌더링, 대화 관리, AI 프로바이더 통합 |
-| **Phase 2** | 음성 대화 — STT, TTS, Talk Mode UI, Wake Word |
-| **Phase 3** | 멀티채널 — Telegram/Discord/Slack 봇 연동 |
-| **Phase 4** | 도구·스킬 — Function Calling, 내장 도구, SKILL.md 기반 스킬 시스템 |
-| **Phase 5** | 고급 기능 — 멀티 세션, 보안(PIN/생체인증), App Widget, CI/CD |
+| Phase | 내용 | 상태 |
+|---|---|---|
+| **Phase 1** | MVP AI 채팅 — 스트리밍 응답, Markdown 렌더링, 대화 관리, AI 프로바이더 통합 | 완료 |
+| **Phase 2** | 음성 대화 — STT, TTS, Talk Mode UI, Wake Word | 완료 |
+| **Phase 3** | 멀티채널 — Telegram/Discord/Slack 봇 연동 | 완료 |
+| **Phase 4** | 도구·스킬 — Function Calling, 내장 도구, SKILL.md 기반 스킬 시스템 | 완료 |
+| **Phase 5** | 고급 기능 — 멀티 세션, 보안(PIN/생체인증), App Widget, CI/CD, Play Store 준비 | 배포 준비 |
 
 ## 🚀 시작하기
 

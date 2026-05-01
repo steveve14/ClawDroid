@@ -49,8 +49,8 @@ public class SecurityFlowE2ETest {
     }
 
     private void navigateToSecuritySettings() {
-        onView(withId(com.clawdroid.core.ui.R.id.settingsFragment)).perform(click());
-        onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings)).perform(click());
+        onView(withId(R.id.settingsFragment)).perform(click());
+        onView(withId(R.id.btnSecuritySettings)).perform(click());
     }
 
     @Test
@@ -59,15 +59,15 @@ public class SecurityFlowE2ETest {
             navigateToSecuritySettings();
 
             // 앱 잠금 스위치 표시
-            onView(withId(com.clawdroid.feature.settings.R.id.switchAppLock))
+            onView(withId(R.id.switchAppLock))
                     .check(matches(isDisplayed()));
 
             // 암호화 스위치 표시
-            onView(withId(com.clawdroid.feature.settings.R.id.switchEncryption))
+            onView(withId(R.id.switchEncryption))
                     .check(matches(isDisplayed()));
 
             // 자동 삭제 스피너 표시
-            onView(withId(com.clawdroid.feature.settings.R.id.spinnerAutoDelete))
+            onView(withId(R.id.spinnerAutoDelete))
                     .check(matches(isDisplayed()));
         }
     }
@@ -78,7 +78,7 @@ public class SecurityFlowE2ETest {
             navigateToSecuritySettings();
 
             // 앱 잠금 기본 상태: OFF
-            onView(withId(com.clawdroid.feature.settings.R.id.switchAppLock))
+            onView(withId(R.id.switchAppLock))
                     .check(matches(isNotChecked()));
         }
     }
@@ -89,7 +89,7 @@ public class SecurityFlowE2ETest {
             navigateToSecuritySettings();
 
             // 앱 잠금 스위치 ON → PIN 설정 다이얼로그 표시
-            onView(withId(com.clawdroid.feature.settings.R.id.switchAppLock)).perform(click());
+            onView(withId(R.id.switchAppLock)).perform(click());
 
             // PIN 입력 다이얼로그가 표시되는지 확인 (AlertDialog)
             onView(withId(android.R.id.button1)).check(matches(isDisplayed()));
@@ -101,7 +101,7 @@ public class SecurityFlowE2ETest {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSecuritySettings();
 
-            onView(withId(com.clawdroid.feature.settings.R.id.switchEncryption))
+            onView(withId(R.id.switchEncryption))
                     .check(matches(isDisplayed()));
         }
     }
@@ -111,7 +111,7 @@ public class SecurityFlowE2ETest {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSecuritySettings();
 
-            onView(withId(com.clawdroid.feature.settings.R.id.spinnerAutoDelete))
+            onView(withId(R.id.spinnerAutoDelete))
                     .check(matches(isDisplayed()));
         }
     }
@@ -125,7 +125,7 @@ public class SecurityFlowE2ETest {
             Espresso.pressBack();
 
             // 설정 화면으로 복귀
-            onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings))
+            onView(withId(R.id.btnSecuritySettings))
                     .check(matches(isDisplayed()));
         }
     }

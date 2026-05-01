@@ -16,14 +16,15 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="채널 추가"
-            app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel" />
+            app:title="@string/channel_add_title"
+            app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+            app:navigationIconTint="@color/md_on_surface" />
 
         <!-- Channel Type Selection -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="채널 타입"
+            android:text="@string/channel_type"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -65,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="채널 이름">
+            android:hint="@string/channel_name_hint">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etChannelName"
@@ -126,7 +127,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DM 정책"
+            android:text="@string/channel_dm_policy"
             android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -144,7 +145,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🔒 페어링"
+                android:text="@string/channel_dm_pairing"
                 android:checked="true" />
 
             <com.google.android.material.chip.Chip
@@ -152,14 +153,14 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🔓 공개" />
+                android:text="@string/channel_dm_public" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipClosed"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🚫 차단" />
+                android:text="@string/channel_dm_blocked" />
         </com.google.android.material.chip.ChipGroup>
 
         <!-- Test Result -->
@@ -179,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="API 연결 테스트" />
+            android:text="@string/channel_api_test" />
 
         <!-- Save Button -->
         <com.google.android.material.button.MaterialButton
@@ -188,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:enabled="false"
-            android:text="채널 추가" />
+            android:text="@string/channel_add_title" />
 
     </LinearLayout>
 </ScrollView>

@@ -71,7 +71,7 @@
                         android:layout_width="@dimen/icon_md"
                         android:layout_height="@dimen/icon_md"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_settings_gear"
+                        android:src="@android:drawable/ic_menu_manage"
                         android:contentDescription="AI"
                         app:tint="@color/md_on_primary_fixed" />
 
@@ -108,7 +108,7 @@
                     android:layout_height="@dimen/icon_md"
                     android:src="@android:drawable/ic_media_play"
                     android:contentDescription="navigate"
-                    android:alpha="0.5" />
+                    app:tint="@color/md_on_primary_fixed" />
 
             </LinearLayout>
 
@@ -177,7 +177,7 @@
                     android:layout_height="@dimen/icon_md"
                     android:src="@android:drawable/ic_media_play"
                     android:contentDescription="navigate"
-                    android:alpha="0.5" />
+                    app:tint="@color/md_on_primary_fixed" />
 
             </LinearLayout>
 
@@ -245,7 +245,7 @@
                     android:layout_height="@dimen/icon_md"
                     android:src="@android:drawable/ic_media_play"
                     android:contentDescription="navigate"
-                    android:alpha="0.5" />
+                    app:tint="@color/md_on_primary_fixed" />
 
             </LinearLayout>
 
@@ -382,7 +382,7 @@
                         android:id="@+id/tvCurrentLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="한국어"
+                        android:text="@string/language_korean"
                         android:textSize="@dimen/text_sm"
                         android:textColor="@color/md_on_surface_variant"
                         android:layout_marginTop="2dp" />
@@ -394,7 +394,7 @@
                     android:layout_height="@dimen/icon_md"
                     android:src="@android:drawable/ic_media_play"
                     android:contentDescription="navigate"
-                    android:alpha="0.5" />
+                    app:tint="@color/md_on_primary_fixed" />
 
             </LinearLayout>
 
@@ -462,7 +462,7 @@
                     android:layout_height="@dimen/icon_md"
                     android:src="@android:drawable/ic_media_play"
                     android:contentDescription="navigate"
-                    android:alpha="0.5" />
+                    app:tint="@color/md_on_primary_fixed" />
 
             </LinearLayout>
 

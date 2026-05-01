@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.clawdroid.app.R;
 import com.clawdroid.core.data.db.dao.ChannelDao;
 import com.clawdroid.core.data.db.entity.ChannelEntity;
 import com.clawdroid.app.databinding.FragmentChannelAddBinding;
@@ -111,18 +112,18 @@ public class ChannelAddFragment extends Fragment {
         String serverUrl = binding.etServerUrl.getText().toString().trim();
 
         if (!"gateway".equals(type) && botToken.isEmpty()) {
-            showTestResult(false, "Bot Token을 입력하세요");
+            showTestResult(false, getString(R.string.channel_bot_token_required));
             return;
         }
         if ("gateway".equals(type) && serverUrl.isEmpty()) {
-            showTestResult(false, "Server URL을 입력하세요");
+            showTestResult(false, getString(R.string.channel_server_url_required));
             return;
         }
 
         binding.btnTestConnection.setEnabled(false);
         binding.tvTestResult.setVisibility(View.VISIBLE);
         binding.tvTestResult.setTextColor(Color.GRAY);
-        binding.tvTestResult.setText("연결 테스트 중...");
+        binding.tvTestResult.setText(R.string.api_test_in_progress);
 
         Single<String> task = Single.fromCallable(() -> {
             switch (type) {
@@ -145,13 +146,13 @@ public class ChannelAddFragment extends Fragment {
                         msg -> {
                             if (binding == null) return;
                             binding.btnTestConnection.setEnabled(true);
-                            showTestResult(true, "연결 성공 · " + msg);
+                            showTestResult(true, getString(R.string.channel_test_success, msg));
                             binding.btnSave.setEnabled(true);
                         },
                         err -> {
                             if (binding == null) return;
                             binding.btnTestConnection.setEnabled(true);
-                            showTestResult(false, "연결 실패: " + err.getMessage());
+                            showTestResult(false, getString(R.string.channel_test_failure, err.getMessage()));
                         }));
     }
 
@@ -175,7 +176,7 @@ public class ChannelAddFragment extends Fragment {
     private void saveChannel(View view) {
         String name = binding.etChannelName.getText().toString().trim();
         if (name.isEmpty()) {
-            binding.etChannelName.setError("이름을 입력하세요");
+            binding.etChannelName.setError(getString(R.string.channel_name_required));
             return;
         }
 
@@ -217,10 +218,12 @@ public class ChannelAddFragment extends Fragment {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 () -> {
-                                    Toast.makeText(getContext(), "채널이 추가되었습니다", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), R.string.channel_added, Toast.LENGTH_SHORT).show();
                                     Navigation.findNavController(view).popBackStack();
                                 },
-                                e -> Toast.makeText(getContext(), "오류: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                                e -> Toast.makeText(getContext(),
+                                        getString(R.string.common_error_prefix, e.getMessage()),
+                                        Toast.LENGTH_SHORT).show()
                         )
         );
     }

@@ -28,8 +28,9 @@
                 android:layout_width="@dimen/icon_md"
                 android:layout_height="@dimen/icon_md"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_settings_gear"
-                android:contentDescription="tool" />
+                android:src="@android:drawable/ic_menu_manage"
+                android:contentDescription="tool"
+                app:tint="@color/md_on_primary_fixed" />
 
         </FrameLayout>
 

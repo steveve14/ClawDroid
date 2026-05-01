@@ -47,7 +47,7 @@ public class SettingsFlowE2ETest {
     }
 
     private void navigateToSettings(ActivityScenario<MainActivity> scenario) {
-        onView(withId(com.clawdroid.core.ui.R.id.settingsFragment)).perform(click());
+        onView(withId(R.id.settingsFragment)).perform(click());
     }
 
     @Test
@@ -55,11 +55,11 @@ public class SettingsFlowE2ETest {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSettings(scenario);
 
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).check(matches(isDisplayed()));
-            onView(withId(com.clawdroid.feature.settings.R.id.btnPersonaSettings)).check(matches(isDisplayed()));
-            onView(withId(com.clawdroid.feature.settings.R.id.btnToolSettings)).check(matches(isDisplayed()));
-            onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings)).check(matches(isDisplayed()));
-            onView(withId(com.clawdroid.feature.settings.R.id.btnAbout)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnModelSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnPersonaSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnToolSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnSecuritySettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnAbout)).check(matches(isDisplayed()));
         }
     }
 
@@ -67,14 +67,14 @@ public class SettingsFlowE2ETest {
     public void navigateToModelSettings_andBack() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSettings(scenario);
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).perform(click());
+            onView(withId(R.id.btnModelSettings)).perform(click());
 
             // ModelSettingsFragment 확인 — 모델 관련 UI 존재
             // 뒤로가기
             pressBack();
 
             // 설정 화면으로 복귀 확인
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnModelSettings)).check(matches(isDisplayed()));
         }
     }
 
@@ -82,11 +82,11 @@ public class SettingsFlowE2ETest {
     public void navigateToPersonaSettings_andBack() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSettings(scenario);
-            onView(withId(com.clawdroid.feature.settings.R.id.btnPersonaSettings)).perform(click());
+            onView(withId(R.id.btnPersonaSettings)).perform(click());
 
             pressBack();
 
-            onView(withId(com.clawdroid.feature.settings.R.id.btnPersonaSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnPersonaSettings)).check(matches(isDisplayed()));
         }
     }
 
@@ -94,15 +94,15 @@ public class SettingsFlowE2ETest {
     public void navigateToSecuritySettings_andBack() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSettings(scenario);
-            onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings)).perform(click());
+            onView(withId(R.id.btnSecuritySettings)).perform(click());
 
             // 보안 설정 화면 확인
-            onView(withId(com.clawdroid.feature.settings.R.id.switchAppLock))
+            onView(withId(R.id.switchAppLock))
                     .check(matches(isDisplayed()));
 
             pressBack();
 
-            onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnSecuritySettings)).check(matches(isDisplayed()));
         }
     }
 
@@ -110,11 +110,11 @@ public class SettingsFlowE2ETest {
     public void navigateToToolSettings_andBack() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSettings(scenario);
-            onView(withId(com.clawdroid.feature.settings.R.id.btnToolSettings)).perform(click());
+            onView(withId(R.id.btnToolSettings)).perform(click());
 
             pressBack();
 
-            onView(withId(com.clawdroid.feature.settings.R.id.btnToolSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnToolSettings)).check(matches(isDisplayed()));
         }
     }
 
@@ -122,7 +122,7 @@ public class SettingsFlowE2ETest {
     public void navigateToAbout_displaysVersionInfo() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             navigateToSettings(scenario);
-            onView(withId(com.clawdroid.feature.settings.R.id.btnAbout)).perform(click());
+            onView(withId(R.id.btnAbout)).perform(click());
 
             // 앱 정보 화면 — 버전 표시 확인
             onView(withText(org.hamcrest.Matchers.containsString("1.0")))
@@ -130,7 +130,7 @@ public class SettingsFlowE2ETest {
 
             pressBack();
 
-            onView(withId(com.clawdroid.feature.settings.R.id.btnAbout)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnAbout)).check(matches(isDisplayed()));
         }
     }
 }

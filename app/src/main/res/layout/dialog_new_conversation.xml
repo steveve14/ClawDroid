@@ -11,7 +11,7 @@
         android:id="@+id/tilChatName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="채팅방 이름"
+        android:hint="@string/conversation_chat_name_hint"
         app:boxBackgroundMode="outline"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="페르소나">
+        android:hint="@string/conversation_persona_hint">
 
         <AutoCompleteTextView
             android:id="@+id/actvPersona"

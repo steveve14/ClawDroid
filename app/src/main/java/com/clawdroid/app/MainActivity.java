@@ -1,5 +1,6 @@
 package com.clawdroid.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.clawdroid.app.databinding.ActivityMainBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.clawdroid.core.locale.AppLocaleManager;
 
 import javax.inject.Inject;
 
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
                     finishAffinity();
                 }
             });
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(AppLocaleManager.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

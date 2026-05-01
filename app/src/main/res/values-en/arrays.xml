@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="auto_delete_options">
+        <item>Off</item>
+        <item>After 7 days</item>
+        <item>After 30 days</item>
+        <item>After 90 days</item>
+        <item>After 180 days</item>
+        <item>After 1 year</item>
+    </string-array>
+</resources>

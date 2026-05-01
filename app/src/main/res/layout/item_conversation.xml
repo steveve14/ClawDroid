@@ -40,7 +40,7 @@
 
             <ImageView
                 android:id="@+id/ivAvatar"
-                android:layout_width="21dp"
+                android:layout_width="@dimen/icon_md"
                 android:layout_height="@dimen/icon_md"
                 android:layout_gravity="center"
                 android:contentDescription="avatar"
@@ -143,21 +143,25 @@
 
             <ImageButton
                 android:id="@+id/btnRename"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/avatar_md"
+                android:layout_height="@dimen/avatar_md"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_edit"
-                android:contentDescription="이름 수정"
-                android:padding="6dp" />
+                android:contentDescription="@string/conversation_action_rename"
+                app:tint="@color/md_on_primary_fixed"
+                android:scaleType="centerInside"
+                android:padding="8dp" />
 
             <ImageButton
                 android:id="@+id/btnDelete"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/avatar_md"
+                android:layout_height="@dimen/avatar_md"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_delete"
-                android:contentDescription="삭제"
-                android:padding="6dp" />
+                android:contentDescription="@string/common_delete"
+                app:tint="@color/md_on_primary_fixed"
+                android:scaleType="centerInside"
+                android:padding="8dp" />
 
         </LinearLayout>
 

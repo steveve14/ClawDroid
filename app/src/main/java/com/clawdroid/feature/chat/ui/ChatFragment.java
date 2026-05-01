@@ -137,9 +137,14 @@ public class ChatFragment extends Fragment {
     }
 
     private void showAttachOptions() {
-        String[] options = {"갤러리에서 선택", "카메라로 촬영", "대화 내보내기 (Markdown)", "대화 내보내기 (JSON)"};
+        String[] options = {
+            getString(R.string.chat_attach_gallery),
+            getString(R.string.chat_attach_camera),
+            getString(R.string.chat_export_markdown),
+            getString(R.string.chat_export_json)
+        };
         new AlertDialog.Builder(requireContext())
-                .setTitle("첨부 / 내보내기")
+            .setTitle(R.string.chat_attach_export_title)
                 .setItems(options, (dialog, which) -> {
                     switch (which) {
                         case 0:

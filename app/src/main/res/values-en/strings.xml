@@ -6,6 +6,22 @@
     <string name="nav_settings">Settings</string>
     <string name="widget_description">ClawDroid quick question widget</string>
 
+    <!-- Common -->
+    <string name="common_none">None</string>
+    <string name="common_save">Save</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_start">Start</string>
+    <string name="common_refresh">Refresh</string>
+    <string name="common_select">Select</string>
+    <string name="common_set">Set</string>
+    <string name="common_disable">Disable</string>
+    <string name="common_next">Next</string>
+    <string name="common_done">Done</string>
+    <string name="common_ok">OK</string>
+    <string name="common_error_prefix">Error: %1$s</string>
+    <string name="common_unknown_error">Unknown error</string>
+
     <!-- Settings screen -->
     <string name="settings_title">Settings</string>
     <string name="settings_subtitle">Configure your AI companion experience</string>
@@ -24,6 +40,8 @@
     <string name="settings_language">Language</string>
     <string name="settings_about">About</string>
     <string name="settings_about_desc">ClawDroid v1.0.0</string>
+    <string name="security_title">Security</string>
+    <string name="skill_management_title">Skill Management</string>
 
     <!-- Language screen -->
     <string name="language_title">Language</string>
@@ -33,6 +51,80 @@
     <string name="language_english">English</string>
     <string name="language_english_sub">English</string>
 
+    <!-- Lock screen -->
+    <string name="lock_title">ClawDroid</string>
+    <string name="lock_pin_prompt">Enter your PIN</string>
+    <string name="lock_pin_hint">PIN (4-6 digits)</string>
+    <string name="lock_unlock">Unlock</string>
+    <string name="lock_too_many_failures">Too many failed attempts. The app is locked.</string>
+    <string name="lock_pin_invalid_with_count">Incorrect PIN. (failed attempts: %1$d)</string>
+    <string name="lock_locked_retry_after">Locked - try again in %1$s</string>
+    <string name="lock_biometric_title">Unlock ClawDroid</string>
+    <string name="lock_biometric_subtitle">Unlock with biometric authentication.</string>
+    <string name="lock_biometric_use_pin">Use PIN</string>
+    <string name="duration_hms">%1$dh %2$02dm %3$02ds</string>
+    <string name="duration_ms">%1$dm %2$02ds</string>
+    <string name="duration_seconds">%1$ds</string>
+
+    <!-- Conversation list -->
+    <string name="conversation_search_content_desc">Search</string>
+    <string name="conversation_new_content_desc">New chat</string>
+    <string name="conversation_search_hint">Search chats...</string>
+    <string name="conversation_empty_icon_desc">Start</string>
+    <string name="conversation_empty_title">No conversations yet</string>
+    <string name="conversation_empty_subtitle">Start a new conversation\nand explore the edge of intelligence.</string>
+    <string name="conversation_empty_action">Start conversation</string>
+    <string name="conversation_default_title">New conversation</string>
+    <string name="conversation_context_default_title">Conversation</string>
+    <string name="conversation_action_pin">Pin</string>
+    <string name="conversation_action_unpin">Unpin</string>
+    <string name="conversation_action_archive">Archive</string>
+    <string name="conversation_action_rename">Rename</string>
+    <string name="conversation_delete_title">Delete chat</string>
+    <string name="conversation_delete_message">Delete this conversation?</string>
+    <string name="conversation_new_dialog_title">Create new chat</string>
+    <string name="conversation_chat_name_hint">Chat name</string>
+    <string name="conversation_persona_hint">Persona</string>
+    <string name="conversation_channel_chip">Channel</string>
+
+    <!-- Voice chat -->
+    <string name="voice_title">Voice Chat</string>
+    <string name="voice_permission_required">Microphone permission is required</string>
+    <string name="voice_status_ready">Voice ready</string>
+    <string name="voice_status_subtitle">Speak naturally. Your voice will be processed in real time.</string>
+    <string name="voice_no_active_conversation">No active chat found</string>
+    <string name="voice_recent_conversation">Recent chat (auto-connect)</string>
+    <string name="voice_conversation_picker_title">Choose chat</string>
+    <string name="voice_conversation_default">Chat</string>
+    <string name="voice_selected_conversation">Connected chat: %1$s</string>
+    <string name="voice_processing">Processing...</string>
+    <string name="voice_playing_response">Playing response...</string>
+    <string name="voice_prompt_speak">Please speak</string>
+    <string name="voice_listening">Listening...</string>
+    <string name="voice_stop">Stop</string>
+    <string name="voice_record">Record</string>
+    <string name="voice_settings">Settings</string>
+    <string name="voice_conversation_content_desc">Chat</string>
+    <string name="voice_history_title">Voice conversation history</string>
+    <string name="voice_stage_label">TALK MODE</string>
+
+    <!-- Speech recognition -->
+    <string name="speech_error_no_response">Recording stopped because there was no response.</string>
+    <string name="speech_error_too_long">Recording stopped because it ran too long.</string>
+    <string name="speech_error_unavailable">Speech recognition is not available.</string>
+    <string name="speech_error_no_match">No recognition result</string>
+    <string name="speech_error_network">Network error</string>
+    <string name="speech_error_audio">Audio error</string>
+    <string name="speech_error_generic">Speech recognition error (%1$d)</string>
+
+    <!-- Channels -->
+    <string name="channel_list_title">Channels</string>
+    <string name="channel_empty_icon_desc">Channels</string>
+    <string name="channel_empty_title">Connect Your Channels</string>
+    <string name="channel_empty_message">Link Telegram, Discord, or Slack\nto manage all chats in one place.</string>
+    <string name="channel_add_title">Add Channel</string>
+    <string name="channel_detail_title">Channel Details</string>
+
     <!-- Model parameters -->
     <string name="model_params_title">Model Parameters</string>
     <string name="model_params_none">No model configured</string>
@@ -40,4 +132,155 @@
     <string name="default_model">Default model</string>
     <string name="configure_model_params">Configure model parameters</string>
     <string name="remove_model">Remove model</string>
+
+    <!-- Model settings -->
+    <string name="model_settings_title">AI Model Settings</string>
+    <string name="model_settings_subtitle">Manage AI providers and models</string>
+    <string name="model_connected_api">API Connection Status</string>
+    <string name="model_add_api">+ Add API</string>
+    <string name="model_no_api_connected">No APIs connected.\nUse Add API to connect a provider.</string>
+    <string name="model_selection">Model Selection</string>
+    <string name="model_add_model">+ Add Model</string>
+    <string name="model_disabled_until_api">Connect an API before choosing a model.</string>
+    <string name="model_fallback">Fallback</string>
+    <string name="model_fallback_desc">Switch to a local model automatically when cloud connections fail.</string>
+    <string name="model_fallback_enabled">Enable fallback</string>
+    <string name="model_switch_title">Switch Model</string>
+    <string name="model_switch_add">+ Add model (go to settings)</string>
+    <string name="provider_select">Select provider</string>
+    <string name="provider_ollama_local">Ollama (local server)</string>
+    <string name="provider_custom_compatible">Custom (OpenAI compatible)</string>
+    <string name="api_key_input">Enter API Key</string>
+    <string name="api_key_hint">API Key</string>
+    <string name="endpoint_url_hint">Endpoint URL (for example: http://localhost:11434)</string>
+    <string name="api_test_in_progress">Testing connection...</string>
+
+    <!-- Security settings -->
+    <string name="security_permissions_title">Security &amp;\nPermissions</string>
+    <string name="security_icon_desc">Security</string>
+    <string name="security_device_protected">Device Protected</string>
+    <string name="security_all_systems_active">All security systems active</string>
+    <string name="security_biometric_title">Biometric Authentication</string>
+    <string name="security_biometric_desc">Fingerprint or face recognition</string>
+    <string name="security_biometric_icon_desc">Biometric authentication</string>
+    <string name="security_app_lock_title">App Lock (PIN)</string>
+    <string name="security_app_lock_desc">4-6 digit PIN lock</string>
+    <string name="security_encryption_title">Data Encryption</string>
+    <string name="security_encryption_desc">Local database encryption</string>
+    <string name="security_encryption_icon_desc">Encryption</string>
+    <string name="security_auto_delete_title">Auto-Delete</string>
+    <string name="security_auto_delete_desc">Automatically delete old conversations</string>
+    <string name="security_auto_delete_icon_desc">Auto-delete</string>
+    <string name="security_biometric_unavailable">Biometric authentication is not available on this device.</string>
+    <string name="security_pin_enter_hint">Enter PIN (4-6 digits)</string>
+    <string name="security_pin_confirm_hint">Confirm PIN</string>
+    <string name="security_pin_set_title">Set PIN</string>
+    <string name="security_pin_min_length">PIN must be at least 4 digits.</string>
+    <string name="security_pin_mismatch">PINs do not match.</string>
+    <string name="security_app_lock_enabled">App lock has been enabled.</string>
+    <string name="security_current_pin_hint">Enter current PIN</string>
+    <string name="security_pin_confirm_title">Confirm PIN</string>
+    <string name="security_app_lock_disabled">App lock has been disabled.</string>
+    <string name="security_pin_invalid">Incorrect PIN.</string>
+    <string name="security_biometric_register_title">Register biometric authentication</string>
+    <string name="security_biometric_register_subtitle">Unlock the app with biometric authentication.</string>
+    <string name="security_biometric_enabled">Biometric authentication has been enabled.</string>
+
+    <!-- Persona settings -->
+    <string name="persona_title">Persona</string>
+    <string name="persona_subtitle">Create and switch between multiple AI personas</string>
+    <string name="persona_empty">No personas yet.\nUse the + button below to add one.</string>
+    <string name="persona_add">Add Persona</string>
+    <string name="persona_edit">Edit Persona</string>
+    <string name="persona_active">Active</string>
+    <string name="persona_name_hint">Persona name</string>
+    <string name="persona_style_hint">Conversation style</string>
+    <string name="persona_name_required">Enter a name</string>
+    <string name="persona_saved">Saved</string>
+    <string name="persona_save_failed">Save failed</string>
+    <string name="persona_delete_title">Delete persona</string>
+    <string name="persona_delete_message">Delete "%1$s"?</string>
+    <string name="persona_deleted">Deleted</string>
+    <string name="persona_activated">%1$s activated</string>
+
+    <!-- Tools/skills settings -->
+    <string name="tools_builtin">Built-in Tools</string>
+    <string name="tools_custom_skills">Custom Skills</string>
+    <string name="skill_how_title">How Skills Work</string>
+    <string name="skill_how_desc">Skills extend your AI capabilities.\nActive skills are automatically added to the system prompt.</string>
+    <string name="skill_empty">No skills registered.\nAdd SKILL.md to the skills folder.</string>
+
+    <!-- Channel settings -->
+    <string name="channel_type">Channel Type</string>
+    <string name="channel_dm_policy">DM Policy</string>
+    <string name="channel_dm_pairing">Pairing</string>
+    <string name="channel_dm_public">Public</string>
+    <string name="channel_dm_blocked">Blocked</string>
+    <string name="channel_api_test">Test API Connection</string>
+    <string name="channel_connect">Connect</string>
+    <string name="channel_pairing_title">DM Pairing</string>
+    <string name="channel_pairing_desc">Enter /pair [code] in the external channel to pair it.</string>
+    <string name="channel_new_pairing_code">Generate new code</string>
+    <string name="channel_persona_title">Channel Persona</string>
+    <string name="channel_persona_desc">System prompt applied only to messages received in this channel.</string>
+    <string name="channel_delete">Delete Channel</string>
+    <string name="channel_name_hint">Channel name</string>
+    <string name="system_prompt_hint">System Prompt</string>
+    <string name="channel_disconnect">Disconnect</string>
+    <string name="channel_status_connected">Connected</string>
+    <string name="channel_status_error">Error</string>
+    <string name="channel_status_disconnected">Disconnected</string>
+    <string name="channel_bot_token_required">Enter a bot token</string>
+    <string name="channel_server_url_required">Enter a server URL</string>
+    <string name="channel_test_success">Connection succeeded · %1$s</string>
+    <string name="channel_test_failure">Connection failed: %1$s</string>
+    <string name="channel_name_required">Enter a name</string>
+    <string name="channel_added">Channel added</string>
+    <string name="channel_persona_too_long">Channel persona must be 2000 characters or fewer.</string>
+    <string name="channel_persona_saved">Channel persona saved.</string>
+
+    <!-- Chat/widget -->
+    <string name="chat_generating">Generating...</string>
+    <string name="chat_attach">Attach</string>
+    <string name="chat_attach_export_title">Attach / Export</string>
+    <string name="chat_attach_gallery">Choose from gallery</string>
+    <string name="chat_attach_camera">Take photo</string>
+    <string name="chat_export_markdown">Export conversation (Markdown)</string>
+    <string name="chat_export_json">Export conversation (JSON)</string>
+    <string name="chat_voice_input">Voice input</string>
+    <string name="chat_message_hint">Type a message...</string>
+    <string name="chat_send">Send</string>
+    <string name="widget_title">ClawDroid</string>
+    <string name="widget_prompt">Enter a quick question.</string>
+    <string name="widget_ask">Ask</string>
+    <string name="widget_open_app">Open app</string>
+
+    <!-- About -->
+    <string name="about_tagline">AI-Powered Personal Assistant</string>
+    <string name="about_terms">Terms of Service</string>
+    <string name="about_privacy">Privacy Policy</string>
+    <string name="about_open_source">Open Source Licenses</string>
+    <string name="about_tech_stack">Tech Stack</string>
+    <string name="about_terms_content">ClawDroid is a personal AI assistant app.\n\nThis app processes user data on device and communicates with servers only when cloud AI models are used.\n\nUsers are responsible for checking the accuracy of AI responses generated by the app.</string>
+    <string name="about_privacy_content">ClawDroid respects user privacy.\n\n• Conversation data: encrypted and stored on device\n• API keys: stored securely with EncryptedSharedPreferences\n• Cloud AI: conversation content may be sent to a server when used\n• On-device AI: processed locally without network access\n• Channel data: only messages from connected channels are processed\n\nUsers can delete all data at any time.</string>
+    <string name="about_open_source_content">This app uses the following open source libraries:\n\n• AndroidX (Apache 2.0)\n• Material Components (Apache 2.0)\n• Room Database (Apache 2.0)\n• Hilt / Dagger (Apache 2.0)\n• RxJava 3 (Apache 2.0)\n• Retrofit / OkHttp (Apache 2.0)\n• Glide (BSD / Apache 2.0)\n• Markwon (Apache 2.0)\n• Jsoup (MIT)\n• Gson (Apache 2.0)</string>
+
+    <!-- Model settings runtime messages -->
+    <string name="model_status_on_device">On device</string>
+    <string name="model_status_connected">Connected</string>
+    <string name="model_status_disconnected">Disconnected</string>
+    <string name="model_connect_api_first">Connect an API first.</string>
+    <string name="model_no_available_models">No available models.</string>
+    <string name="model_selected">%1$s selected</string>
+    <string name="model_list_load_failed">Failed to load model list</string>
+    <string name="provider_choose_required">Choose a provider.</string>
+    <string name="api_key_required">Enter an API Key.</string>
+    <string name="openai_api_key_input">Enter OpenAI API Key</string>
+    <string name="gemini_api_key_input">Enter Gemini API Key</string>
+    <string name="ollama_settings">Ollama Settings</string>
+    <string name="custom_api_settings">Custom API Settings</string>
+    <string name="api_test_success">Connection successful!</string>
+    <string name="api_test_success_detail">%1$s connection was verified.</string>
+    <string name="api_test_failure">Connection failed</string>
+    <string name="api_test_failure_detail">Check the API key or endpoint.</string>
 </resources>

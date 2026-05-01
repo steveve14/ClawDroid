@@ -29,6 +29,7 @@ public class CalculatorTool implements Tool {
 
         JsonObject expression = new JsonObject();
         expression.addProperty("type", "string");
+        expression.addProperty("maxLength", 500);
         expression.addProperty("description", "계산할 수학 표현식 (예: 2+3*4, sqrt(16), 2^10)");
         properties.add("expression", expression);
 

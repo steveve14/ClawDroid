@@ -1,5 +1,6 @@
 package com.clawdroid.feature.settings.ui;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,8 +30,10 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -46,6 +49,7 @@ public class ModelSettingsFragment extends Fragment {
     private FragmentModelSettingsBinding binding;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final List<String> connectedProviderIds = new ArrayList<>();
+    private final Map<String, Boolean> providerAvailability = new LinkedHashMap<>();
     private String currentModelKey = "";
 
     @Inject
@@ -79,29 +83,23 @@ public class ModelSettingsFragment extends Fragment {
 
     private void refreshConnectedApis() {
         connectedProviderIds.clear();
+        providerAvailability.clear();
         binding.connectedApiContainer.removeAllViews();
 
-        // Gemini Nano (온디바이스) — API 키 불필요, 항상 기본 제공
-        connectedProviderIds.add("gemini-nano");
-
         List<String> allIds = providerManager.getAllProviderIds();
-        List<Single<Boolean>> checks = new ArrayList<>();
+        List<Single<ProviderAvailabilityResult>> checks = new ArrayList<>();
         for (String id : allIds) {
-            if ("gemini-nano".equals(id)) continue; // 이미 기본 추가됨
             AiProvider provider = providerManager.getProvider(id);
             if (provider != null) {
-                checks.add(provider.isAvailable().map(avail -> {
-                    if (avail) {
-                        synchronized (connectedProviderIds) {
-                            connectedProviderIds.add(id);
-                        }
-                    }
-                    return avail;
-                }));
+                providerAvailability.put(id, false);
+                checks.add(provider.isAvailable()
+                        .map(avail -> new ProviderAvailabilityResult(id, avail))
+                        .onErrorReturnItem(new ProviderAvailabilityResult(id, false)));
             }
         }
 
         if (checks.isEmpty()) {
+            populateConnectedApis();
             updateModelSectionState();
             return;
         }
@@ -111,23 +109,45 @@ public class ModelSettingsFragment extends Fragment {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(results -> {
+                            for (Object result : results) {
+                                ProviderAvailabilityResult status = (ProviderAvailabilityResult) result;
+                                setProviderAvailability(status.providerId, status.available);
+                            }
                             populateConnectedApis();
                             updateModelSectionState();
-                        }, err -> updateModelSectionState())
+                        }, err -> {
+                            populateConnectedApis();
+                            updateModelSectionState();
+                        })
         );
+    }
+
+    private void setProviderAvailability(String providerId, boolean available) {
+        providerAvailability.put(providerId, available);
+        connectedProviderIds.remove(providerId);
+        if (available) {
+            connectedProviderIds.add(providerId);
+        }
+    }
+
+    private boolean isProviderAvailable(String providerId) {
+        Boolean available = providerAvailability.get(providerId);
+        return available != null && available;
     }
 
     private void populateConnectedApis() {
         binding.connectedApiContainer.removeAllViews();
 
-        if (connectedProviderIds.isEmpty()) {
+        if (providerAvailability.isEmpty()) {
             binding.tvNoApiConnected.setVisibility(View.VISIBLE);
             return;
         }
 
         binding.tvNoApiConnected.setVisibility(View.GONE);
 
-        for (String id : connectedProviderIds) {
+        for (Map.Entry<String, Boolean> entry : providerAvailability.entrySet()) {
+            String id = entry.getKey();
+            boolean available = entry.getValue();
             AiProvider provider = providerManager.getProvider(id);
             if (provider == null) continue;
 
@@ -158,15 +178,18 @@ public class ModelSettingsFragment extends Fragment {
             tvName.setLayoutParams(tvLp);
 
             TextView tvStatus = new TextView(requireContext());
-            // Gemini Nano는 온디바이스 — "기기 내장" 표시
-            if ("gemini-nano".equals(id)) {
-                tvStatus.setText("✓ 기기 내장");
+            if ("gemini-nano".equals(id) && available) {
+                tvStatus.setText(R.string.model_status_on_device);
+            } else if (available) {
+                tvStatus.setText(R.string.model_status_connected);
             } else {
-                tvStatus.setText("✓ 연결됨");
+                tvStatus.setText(R.string.model_status_disconnected);
             }
             tvStatus.setTextSize(13);
-            tvStatus.setTextColor(getResources().getColor(R.color.md_primary, null));
+            tvStatus.setTextColor(getResources().getColor(
+                    available ? R.color.status_connected : R.color.status_disconnected, null));
 
+            inner.addView(createStatusDot(available, dp));
             inner.addView(tvName);
             inner.addView(tvStatus);
             card.addView(inner);
@@ -224,7 +247,7 @@ public class ModelSettingsFragment extends Fragment {
 
     private void showAddModelDialog() {
         if (connectedProviderIds.isEmpty()) {
-            Toast.makeText(requireContext(), "API\ub97c \uba3c\uc800 \uc5f0\uacb0\ud574\uc8fc\uc138\uc694.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), R.string.model_connect_api_first, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -258,7 +281,7 @@ public class ModelSettingsFragment extends Fragment {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(items -> {
                             if (items.isEmpty()) {
-                                Toast.makeText(requireContext(), "사용 가능한 모델이 없습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), R.string.model_no_available_models, Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             String[] names = new String[items.size()];
@@ -266,7 +289,7 @@ public class ModelSettingsFragment extends Fragment {
                                 names[i] = items.get(i)[0];
                             }
                             new MaterialAlertDialogBuilder(requireContext())
-                                    .setTitle("모델 선택")
+                                    .setTitle(R.string.model_selection)
                                     .setItems(names, (dlg, which) -> {
                                         String selectedProvider = items.get(which)[1];
                                         String selectedModelId = items.get(which)[2];
@@ -274,11 +297,13 @@ public class ModelSettingsFragment extends Fragment {
                                         settingsRepository.setActiveProvider(selectedProvider);
                                         settingsRepository.setDefaultModelId(selectedProvider, selectedModelId);
                                         loadSelectedModel();
-                                        Toast.makeText(requireContext(), names[which] + " 선택됨", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(requireContext(),
+                                                getString(R.string.model_selected, names[which]),
+                                                Toast.LENGTH_SHORT).show();
                                     })
-                                    .setNegativeButton("취소", null)
+                                    .setNegativeButton(R.string.common_cancel, null)
                                     .show();
-                        }, err -> Toast.makeText(requireContext(), "모델 목록 로드 실패", Toast.LENGTH_SHORT).show())
+                        }, err -> Toast.makeText(requireContext(), R.string.model_list_load_failed, Toast.LENGTH_SHORT).show())
         );
     }
 
@@ -317,6 +342,8 @@ public class ModelSettingsFragment extends Fragment {
         int pad = (int) (16 * dp);
         inner.setPadding(pad, pad, pad, pad);
 
+        inner.addView(createStatusDot(isProviderAvailable(providerId), dp));
+
         LinearLayout textWrap = new LinearLayout(requireContext());
         textWrap.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams textLp = new LinearLayout.LayoutParams(
@@ -341,7 +368,7 @@ public class ModelSettingsFragment extends Fragment {
         LinearLayout.LayoutParams ivLp = new LinearLayout.LayoutParams(iconSize, iconSize);
         ivLp.leftMargin = (int) (8 * dp);
         ivChevron.setLayoutParams(ivLp);
-        ivChevron.setImageResource(R.drawable.ic_settings_gear);
+        ivChevron.setImageResource(android.R.drawable.ic_menu_manage);
         ivChevron.setColorFilter(getResources().getColor(R.color.md_on_surface_variant, null));
         ivChevron.setClickable(true);
         ivChevron.setFocusable(true);
@@ -353,6 +380,31 @@ public class ModelSettingsFragment extends Fragment {
         inner.addView(ivChevron);
         card.addView(inner);
         return card;
+    }
+
+    private View createStatusDot(boolean connected, float dp) {
+        View dot = new View(requireContext());
+        int size = (int) (10 * dp);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(size, size);
+        lp.rightMargin = (int) (12 * dp);
+        dot.setLayoutParams(lp);
+
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.OVAL);
+        drawable.setColor(getResources().getColor(
+                connected ? R.color.status_connected : R.color.status_disconnected, null));
+        dot.setBackground(drawable);
+        return dot;
+    }
+
+    private static class ProviderAvailabilityResult {
+        final String providerId;
+        final boolean available;
+
+        ProviderAvailabilityResult(String providerId, boolean available) {
+            this.providerId = providerId;
+            this.available = available;
+        }
     }
 
     private void showModelParamsDialog(String modelName, String providerId, String modelId) {
@@ -435,8 +487,8 @@ public class ModelSettingsFragment extends Fragment {
 
         AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
                 .setView(dialogView)
-                .setPositiveButton("\ub2e4\uc74c", null)
-                .setNegativeButton("\ucde8\uc18c", null)
+            .setPositiveButton(R.string.common_next, null)
+            .setNegativeButton(R.string.common_cancel, null)
                 .create();
 
         dialog.show();
@@ -449,34 +501,34 @@ public class ModelSettingsFragment extends Fragment {
                 int checkedId = rgProvider.getCheckedRadioButtonId();
                 if (checkedId == R.id.rbProviderOpenAi) {
                     selectedProviderId[0] = "openai";
-                    tvTitle.setText("OpenAI API Key \uc785\ub825");
+                    tvTitle.setText(R.string.openai_api_key_input);
                     tilEndpoint.setVisibility(View.GONE);
                 } else if (checkedId == R.id.rbProviderGemini) {
                     selectedProviderId[0] = "gemini-cloud";
-                    tvTitle.setText("Gemini API Key \uc785\ub825");
+                    tvTitle.setText(R.string.gemini_api_key_input);
                     tilEndpoint.setVisibility(View.GONE);
                 } else if (checkedId == R.id.rbProviderOllama) {
                     selectedProviderId[0] = "ollama";
-                    tvTitle.setText("Ollama \uc124\uc815");
+                    tvTitle.setText(R.string.ollama_settings);
                     tilEndpoint.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.rbProviderCustom) {
                     selectedProviderId[0] = "custom";
-                    tvTitle.setText("Custom API \uc124\uc815");
+                    tvTitle.setText(R.string.custom_api_settings);
                     tilEndpoint.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(requireContext(), "\ud504\ub85c\ubc14\uc774\ub354\ub97c \uc120\ud0dd\ud574\uc8fc\uc138\uc694.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.provider_choose_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 stepProvider.setVisibility(View.GONE);
                 stepApiKey.setVisibility(View.VISIBLE);
                 currentStep[0] = 2;
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText("\uc5f0\uacb0 \ud14c\uc2a4\ud2b8");
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.channel_api_test);
 
             } else if (currentStep[0] == 2) {
                 String apiKey = etApiKey.getText() != null ? etApiKey.getText().toString().trim() : "";
                 if (apiKey.isEmpty() && !"ollama".equals(selectedProviderId[0])) {
-                    Toast.makeText(requireContext(), "API Key\ub97c \uc785\ub825\ud574\uc8fc\uc138\uc694.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.api_key_required, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -494,11 +546,11 @@ public class ModelSettingsFragment extends Fragment {
                 stepApiKey.setVisibility(View.GONE);
                 stepResult.setVisibility(View.VISIBLE);
                 progressTest.setVisibility(View.VISIBLE);
-                tvTestStatus.setText("\uc5f0\uacb0 \ud14c\uc2a4\ud2b8 \uc911...");
+                tvTestStatus.setText(R.string.api_test_in_progress);
                 tvTestDetail.setText("");
                 currentStep[0] = 3;
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText("\uc644\ub8cc");
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setText(R.string.common_done);
 
                 AiProvider provider = providerManager.getProvider(selectedProviderId[0]);
                 if (provider != null) {
@@ -509,18 +561,20 @@ public class ModelSettingsFragment extends Fragment {
                                     .subscribe(available -> {
                                         progressTest.setVisibility(View.GONE);
                                         if (available) {
-                                            tvTestStatus.setText("\u2713 \uc5f0\uacb0 \uc131\uacf5!");
-                                            tvTestDetail.setText(provider.getName() + " \uc5f0\uacb0\uc774 \ud655\uc778\ub418\uc5c8\uc2b5\ub2c8\ub2e4.");
+                                            tvTestStatus.setText(R.string.api_test_success);
+                                            tvTestDetail.setText(getString(R.string.api_test_success_detail, provider.getName()));
                                             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                                         } else {
-                                            tvTestStatus.setText("\u2717 \uc5f0\uacb0 \uc2e4\ud328");
-                                            tvTestDetail.setText("API \ud0a4 \ub610\ub294 \uc5d4\ub4dc\ud3ec\uc778\ud2b8\ub97c \ud655\uc778\ud574\uc8fc\uc138\uc694.");
+                                            tvTestStatus.setText(R.string.api_test_failure);
+                                            tvTestDetail.setText(R.string.api_test_failure_detail);
                                             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                                         }
                                     }, err -> {
                                         progressTest.setVisibility(View.GONE);
-                                        tvTestStatus.setText("\u2717 \uc5f0\uacb0 \uc2e4\ud328");
-                                        tvTestDetail.setText(err.getMessage() != null ? err.getMessage() : "\uc54c \uc218 \uc5c6\ub294 \uc624\ub958");
+                                        tvTestStatus.setText(R.string.api_test_failure);
+                                        tvTestDetail.setText(err.getMessage() != null
+                                                ? err.getMessage()
+                                                : getString(R.string.common_unknown_error));
                                         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                                     })
                     );

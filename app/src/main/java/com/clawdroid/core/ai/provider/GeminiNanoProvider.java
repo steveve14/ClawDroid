@@ -9,7 +9,9 @@ import com.clawdroid.core.model.AiRequest;
 import com.clawdroid.core.model.AiResponse;
 import com.clawdroid.core.model.ModelInfo;
 import com.clawdroid.core.model.ProviderType;
+import com.google.mlkit.genai.common.DownloadCallback;
 import com.google.mlkit.genai.common.FeatureStatus;
+import com.google.mlkit.genai.common.GenAiException;
 import com.google.mlkit.genai.common.StreamingCallback;
 import com.google.mlkit.genai.prompt.GenerateContentRequest;
 import com.google.mlkit.genai.prompt.GenerateContentResponse;
@@ -24,18 +26,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleEmitter;
 
 public class GeminiNanoProvider implements AiProvider {
 
     private final Context context;
     private final Executor executor = Executors.newSingleThreadExecutor();
     private volatile GenerativeModelFutures modelFutures;
+    private final AtomicBoolean downloadRequested = new AtomicBoolean(false);
 
     @Inject
     public GeminiNanoProvider(@ApplicationContext Context context) {
@@ -53,39 +58,15 @@ public class GeminiNanoProvider implements AiProvider {
 
     @Override
     public Single<Boolean> isAvailable() {
-        return Single.create(emitter -> {
-            try {
-                GenerativeModelFutures model = getOrCreateModel();
-                Futures.addCallback(
-                        model.checkStatus(),
-                        new FutureCallback<Integer>() {
-                            @Override
-                            public void onSuccess(Integer status) {
-                                if (emitter.isDisposed()) return;
-                                emitter.onSuccess(status == FeatureStatus.AVAILABLE);
-                            }
-
-                            @Override
-                            public void onFailure(Throwable t) {
-                                if (emitter.isDisposed()) return;
-                                emitter.onSuccess(false);
-                            }
-                        },
-                        executor
-                );
-            } catch (Exception e) {
-                if (!emitter.isDisposed()) {
-                    emitter.onSuccess(false);
-                }
-            }
-        });
+        return ensureModelReady()
+                .map(model -> true)
+                .onErrorReturnItem(false);
     }
 
     @Override
     public Single<AiResponse> generate(AiRequest request) {
-        return Single.create(emitter -> {
-            try {
-                GenerativeModelFutures model = getOrCreateModel();
+        return ensureModelReady()
+                .flatMap(model -> Single.create(emitter -> {
                 GenerateContentRequest contentRequest = buildRequest(request);
 
                 Futures.addCallback(
@@ -114,20 +95,13 @@ public class GeminiNanoProvider implements AiProvider {
                         },
                         executor
                 );
-            } catch (Exception e) {
-                if (!emitter.isDisposed()) {
-                    emitter.onError(new AiProviderException(
-                            "Gemini Nano not available: " + e.getMessage(), e));
-                }
-            }
-        });
+        }));
     }
 
     @Override
     public Observable<String> generateStream(AiRequest request) {
-        return Observable.create(emitter -> {
-            try {
-                GenerativeModelFutures model = getOrCreateModel();
+        return ensureModelReady()
+                .flatMapObservable(model -> Observable.create(emitter -> {
                 GenerateContentRequest contentRequest = buildRequest(request);
 
                 StreamingCallback streamingCallback = text -> {
@@ -157,13 +131,7 @@ public class GeminiNanoProvider implements AiProvider {
                         },
                         executor
                 );
-            } catch (Exception e) {
-                if (!emitter.isDisposed()) {
-                    emitter.onError(new AiProviderException(
-                            "Gemini Nano streaming not available: " + e.getMessage(), e));
-                }
-            }
-        });
+        }));
     }
 
     @Override
@@ -180,6 +148,87 @@ public class GeminiNanoProvider implements AiProvider {
             modelFutures = GenerativeModelFutures.from(generativeModel);
         }
         return modelFutures;
+    }
+
+    private Single<GenerativeModelFutures> ensureModelReady() {
+        return Single.create(emitter -> {
+            GenerativeModelFutures model;
+            try {
+                model = getOrCreateModel();
+            } catch (Exception e) {
+                emitter.onError(new AiProviderException(
+                        "Gemini Nano client could not be created: " + e.getMessage(), e));
+                return;
+            }
+
+            Futures.addCallback(
+                    model.checkStatus(),
+                    new FutureCallback<Integer>() {
+                        @Override
+                        public void onSuccess(Integer status) {
+                            if (emitter.isDisposed()) return;
+                            if (status == FeatureStatus.AVAILABLE) {
+                                emitter.onSuccess(model);
+                            } else if (status == FeatureStatus.DOWNLOADABLE
+                                    || status == FeatureStatus.DOWNLOADING) {
+                                downloadModel(model, emitter);
+                            } else {
+                                emitter.onError(new AiProviderException(
+                                        "Gemini Nano is not available on this device. "
+                                                + "Use a supported physical device with Google AI Core, "
+                                                + "or connect a cloud/local provider."));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+                            if (!emitter.isDisposed()) {
+                                emitter.onError(new AiProviderException(
+                                        "Gemini Nano status check failed: " + t.getMessage(), t));
+                            }
+                        }
+                    },
+                    executor
+            );
+        });
+    }
+
+    private void downloadModel(GenerativeModelFutures model,
+                               SingleEmitter<GenerativeModelFutures> emitter) {
+        downloadRequested.set(true);
+        Futures.addCallback(
+                model.download(new DownloadCallback() {
+                    @Override
+                    public void onDownloadCompleted() {}
+
+                    @Override
+                    public void onDownloadFailed(GenAiException e) {}
+
+                    @Override
+                    public void onDownloadProgress(long totalBytesDownloaded) {}
+
+                    @Override
+                    public void onDownloadStarted(long bytesToDownload) {}
+                }),
+                new FutureCallback<Void>() {
+                    @Override
+                    public void onSuccess(Void result) {
+                        if (!emitter.isDisposed()) {
+                            emitter.onSuccess(model);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t) {
+                        downloadRequested.set(false);
+                        if (!emitter.isDisposed()) {
+                            emitter.onError(new AiProviderException(
+                                    "Gemini Nano model download failed: " + t.getMessage(), t));
+                        }
+                    }
+                },
+                executor
+        );
     }
 
     private GenerateContentRequest buildRequest(AiRequest request) {

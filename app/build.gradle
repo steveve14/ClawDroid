@@ -76,6 +76,12 @@ android {
     hilt {
         enableAggregatingTask = false
     }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {

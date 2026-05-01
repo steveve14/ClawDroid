@@ -46,7 +46,7 @@ public class VoiceChatE2ETest {
     }
 
     private void navigateToVoiceChat() {
-        onView(withId(com.clawdroid.core.ui.R.id.voiceChatFragment)).perform(click());
+        onView(withId(R.id.voiceChatFragment)).perform(click());
     }
 
     @Test
@@ -55,15 +55,15 @@ public class VoiceChatE2ETest {
             navigateToVoiceChat();
 
             // 녹음 버튼 확인
-            onView(withId(com.clawdroid.feature.voice.R.id.btnRecord))
+            onView(withId(R.id.btnRecord))
                     .check(matches(isDisplayed()));
 
             // 중지 버튼 확인
-            onView(withId(com.clawdroid.feature.voice.R.id.btnStop))
+            onView(withId(R.id.btnStop))
                     .check(matches(isDisplayed()));
 
             // 설정 버튼 확인
-            onView(withId(com.clawdroid.feature.voice.R.id.btnVoiceSettings))
+            onView(withId(R.id.btnVoiceSettings))
                     .check(matches(isDisplayed()));
         }
     }
@@ -74,7 +74,7 @@ public class VoiceChatE2ETest {
             navigateToVoiceChat();
 
             // 상태 텍스트 표시 확인 (기본: "탭하여 말하기")
-            onView(withId(com.clawdroid.feature.voice.R.id.tvStatus))
+            onView(withId(R.id.tvStatus))
                     .check(matches(isDisplayed()));
         }
     }
@@ -85,7 +85,7 @@ public class VoiceChatE2ETest {
             navigateToVoiceChat();
 
             // 음성 대화 기록 RecyclerView 확인
-            onView(withId(com.clawdroid.feature.voice.R.id.recyclerHistory))
+            onView(withId(R.id.recyclerHistory))
                     .check(matches(isDisplayed()));
         }
     }
@@ -96,7 +96,7 @@ public class VoiceChatE2ETest {
             navigateToVoiceChat();
 
             // 오디오 비주얼라이저 영역 표시 확인
-            onView(withId(com.clawdroid.feature.voice.R.id.visualizerArea))
+            onView(withId(R.id.visualizerArea))
                     .check(matches(isDisplayed()));
         }
     }

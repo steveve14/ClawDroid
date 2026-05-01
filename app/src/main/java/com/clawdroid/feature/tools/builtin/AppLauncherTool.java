@@ -50,6 +50,7 @@ public class AppLauncherTool implements Tool {
 
         JsonObject appName = new JsonObject();
         appName.addProperty("type", "string");
+        appName.addProperty("maxLength", 256);
         appName.addProperty("description", "실행할 앱 이름 또는 패키지명");
         properties.add("app_name", appName);
 

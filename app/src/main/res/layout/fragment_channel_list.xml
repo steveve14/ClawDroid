@@ -29,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Channels"
+                android:text="@string/channel_list_title"
                 android:textColor="@color/md_on_surface"
                 android:textSize="@dimen/text_xl"
                 android:textStyle="bold"
@@ -41,7 +41,9 @@
                 android:layout_height="@dimen/avatar_md"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/stat_notify_sync"
-                android:contentDescription="새로고침"
+                android:contentDescription="@string/common_refresh"
+                app:tint="@color/md_on_primary_fixed"
+                android:scaleType="centerInside"
                 android:padding="8dp" />
 
         </LinearLayout>
@@ -83,18 +85,18 @@
             android:background="@drawable/bg_card_ghost_large">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
                 android:layout_gravity="center"
                 android:src="@android:drawable/stat_notify_sync"
-                android:contentDescription="채널" />
+                android:contentDescription="@string/channel_empty_icon_desc" />
 
         </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connect Your Channels"
+            android:text="@string/channel_empty_title"
             android:textSize="@dimen/text_xl"
             android:textStyle="bold"
             android:textColor="@color/md_on_surface"
@@ -104,7 +106,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Link Telegram, Discord, or Slack\nto manage all chats in one place."
+            android:text="@string/channel_empty_message"
             android:textSize="@dimen/text_sm"
             android:textColor="@color/md_on_surface_variant"
             android:gravity="center"
@@ -119,8 +121,9 @@
         android:layout_height="@dimen/fab_size"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:contentDescription="채널 추가"
+        android:contentDescription="@string/channel_add_title"
         app:srcCompat="@android:drawable/ic_input_add"
+        app:maxImageSize="@dimen/icon_md"
         app:tint="@color/md_on_primary"
         app:backgroundTint="@color/md_primary_container"
         app:shapeAppearance="@style/Shape.ClawDroid.FAB"

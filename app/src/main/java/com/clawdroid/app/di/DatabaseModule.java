@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.clawdroid.core.data.db.ClawDroidDatabase;
+import com.clawdroid.core.data.db.DatabaseCipherSupportFactory;
 import com.clawdroid.core.data.db.DatabaseKeyManager;
 import com.clawdroid.core.data.db.DatabaseMigrationHelper;
 import com.clawdroid.core.data.db.migration.Migrations;
@@ -14,8 +15,6 @@ import com.clawdroid.core.data.db.dao.ConversationDao;
 import com.clawdroid.core.data.db.dao.MessageDao;
 import com.clawdroid.core.data.db.dao.PersonaDao;
 import com.clawdroid.core.data.db.dao.ToolCallDao;
-
-import net.zetetic.database.sqlcipher.SupportOpenHelperFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -49,14 +48,12 @@ public class DatabaseModule {
         // 원본 char[] 제로화 (메모리 상주 축소)
         Arrays.fill(passphrase, '0');
 
-        SupportOpenHelperFactory factory = new SupportOpenHelperFactory(passBytes);
-
         return Room.databaseBuilder(
                 context,
                 ClawDroidDatabase.class,
                 "clawdroid.db"
         )
-        .openHelperFactory(factory)
+        .openHelperFactory(DatabaseCipherSupportFactory.create(passBytes))
         .addMigrations(Migrations.MIGRATION_1_2, Migrations.MIGRATION_2_3, Migrations.MIGRATION_3_4)
         .fallbackToDestructiveMigration()
         .build();

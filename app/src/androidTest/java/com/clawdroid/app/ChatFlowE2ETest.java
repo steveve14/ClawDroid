@@ -14,8 +14,6 @@ import android.content.SharedPreferences;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.clawdroid.feature.chat.R;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,7 +52,7 @@ public class ChatFlowE2ETest {
     public void conversationListDisplayed_onLaunch() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // 대화 목록 화면이 표시되는지 확인
-            onView(withId(R.id.recyclerConversations)).check(matches(isDisplayed()));
+            assertConversationListOrEmptyStateDisplayed();
         }
     }
 
@@ -62,7 +60,7 @@ public class ChatFlowE2ETest {
     public void createNewConversation_andNavigateToChat() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // FAB 클릭 → 새 대화 생성 → 채팅 화면으로 이동
-            onView(withId(R.id.fabNewConversation)).perform(click());
+            createNewConversation();
 
             // 채팅 화면의 메시지 입력 필드가 표시되는지 확인
             onView(withId(R.id.etMessage)).check(matches(isDisplayed()));
@@ -76,7 +74,7 @@ public class ChatFlowE2ETest {
     public void sendMessage_displaysInRecyclerView() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // 새 대화 생성
-            onView(withId(R.id.fabNewConversation)).perform(click());
+            createNewConversation();
 
             // 메시지 입력
             String testMessage = "안녕하세요, 테스트 메시지입니다.";
@@ -95,7 +93,7 @@ public class ChatFlowE2ETest {
     public void sendSlashCommand_status() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // 새 대화 생성
-            onView(withId(R.id.fabNewConversation)).perform(click());
+            createNewConversation();
 
             // /status 명령어 입력
             onView(withId(R.id.etMessage))
@@ -112,7 +110,7 @@ public class ChatFlowE2ETest {
     public void sendSlashCommand_new_resetsConversation() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // 새 대화 생성
-            onView(withId(R.id.fabNewConversation)).perform(click());
+            createNewConversation();
 
             // 메시지 전송
             onView(withId(R.id.etMessage))
@@ -132,7 +130,7 @@ public class ChatFlowE2ETest {
     @Test
     public void toolbar_displaysConversationTitle() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-            onView(withId(R.id.fabNewConversation)).perform(click());
+            createNewConversation();
 
             // 채팅 화면 툴바에 제목이 표시되는지 확인
             onView(withId(R.id.tvTitle)).check(matches(isDisplayed()));
@@ -142,10 +140,23 @@ public class ChatFlowE2ETest {
     @Test
     public void modelName_isDisplayedInChat() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-            onView(withId(R.id.fabNewConversation)).perform(click());
+            createNewConversation();
 
             // 모델 이름 표시 확인
             onView(withId(R.id.tvModelName)).check(matches(isDisplayed()));
+        }
+    }
+
+    private void createNewConversation() {
+        onView(withId(R.id.fabNewConversation)).perform(click());
+        onView(withText("시작")).perform(click());
+    }
+
+    private void assertConversationListOrEmptyStateDisplayed() {
+        try {
+            onView(withId(R.id.recyclerConversations)).check(matches(isDisplayed()));
+        } catch (AssertionError | RuntimeException e) {
+            onView(withId(R.id.emptyState)).check(matches(isDisplayed()));
         }
     }
 }

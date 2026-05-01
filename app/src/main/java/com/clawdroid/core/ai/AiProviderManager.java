@@ -21,6 +21,7 @@ import io.reactivex.rxjava3.core.Single;
 public class AiProviderManager {
 
     private static final int MAX_RETRY_COUNT = 10;
+    private static final String NANO_PROVIDER_ID = "gemini-nano";
 
     private final Map<String, AiProvider> providers;
     private final SettingsRepository settingsRepository;
@@ -34,7 +35,14 @@ public class AiProviderManager {
 
     public Single<Boolean> isAnyProviderAvailable() {
         return buildProviderChain()
-                .map(chain -> !chain.isEmpty());
+                .flatMap(chain -> {
+                    if (chain.isEmpty()) {
+                        return Single.just(false);
+                    }
+                    return Observable.fromIterable(chain)
+                            .concatMapSingle(provider -> provider.isAvailable().onErrorReturnItem(false))
+                            .any(Boolean.TRUE::equals);
+                });
     }
 
     public Observable<String> generateStream(AiRequest request) {
@@ -53,9 +61,7 @@ public class AiProviderManager {
                                 throw new RuntimeException(
                                         new AiProviderException("최대 재시도 횟수(" + MAX_RETRY_COUNT + "회)를 초과했습니다."));
                             }
-                            if (error instanceof AiProviderException &&
-                                    error.getMessage() != null &&
-                                    error.getMessage().contains("연결되지 않았습니다")) {
+                            if (isProviderConfigurationError(error)) {
                                 throw new RuntimeException(error);
                             }
                             return retryCount;
@@ -81,9 +87,7 @@ public class AiProviderManager {
                                 throw new RuntimeException(
                                         new AiProviderException("최대 재시도 횟수(" + MAX_RETRY_COUNT + "회)를 초과했습니다."));
                             }
-                            if (error instanceof AiProviderException &&
-                                    error.getMessage() != null &&
-                                    error.getMessage().contains("연결되지 않았습니다")) {
+                            if (isProviderConfigurationError(error)) {
                                 throw new RuntimeException(error);
                             }
                             return retryCount;
@@ -118,11 +122,36 @@ public class AiProviderManager {
                     enabledProviders.sort(Comparator.comparingInt(AiProviderEntity::getPriority));
                     List<AiProvider> chain = new ArrayList<>();
                     for (AiProviderEntity p : enabledProviders) {
-                        AiProvider provider = providers.get(p.getId());
-                        if (provider != null) chain.add(provider);
+                        addProviderIfPresent(chain, p.getId());
+                    }
+
+                    addProviderIfPresent(chain, settingsRepository.getActiveProvider());
+                    addProviderIfPresent(chain, NANO_PROVIDER_ID);
+
+                    if (settingsRepository.isFallbackEnabled()) {
+                        addProviderIfPresent(chain, "gemini-cloud");
+                        addProviderIfPresent(chain, "openai");
+                        addProviderIfPresent(chain, "ollama");
+                        addProviderIfPresent(chain, "custom");
                     }
                     return chain;
                 });
+    }
+
+    private void addProviderIfPresent(List<AiProvider> chain, String id) {
+        if (id == null || id.isEmpty()) return;
+        AiProvider provider = providers.get(id);
+        if (provider != null && !chain.contains(provider)) {
+            chain.add(provider);
+        }
+    }
+
+    private boolean isProviderConfigurationError(Throwable error) {
+        String message = error.getMessage();
+        return error instanceof AiProviderException
+                && message != null
+                && (message.contains("연결되지 않았습니다")
+                || message.contains("사용 가능한 AI 프로바이더가 없습니다"));
     }
 
     private Observable<String> tryProviders(List<AiProvider> chain, AiRequest request) {

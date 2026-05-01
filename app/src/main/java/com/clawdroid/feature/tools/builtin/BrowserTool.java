@@ -46,6 +46,7 @@ public class BrowserTool implements Tool {
 
         JsonObject query = new JsonObject();
         query.addProperty("type", "string");
+        query.addProperty("maxLength", 2048);
         query.addProperty("description", "검색할 키워드 또는 URL");
         properties.add("query", query);
 

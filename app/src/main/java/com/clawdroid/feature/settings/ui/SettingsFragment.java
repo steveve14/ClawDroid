@@ -64,7 +64,8 @@ public class SettingsFragment extends Fragment {
                         .navigate(R.id.action_settings_to_languageSettings));
 
         String lang = settingsRepository.getAppLanguage();
-        binding.tvCurrentLanguage.setText(getString("en".equals(lang) ? R.string.language_english : R.string.language_korean));
+        binding.tvCurrentLanguage.setText(
+                getString("en".equals(lang) ? R.string.language_english : R.string.language_korean));
     }
 
     @Override

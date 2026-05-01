@@ -83,7 +83,9 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
         }
 
         void bind(ConversationEntity item) {
-            tvTitle.setText(item.getTitle() != null ? item.getTitle() : "새 대화");
+            tvTitle.setText(item.getTitle() != null
+                    ? item.getTitle()
+                    : itemView.getContext().getString(R.string.conversation_default_title));
             tvPreview.setText(item.getLastMessagePreview() != null
                     ? item.getLastMessagePreview() : "");
 
@@ -97,7 +99,8 @@ public class ConversationAdapter extends ListAdapter<ConversationEntity, Convers
             // Channel chip
             if (item.getChannelId() != null) {
                 chipChannel.setVisibility(View.VISIBLE);
-                chipChannel.setText("📡 채널");
+                chipChannel.setText(itemView.getContext()
+                        .getString(R.string.conversation_channel_chip));
             } else {
                 chipChannel.setVisibility(View.GONE);
             }

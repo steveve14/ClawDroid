@@ -63,48 +63,46 @@ public class FullJourneyE2ETest {
     public void fullUserJourney_newUser() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // Step 1: 앱 시작 — 대화 목록 표시
-            onView(withId(com.clawdroid.feature.chat.R.id.recyclerConversations))
-                    .check(matches(isDisplayed()));
+            assertConversationListOrEmptyStateDisplayed();
 
             // Step 2: 새 대화 생성
-            onView(withId(com.clawdroid.feature.chat.R.id.fabNewConversation)).perform(click());
-            onView(withId(com.clawdroid.feature.chat.R.id.etMessage)).check(matches(isDisplayed()));
+            createNewConversation();
+            onView(withId(R.id.etMessage)).check(matches(isDisplayed()));
 
             // Step 3: 메시지 전송
-            onView(withId(com.clawdroid.feature.chat.R.id.etMessage))
+            onView(withId(R.id.etMessage))
                     .perform(androidx.test.espresso.action.ViewActions.typeText("Hello ClawDroid!"),
                             androidx.test.espresso.action.ViewActions.closeSoftKeyboard());
-            onView(withId(com.clawdroid.feature.chat.R.id.btnSend)).perform(click());
+            onView(withId(R.id.btnSend)).perform(click());
 
             // Step 4: 뒤로가기 → 대화 목록
             pressBack();
-            onView(withId(com.clawdroid.feature.chat.R.id.recyclerConversations))
+            onView(withId(R.id.recyclerConversations))
                     .check(matches(isDisplayed()));
 
             // Step 5: 설정 → 모델 설정 → 복귀
-            onView(withId(com.clawdroid.core.ui.R.id.settingsFragment)).perform(click());
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).perform(click());
+            onView(withId(R.id.settingsFragment)).perform(click());
+            onView(withId(R.id.btnModelSettings)).perform(click());
             pressBack();
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnModelSettings)).check(matches(isDisplayed()));
 
             // Step 6: 보안 설정 → 복귀
-            onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings)).perform(click());
-            onView(withId(com.clawdroid.feature.settings.R.id.switchAppLock)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnSecuritySettings)).perform(click());
+            onView(withId(R.id.switchAppLock)).check(matches(isDisplayed()));
             pressBack();
 
             // Step 7: 앱 정보
-            onView(withId(com.clawdroid.feature.settings.R.id.btnAbout)).perform(click());
+            onView(withId(R.id.btnAbout)).perform(click());
             onView(withText(org.hamcrest.Matchers.containsString("1.0"))).check(matches(isDisplayed()));
             pressBack();
 
             // Step 8: 채널 목록
-            onView(withId(com.clawdroid.core.ui.R.id.channelListFragment)).perform(click());
-            onView(withId(com.clawdroid.feature.channels.R.id.recyclerChannels))
-                    .check(matches(isDisplayed()));
+            onView(withId(R.id.channelListFragment)).perform(click());
+            assertChannelListOrEmptyStateDisplayed();
 
             // Step 9: 음성 대화
-            onView(withId(com.clawdroid.core.ui.R.id.voiceChatFragment)).perform(click());
-            onView(withId(com.clawdroid.feature.voice.R.id.btnRecord))
+            onView(withId(R.id.voiceChatFragment)).perform(click());
+            onView(withId(R.id.btnRecord))
                     .check(matches(isDisplayed()));
         }
     }
@@ -116,33 +114,33 @@ public class FullJourneyE2ETest {
     @Test
     public void settingsExploration_journey() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
-            onView(withId(com.clawdroid.core.ui.R.id.settingsFragment)).perform(click());
+            onView(withId(R.id.settingsFragment)).perform(click());
 
             // 모델 설정
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).perform(click());
+            onView(withId(R.id.btnModelSettings)).perform(click());
             pressBack();
 
             // 페르소나 설정
-            onView(withId(com.clawdroid.feature.settings.R.id.btnPersonaSettings)).perform(click());
+            onView(withId(R.id.btnPersonaSettings)).perform(click());
             pressBack();
 
             // 도구·스킬 설정
-            onView(withId(com.clawdroid.feature.settings.R.id.btnToolSettings)).perform(click());
+            onView(withId(R.id.btnToolSettings)).perform(click());
             pressBack();
 
             // 보안 설정
-            onView(withId(com.clawdroid.feature.settings.R.id.btnSecuritySettings)).perform(click());
-            onView(withId(com.clawdroid.feature.settings.R.id.switchAppLock)).check(matches(isDisplayed()));
-            onView(withId(com.clawdroid.feature.settings.R.id.switchEncryption)).check(matches(isDisplayed()));
-            onView(withId(com.clawdroid.feature.settings.R.id.spinnerAutoDelete)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnSecuritySettings)).perform(click());
+            onView(withId(R.id.switchAppLock)).check(matches(isDisplayed()));
+            onView(withId(R.id.switchEncryption)).check(matches(isDisplayed()));
+            onView(withId(R.id.spinnerAutoDelete)).check(matches(isDisplayed()));
             pressBack();
 
             // 앱 정보
-            onView(withId(com.clawdroid.feature.settings.R.id.btnAbout)).perform(click());
+            onView(withId(R.id.btnAbout)).perform(click());
             pressBack();
 
             // 설정 화면 복귀 확인
-            onView(withId(com.clawdroid.feature.settings.R.id.btnModelSettings)).check(matches(isDisplayed()));
+            onView(withId(R.id.btnModelSettings)).check(matches(isDisplayed()));
         }
     }
 
@@ -154,24 +152,45 @@ public class FullJourneyE2ETest {
     public void multipleConversations_journey() {
         try (ActivityScenario<MainActivity> scenario = ActivityScenario.launch(MainActivity.class)) {
             // 대화 1 생성
-            onView(withId(com.clawdroid.feature.chat.R.id.fabNewConversation)).perform(click());
-            onView(withId(com.clawdroid.feature.chat.R.id.etMessage))
+            createNewConversation();
+            onView(withId(R.id.etMessage))
                     .perform(androidx.test.espresso.action.ViewActions.typeText("대화 1"),
                             androidx.test.espresso.action.ViewActions.closeSoftKeyboard());
-            onView(withId(com.clawdroid.feature.chat.R.id.btnSend)).perform(click());
+            onView(withId(R.id.btnSend)).perform(click());
             pressBack();
 
             // 대화 2 생성
-            onView(withId(com.clawdroid.feature.chat.R.id.fabNewConversation)).perform(click());
-            onView(withId(com.clawdroid.feature.chat.R.id.etMessage))
+            createNewConversation();
+            onView(withId(R.id.etMessage))
                     .perform(androidx.test.espresso.action.ViewActions.typeText("대화 2"),
                             androidx.test.espresso.action.ViewActions.closeSoftKeyboard());
-            onView(withId(com.clawdroid.feature.chat.R.id.btnSend)).perform(click());
+            onView(withId(R.id.btnSend)).perform(click());
             pressBack();
 
             // 대화 목록에 최소 2개 대화가 있는지 확인
-            onView(withId(com.clawdroid.feature.chat.R.id.recyclerConversations))
+            onView(withId(R.id.recyclerConversations))
                     .check(matches(isDisplayed()));
+        }
+    }
+
+    private void createNewConversation() {
+        onView(withId(R.id.fabNewConversation)).perform(click());
+        onView(withText("시작")).perform(click());
+    }
+
+    private void assertConversationListOrEmptyStateDisplayed() {
+        try {
+            onView(withId(R.id.recyclerConversations)).check(matches(isDisplayed()));
+        } catch (AssertionError | RuntimeException e) {
+            onView(withId(R.id.emptyState)).check(matches(isDisplayed()));
+        }
+    }
+
+    private void assertChannelListOrEmptyStateDisplayed() {
+        try {
+            onView(withId(R.id.recyclerChannels)).check(matches(isDisplayed()));
+        } catch (AssertionError | RuntimeException e) {
+            onView(withId(R.id.emptyState)).check(matches(isDisplayed()));
         }
     }
 }

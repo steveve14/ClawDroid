@@ -98,7 +98,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="생성 중..."
+            android:text="@string/chat_generating"
             android:textSize="@dimen/text_sm"
             android:textColor="@color/md_on_surface_variant"
             android:layout_marginStart="8dp" />
@@ -128,7 +128,9 @@
             android:layout_height="@dimen/avatar_md"
             android:src="@android:drawable/ic_menu_gallery"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="첨부"
+            android:contentDescription="@string/chat_attach"
+            app:tint="@color/md_on_primary_fixed"
+            android:scaleType="centerInside"
             android:padding="8dp" />
 
         <!-- Voice -->
@@ -138,7 +140,9 @@
             android:layout_height="@dimen/avatar_md"
             android:src="@android:drawable/ic_btn_speak_now"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="음성 입력"
+            android:contentDescription="@string/chat_voice_input"
+            app:tint="@color/md_on_primary_fixed"
+            android:scaleType="centerInside"
             android:padding="8dp" />
 
         <!-- Text Input -->
@@ -148,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginHorizontal="@dimen/spacing_sm"
-            android:hint="메시지를 입력하세요..."
+            android:hint="@string/chat_message_hint"
             android:maxLines="5"
             android:inputType="textMultiLine"
             android:background="@android:color/transparent"
@@ -160,16 +164,17 @@
         <!-- Send -->
         <FrameLayout
             android:id="@+id/btnSend"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="@dimen/avatar_md"
+            android:layout_height="@dimen/avatar_md"
             android:background="@drawable/bg_gradient_primary_pill"
-            android:contentDescription="전송">
+            android:contentDescription="@string/chat_send">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="@dimen/icon_md"
+                android:layout_height="@dimen/icon_md"
                 android:layout_gravity="center"
                 android:src="@android:drawable/ic_menu_send"
+                app:tint="@color/md_on_primary"
                 android:contentDescription="send" />
 
         </FrameLayout>

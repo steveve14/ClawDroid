@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.clawdroid.app.R;
 import com.clawdroid.core.data.db.entity.PersonaEntity;
 import com.clawdroid.core.data.repository.PersonaRepository;
 import com.clawdroid.app.databinding.FragmentPersonaSettingsBinding;
@@ -129,7 +130,7 @@ public class PersonaSettingsFragment extends Fragment {
 
             if (persona.isActive()) {
                 TextView tvActive = new TextView(requireContext());
-                tvActive.setText("\ud65c\uc131");
+                tvActive.setText(R.string.persona_active);
                 tvActive.setTextSize(12);
                 tvActive.setTextColor(getResources().getColor(com.clawdroid.app.R.color.md_primary, null));
                 LinearLayout.LayoutParams badgeLp = new LinearLayout.LayoutParams(
@@ -142,7 +143,7 @@ public class PersonaSettingsFragment extends Fragment {
             inner.addView(textGroup);
 
             TextView btnEdit = new TextView(requireContext());
-            btnEdit.setText("\ud3b8\uc9d1");
+            btnEdit.setText(R.string.conversation_action_rename);
             btnEdit.setTextSize(13);
             btnEdit.setTextColor(getResources().getColor(com.clawdroid.app.R.color.md_primary, null));
             btnEdit.setPadding(pad / 2, pad / 2, pad / 2, pad / 2);
@@ -150,7 +151,7 @@ public class PersonaSettingsFragment extends Fragment {
             inner.addView(btnEdit);
 
             TextView btnDelete = new TextView(requireContext());
-            btnDelete.setText("\uc0ad\uc81c");
+            btnDelete.setText(R.string.common_delete);
             btnDelete.setTextSize(13);
             btnDelete.setTextColor(getResources().getColor(com.clawdroid.app.R.color.md_error, null));
             btnDelete.setPadding(pad / 2, pad / 2, pad / 2, pad / 2);
@@ -166,7 +167,9 @@ public class PersonaSettingsFragment extends Fragment {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                () -> Snackbar.make(binding.getRoot(), persona.getName() + " \ud65c\uc131\ud654\ub428", Snackbar.LENGTH_SHORT).show(),
+                                () -> Snackbar.make(binding.getRoot(),
+                                        getString(R.string.persona_activated, persona.getName()),
+                                        Snackbar.LENGTH_SHORT).show(),
                                 e -> {}
                             )
                     );
@@ -185,14 +188,14 @@ public class PersonaSettingsFragment extends Fragment {
 
         TextInputLayout tilName = new TextInputLayout(requireContext(),
                 null, com.google.android.material.R.attr.textInputOutlinedStyle);
-        tilName.setHint("페르소나 이름");
+        tilName.setHint(getString(R.string.persona_name_hint));
         TextInputEditText etName = new TextInputEditText(requireContext());
         if (existing != null) etName.setText(existing.getName());
         tilName.addView(etName);
 
         TextInputLayout tilPrompt = new TextInputLayout(requireContext(),
                 null, com.google.android.material.R.attr.textInputOutlinedStyle);
-        tilPrompt.setHint("System Prompt");
+        tilPrompt.setHint(getString(R.string.system_prompt_hint));
         tilPrompt.setCounterEnabled(true);
         tilPrompt.setCounterMaxLength(2000);
         TextInputEditText etPrompt = new TextInputEditText(requireContext());
@@ -207,7 +210,7 @@ public class PersonaSettingsFragment extends Fragment {
 
         TextInputLayout tilStyle = new TextInputLayout(requireContext(),
                 null, com.google.android.material.R.attr.textInputOutlinedExposedDropdownMenuStyle);
-        tilStyle.setHint("\ub300\ud654 \uc2a4\ud0c0\uc77c");
+        tilStyle.setHint(getString(R.string.persona_style_hint));
         android.widget.AutoCompleteTextView actvStyle = new android.widget.AutoCompleteTextView(requireContext());
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_dropdown_item_1line, STYLES);
@@ -232,15 +235,15 @@ public class PersonaSettingsFragment extends Fragment {
         layout.addView(tilPrompt);
         layout.addView(tilStyle);
 
-        String title = existing == null ? "\ud398\ub974\uc18c\ub098 \ucd94\uac00" : "\ud398\ub974\uc18c\ub098 \ud3b8\uc9d1";
+        int title = existing == null ? R.string.persona_add : R.string.persona_edit;
 
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(title)
                 .setView(layout)
-                .setPositiveButton("\uc800\uc7a5", (dialog, which) -> {
+            .setPositiveButton(R.string.common_save, (dialog, which) -> {
                     String name = etName.getText() != null ? etName.getText().toString().trim() : "";
                     if (name.isEmpty()) {
-                        Snackbar.make(binding.getRoot(), "\uc774\ub984\uc744 \uc785\ub825\ud574 \uc8fc\uc138\uc694", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(binding.getRoot(), R.string.persona_name_required, Snackbar.LENGTH_SHORT).show();
                         return;
                     }
                     String prompt = etPrompt.getText() != null ? etPrompt.getText().toString() : "";
@@ -258,31 +261,31 @@ public class PersonaSettingsFragment extends Fragment {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                () -> Snackbar.make(binding.getRoot(), "\uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4", Snackbar.LENGTH_SHORT).show(),
-                                e -> Snackbar.make(binding.getRoot(), "\uc800\uc7a5 \uc2e4\ud328", Snackbar.LENGTH_SHORT).show()
+                                () -> Snackbar.make(binding.getRoot(), R.string.persona_saved, Snackbar.LENGTH_SHORT).show(),
+                                e -> Snackbar.make(binding.getRoot(), R.string.persona_save_failed, Snackbar.LENGTH_SHORT).show()
                             )
                     );
                 })
-                .setNegativeButton("\ucde8\uc18c", null)
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 
     private void confirmDelete(PersonaEntity persona) {
         new MaterialAlertDialogBuilder(requireContext())
-                .setTitle("\ud398\ub974\uc18c\ub098 \uc0ad\uc81c")
-                .setMessage("\"" + persona.getName() + "\"\uc744(\ub97c) \uc0ad\uc81c\ud560\uae4c\uc694?")
-                .setPositiveButton("\uc0ad\uc81c", (dialog, which) -> {
+                .setTitle(R.string.persona_delete_title)
+                .setMessage(getString(R.string.persona_delete_message, persona.getName()))
+                .setPositiveButton(R.string.common_delete, (dialog, which) -> {
                     disposables.add(
                         personaRepository.delete(persona.getId())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                () -> Snackbar.make(binding.getRoot(), "\uc0ad\uc81c\ub418\uc5c8\uc2b5\ub2c8\ub2e4", Snackbar.LENGTH_SHORT).show(),
+                                () -> Snackbar.make(binding.getRoot(), R.string.persona_deleted, Snackbar.LENGTH_SHORT).show(),
                                 e -> {}
                             )
                     );
                 })
-                .setNegativeButton("\ucde8\uc18c", null)
+                .setNegativeButton(R.string.common_cancel, null)
                 .show();
     }
 

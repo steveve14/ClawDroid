@@ -65,16 +65,20 @@ public class CalendarTool implements Tool {
 
         JsonObject date = new JsonObject();
         date.addProperty("type", "string");
+        date.addProperty("maxLength", 10);
         date.addProperty("description", "날짜 (yyyy-MM-dd 형식)");
         properties.add("date", date);
 
         JsonObject title = new JsonObject();
         title.addProperty("type", "string");
+        title.addProperty("maxLength", 200);
         title.addProperty("description", "일정 제목 (create 시 필수)");
         properties.add("title", title);
 
         JsonObject duration = new JsonObject();
         duration.addProperty("type", "integer");
+        duration.addProperty("minimum", 1);
+        duration.addProperty("maximum", 1440);
         duration.addProperty("description", "일정 시간(분, 기본 60)");
         properties.add("duration", duration);
 

@@ -43,6 +43,8 @@ public class VoiceChatFragment extends Fragment {
     @Inject TtsManager ttsManager;
 
     private boolean isRecording = false;
+    private boolean isProcessing = false;
+    private boolean hasActiveConversation = false;
     private List<ConversationEntity> conversationList = new ArrayList<>();
 
     private final ActivityResultLauncher<String> permissionLauncher =
@@ -50,7 +52,7 @@ public class VoiceChatFragment extends Fragment {
                 if (granted) {
                     startRecording();
                 } else {
-                    binding.tvStatus.setText("마이크 권한이 필요합니다");
+                    binding.tvStatus.setText(R.string.voice_permission_required);
                 }
             });
 
@@ -73,11 +75,11 @@ public class VoiceChatFragment extends Fragment {
         // 공통 헤더 설정
         View headerView = binding.commonHeader.getRoot();
         android.widget.TextView tvTitle = headerView.findViewById(R.id.tvHeaderTitle);
-        if (tvTitle != null) tvTitle.setText("음성 채팅");
+        if (tvTitle != null) tvTitle.setText(R.string.voice_title);
         com.google.android.material.appbar.MaterialToolbar toolbar =
                 headerView.findViewById(R.id.toolbar);
         if (toolbar != null) {
-            toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+            toolbar.setNavigationIcon(android.R.drawable.ic_menu_revert);
             toolbar.setNavigationIconTint(
                     getResources().getColor(R.color.md_on_surface, null));
             toolbar.setNavigationOnClickListener(v ->
@@ -96,23 +98,26 @@ public class VoiceChatFragment extends Fragment {
 
         setupSpeechCallback();
         setupObservers();
+        setRecordingUi(false, getString(R.string.voice_prompt_speak));
     }
 
     private void showConversationPicker() {
         if (conversationList.isEmpty()) {
-            binding.tvStatus.setText("활성 채팅방이 없습니다");
+            binding.tvStatus.setText(R.string.voice_no_active_conversation);
             return;
         }
 
         String[] titles = new String[conversationList.size() + 1];
-        titles[0] = "최근 채팅방 (자동 연결)";
+        titles[0] = getString(R.string.voice_recent_conversation);
         for (int i = 0; i < conversationList.size(); i++) {
             ConversationEntity c = conversationList.get(i);
-            titles[i + 1] = c.getTitle() != null ? c.getTitle() : "채팅방 " + (i + 1);
+            titles[i + 1] = c.getTitle() != null
+                    ? c.getTitle()
+                    : getString(R.string.voice_conversation_default) + " " + (i + 1);
         }
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("채팅방 선택")
+                .setTitle(R.string.voice_conversation_picker_title)
                 .setItems(titles, (dialog, which) -> {
                     if (which == 0) {
                         viewModel.selectConversation(
@@ -129,6 +134,7 @@ public class VoiceChatFragment extends Fragment {
             @Override
             public void onPartialResult(String text) {
                 if (isAdded()) {
+                    isRecording = true;
                     binding.tvStatus.setText(text);
                 }
             }
@@ -136,8 +142,12 @@ public class VoiceChatFragment extends Fragment {
             @Override
             public void onFinalResult(String text) {
                 if (isAdded()) {
-                    isRecording = false;
-                    binding.tvStatus.setText("처리 중...");
+                    if (!hasActiveConversation) {
+                        setRecordingUi(false, getString(R.string.voice_no_active_conversation));
+                        return;
+                    }
+                    setRecordingUi(false, getString(R.string.voice_processing));
+                    binding.tvStatus.setText(R.string.voice_processing);
                     viewModel.processUserSpeech(text);
                 }
             }
@@ -145,8 +155,7 @@ public class VoiceChatFragment extends Fragment {
             @Override
             public void onError(String message) {
                 if (isAdded()) {
-                    isRecording = false;
-                    binding.tvStatus.setText(message);
+                    setRecordingUi(false, message);
                 }
             }
 
@@ -172,14 +181,17 @@ public class VoiceChatFragment extends Fragment {
         viewModel.getAiResponse().observe(getViewLifecycleOwner(), response -> {
             if (response != null && !response.isEmpty()) {
                 ttsManager.speak(response);
-                binding.tvStatus.setText("응답 재생 중...");
+                binding.tvStatus.setText(R.string.voice_playing_response);
             }
         });
 
         viewModel.getIsProcessing().observe(getViewLifecycleOwner(), processing -> {
-            binding.btnRecord.setEnabled(!processing);
-            if (!processing && !isRecording) {
-                binding.tvStatus.setText("말씀해 주세요");
+            isProcessing = Boolean.TRUE.equals(processing);
+            updateRecordButtonState();
+            if (!isProcessing && !isRecording) {
+                binding.tvStatus.setText(hasActiveConversation
+                        ? R.string.voice_prompt_speak
+                        : R.string.voice_no_active_conversation);
             }
         });
 
@@ -191,23 +203,41 @@ public class VoiceChatFragment extends Fragment {
 
         viewModel.getConversations().observe(getViewLifecycleOwner(), list -> {
             conversationList = list != null ? list : new ArrayList<>();
+            if (conversationList.isEmpty()) {
+                hasActiveConversation = false;
+                speechManager.stopListening();
+                setRecordingUi(false, getString(R.string.voice_no_active_conversation));
+            }
         });
 
         viewModel.getSelectedConversation().observe(getViewLifecycleOwner(), conv -> {
+            hasActiveConversation = conv != null;
+            updateRecordButtonState();
             if (conv != null) {
-                String title = conv.getTitle() != null ? conv.getTitle() : "채팅방";
-                binding.tvSelectedConversation.setText("연결된 채팅방: " + title);
+                String title = conv.getTitle() != null
+                        ? conv.getTitle()
+                        : getString(R.string.voice_conversation_default);
+                binding.tvSelectedConversation.setText(
+                        getString(R.string.voice_selected_conversation, title));
+                if (!isRecording && !isProcessing) {
+                    binding.tvStatus.setText(R.string.voice_prompt_speak);
+                }
             } else {
-                binding.tvSelectedConversation.setText("최근 채팅방 (자동 연결)");
+                binding.tvSelectedConversation.setText(R.string.voice_no_active_conversation);
+                if (!isRecording) {
+                    binding.tvStatus.setText(R.string.voice_no_active_conversation);
+                }
             }
         });
 
         ttsManager.setCallback(new TtsManager.Callback() {
             @Override public void onStart() {
-                if (isAdded()) binding.tvStatus.setText("응답 재생 중...");
+                if (isAdded()) binding.tvStatus.setText(R.string.voice_playing_response);
             }
             @Override public void onDone() {
-                if (isAdded()) binding.tvStatus.setText("말씀해 주세요");
+                if (isAdded()) binding.tvStatus.setText(hasActiveConversation
+                        ? R.string.voice_prompt_speak
+                        : R.string.voice_no_active_conversation);
             }
             @Override public void onError(String message) {
                 if (isAdded()) binding.tvStatus.setText(message);
@@ -216,6 +246,11 @@ public class VoiceChatFragment extends Fragment {
     }
 
     private void toggleRecording() {
+        if (!hasActiveConversation) {
+            setRecordingUi(false, getString(R.string.voice_no_active_conversation));
+            return;
+        }
+
         if (isRecording) {
             stopRecording();
         } else {
@@ -229,15 +264,38 @@ public class VoiceChatFragment extends Fragment {
     }
 
     private void startRecording() {
-        isRecording = true;
-        binding.tvStatus.setText("듣고 있습니다...");
+        if (!hasActiveConversation) {
+            setRecordingUi(false, getString(R.string.voice_no_active_conversation));
+            return;
+        }
+
+        ttsManager.stop();
+        setRecordingUi(true, getString(R.string.voice_listening));
         speechManager.startListening();
     }
 
     private void stopRecording() {
-        isRecording = false;
-        binding.tvStatus.setText("말씀해 주세요");
         speechManager.stopListening();
+        setRecordingUi(false, getString(hasActiveConversation
+                ? R.string.voice_prompt_speak
+                : R.string.voice_no_active_conversation));
+    }
+
+    private void setRecordingUi(boolean recording, String statusText) {
+        isRecording = recording;
+        if (binding == null) return;
+        binding.tvStatus.setText(statusText);
+        binding.visualizerArea.setScaleX(recording ? 1.05f : 1.0f);
+        binding.visualizerArea.setScaleY(recording ? 1.05f : 1.0f);
+        binding.btnStop.setEnabled(recording);
+        updateRecordButtonState();
+    }
+
+    private void updateRecordButtonState() {
+        if (binding == null) return;
+        boolean enabled = hasActiveConversation && !isProcessing;
+        binding.btnRecord.setEnabled(enabled);
+        binding.btnRecord.setAlpha(enabled ? 1f : 0.45f);
     }
 
     @Override

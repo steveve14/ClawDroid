@@ -9,9 +9,8 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.clawdroid.core.data.db.ClawDroidDatabase;
+import com.clawdroid.core.data.db.DatabaseCipherSupportFactory;
 import com.clawdroid.core.data.db.DatabaseKeyManager;
-
-import net.zetetic.database.sqlcipher.SupportOpenHelperFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -43,7 +42,7 @@ public class AutoDeleteWorker extends Worker {
 
             ClawDroidDatabase db = Room.databaseBuilder(
                     getApplicationContext(), ClawDroidDatabase.class, "clawdroid.db")
-                    .openHelperFactory(new SupportOpenHelperFactory(passBytes))
+                    .openHelperFactory(DatabaseCipherSupportFactory.create(passBytes))
                     .build();
             String cutoffDate = Instant.now().minusSeconds((long) days * 86400).toString();
             db.conversationDao().deleteOlderThan(cutoffDate).blockingAwait();

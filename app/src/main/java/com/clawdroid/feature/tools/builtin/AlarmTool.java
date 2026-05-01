@@ -47,21 +47,28 @@ public class AlarmTool implements Tool {
 
         JsonObject hour = new JsonObject();
         hour.addProperty("type", "integer");
+        hour.addProperty("minimum", 0);
+        hour.addProperty("maximum", 23);
         hour.addProperty("description", "알람 시간 (0-23)");
         properties.add("hour", hour);
 
         JsonObject minute = new JsonObject();
         minute.addProperty("type", "integer");
+        minute.addProperty("minimum", 0);
+        minute.addProperty("maximum", 59);
         minute.addProperty("description", "알람 분 (0-59)");
         properties.add("minute", minute);
 
         JsonObject seconds = new JsonObject();
         seconds.addProperty("type", "integer");
+        seconds.addProperty("minimum", 1);
+        seconds.addProperty("maximum", 86400);
         seconds.addProperty("description", "타이머 시간(초)");
         properties.add("seconds", seconds);
 
         JsonObject message = new JsonObject();
         message.addProperty("type", "string");
+        message.addProperty("maxLength", 120);
         message.addProperty("description", "알람/타이머 메시지");
         properties.add("message", message);
 

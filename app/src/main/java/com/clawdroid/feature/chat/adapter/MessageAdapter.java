@@ -70,7 +70,7 @@ public class MessageAdapter extends ListAdapter<MessageAdapter.MessageItem, Mess
                 userBubble.setVisibility(View.GONE);
                 aiBubble.setVisibility(View.VISIBLE);
                 MarkdownRenderer.render(tvAiContent, item.streamingContent);
-                tvAiMeta.setText("생성 중...");
+                tvAiMeta.setText(R.string.chat_generating);
                 chipToolCall.setVisibility(View.GONE);
                 return;
             }

@@ -1,5 +1,6 @@
 package com.clawdroid.app;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
+import com.clawdroid.core.locale.AppLocaleManager;
 import com.clawdroid.feature.settings.security.PinManager;
 
 import javax.inject.Inject;
@@ -40,6 +42,11 @@ public class LockActivity extends AppCompatActivity {
     private EditText pinInput;
     private final Handler lockoutHandler = new Handler(Looper.getMainLooper());
     private Runnable lockoutTicker;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(AppLocaleManager.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +71,13 @@ public class LockActivity extends AppCompatActivity {
         layout.setPadding(padding, padding, padding, padding);
 
         TextView title = new TextView(this);
-        title.setText("🔒 ClawDroid");
+        title.setText(getString(R.string.lock_title));
         title.setTextSize(24);
         title.setGravity(Gravity.CENTER);
         layout.addView(title);
 
         subtitle = new TextView(this);
-        subtitle.setText("PIN을 입력해주세요");
+        subtitle.setText(getString(R.string.lock_pin_prompt));
         subtitle.setTextSize(16);
         subtitle.setGravity(Gravity.CENTER);
         LinearLayout.LayoutParams subtitleParams = new LinearLayout.LayoutParams(
@@ -80,7 +87,7 @@ public class LockActivity extends AppCompatActivity {
         layout.addView(subtitle);
 
         pinInput = new EditText(this);
-        pinInput.setHint("PIN (4~6자리)");
+        pinInput.setHint(getString(R.string.lock_pin_hint));
         pinInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         pinInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         pinInput.setGravity(Gravity.CENTER);
@@ -91,7 +98,7 @@ public class LockActivity extends AppCompatActivity {
         layout.addView(pinInput);
 
         btnUnlock = new Button(this);
-        btnUnlock.setText("잠금 해제");
+        btnUnlock.setText(getString(R.string.lock_unlock));
         LinearLayout.LayoutParams btnParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         btnParams.topMargin = (int) (16 * getResources().getDisplayMetrics().density);
@@ -102,7 +109,7 @@ public class LockActivity extends AppCompatActivity {
             long remaining = pinManager.getLockRemainingMillis();
             if (remaining > 0) {
                 Toast.makeText(this,
-                        "너무 많은 실패가 감지되어 잠겨있습니다.",
+                        getString(R.string.lock_too_many_failures),
                         Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -132,9 +139,9 @@ public class LockActivity extends AppCompatActivity {
             pinInput.setEnabled(true);
             int fails = pinManager.getFailCount();
             if (fails > 0) {
-                subtitle.setText("PIN이 올바르지 않습니다. (누적 실패: " + fails + ")");
+                subtitle.setText(getString(R.string.lock_pin_invalid_with_count, fails));
             } else {
-                subtitle.setText("PIN을 입력해주세요");
+                subtitle.setText(getString(R.string.lock_pin_prompt));
             }
         }
     }
@@ -150,7 +157,7 @@ public class LockActivity extends AppCompatActivity {
                     return;
                 }
                 long sec = (left + 999) / 1000;
-                subtitle.setText("잠김 — " + formatDuration(sec) + " 후 다시 시도");
+                subtitle.setText(getString(R.string.lock_locked_retry_after, formatDuration(sec)));
                 lockoutHandler.postDelayed(this, 1000L);
             }
         };
@@ -161,9 +168,9 @@ public class LockActivity extends AppCompatActivity {
         long h = totalSec / 3600;
         long m = (totalSec % 3600) / 60;
         long s = totalSec % 60;
-        if (h > 0) return String.format("%d시간 %02d분 %02d초", h, m, s);
-        if (m > 0) return String.format("%d분 %02d초", m, s);
-        return s + "초";
+        if (h > 0) return getString(R.string.duration_hms, h, m, s);
+        if (m > 0) return getString(R.string.duration_ms, m, s);
+        return getString(R.string.duration_seconds, s);
     }
 
     private void showBiometricPrompt() {
@@ -174,9 +181,9 @@ public class LockActivity extends AppCompatActivity {
         }
 
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("ClawDroid 잠금 해제")
-                .setSubtitle("생체 인증으로 잠금을 해제합니다.")
-                .setNegativeButtonText("PIN으로 입력")
+                .setTitle(getString(R.string.lock_biometric_title))
+                .setSubtitle(getString(R.string.lock_biometric_subtitle))
+                .setNegativeButtonText(getString(R.string.lock_biometric_use_pin))
                 .build();
 
         BiometricPrompt biometricPrompt = new BiometricPrompt(this,

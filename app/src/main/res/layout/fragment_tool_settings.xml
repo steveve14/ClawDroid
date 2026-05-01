@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tools &amp; Skills"
+        android:text="@string/settings_tools"
         android:textSize="@dimen/text_3xl"
         android:textStyle="bold"
         android:textColor="@color/md_on_surface"
@@ -43,12 +43,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Built-in Tools" />
+            android:text="@string/tools_builtin" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Custom Skills" />
+            android:text="@string/tools_custom_skills" />
     </com.google.android.material.tabs.TabLayout>
 
     <!-- Tools List -->

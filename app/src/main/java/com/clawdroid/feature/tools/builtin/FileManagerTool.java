@@ -54,6 +54,7 @@ public class FileManagerTool implements Tool {
 
         JsonObject path = new JsonObject();
         path.addProperty("type", "string");
+        path.addProperty("maxLength", 4096);
         path.addProperty("description", "파일 또는 디렉토리 경로");
         properties.add("path", path);
 

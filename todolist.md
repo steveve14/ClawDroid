@@ -1,6 +1,6 @@
 # 🦞 ClawDroid — 개발 TODO 리스트
 
-> **최종 갱신**: 2026-04-19
+> **최종 갱신**: 2026-05-01
 > **기술 스택**: Java 17 · XML Views (ViewBinding) · RxJava 3 · Retrofit + OkHttp · Room · Hilt · Gemini Nano
 
 ---
@@ -75,6 +75,7 @@
 - [x] ML Kit 음성 인식 온디바이스 통합
 - [x] `SpeechRecognizer` 폴백 구현
 - [x] 오디오 권한 요청 및 관리
+- [x] 무응답/장시간 녹음 자동 정지 + 정지 버튼 즉시 취소
 
 ### 🗣️ TTS (Text-to-Speech)
 
@@ -191,19 +192,20 @@
 - [x] 외부 채널 에러 메시지 내부 정보 은닉
 - [x] `Throwable::printStackTrace` 제거 (로그 민감정보 노출 방지)
 - [x] CalculatorTool 입력 길이 제한 (500자)
+- [x] ToolExecutor 공통 인자 검증 + `tool_calls` 감사 로그 저장
 
 ### 📱 세션 & 명령어
 
 - [x] 멀티 세션 (채널·주제별 독립 대화)
 - [x] 슬래시 명령어: `/new`, `/reset`, `/compact` 구현 완료
-- [x] 슬래시 명령어: `/status`, `/think <level>` 미구현
-- [x] Room FTS 대화 검색 (현재 LIKE 기반 검색만 구현됨)
+- [x] 슬래시 명령어: `/status`, `/think <level>` 구현 완료
+- [x] Room FTS 대화 검색 (FTS4 가상 테이블 + 트리거)
 
 ### 🎛️ 페르소나 설정
 
 - [x] `PersonaSettingsFragment` — AI 이름, 역할, 시스템 프롬프트 편집
 - [x] Conversation Style 선택 (Friendly / Professional / Humorous / Concise)
-- [x] 채널별 페르소나 설정 (P2)
+- [x] 채널별 페르소나 설정 (채널 상세 System Prompt)
 
 ### 📊 위젯 & 퀵 액세스
 
@@ -214,9 +216,10 @@
 
 - [x] ProGuard / R8 난독화 설정 (`proguard-rules.pro`)
 - [x] 서명 설정 (`keystore.properties`)
-- [x] GitHub Actions CI/CD (테스트 → 빌드 → Play Store 업로드)
-- [ ] Play Store 스토어 등록 정보 (스크린샷, 설명, 분류)
-- [ ] Play Store 내부 테스트 트랙 배포
+- [x] E2E instrumentation 테스트 구축 (`androidTest`, `assembleDebugAndroidTest`)
+- [x] GitHub Actions CI/CD (테스트 → 빌드 → release AAB → 내부 트랙 draft 업로드)
+- [x] Play Store 스토어 등록 정보 초안 및 출시 체크리스트 문서화
+- [ ] Play Store 내부 테스트 트랙 실제 배포 (Play Console 계정/서비스 계정 필요)
 - [ ] Play Store 프로덕션 출시
 
 ### ℹ️ 정보 화면
@@ -225,7 +228,7 @@
 
 ---
 
-## 📊 미완료 항목 요약 — `완료 61 / 전체 87` (70.1%)
+## 📊 미완료 항목 요약 — `완료 126 / 전체 128` (98.4%)
 
 > 아래는 모든 `[ ]` 항목을 Phase별로 모아놓은 현황판입니다.
 
@@ -245,26 +248,16 @@
 
 > Phase 4 전체 완료!
 
-### Phase 5 — 고급 기능 & 배포 (미완료 12개)
+### Phase 5 — 고급 기능 & 배포 (미완료 2개)
 
 | 섹션 | 항목 |
 |---|---|
-| 보안 | 앱 잠금 — PIN (SHA-256) |
-| 보안 | 생체 인증 (`BiometricPrompt`) |
-| 보안 | 대화 자동 삭제 옵션 (N일 후) |
-| 세션 & 명령어 | 멀티 세션 (채널·주제별 독립 대화) |
-| 세션 & 명령어 | 슬래시 명령어: `/status`, `/think <level>` |
-| 세션 & 명령어 | Room FTS 대화 검색 (현재 LIKE 기반) |
-| 페르소나 | 채널별 페르소나 설정 (P2) |
-| 위젯 | App Widget (`RemoteViews`) |
-| 위젯 | Quick Settings Tile — 음성 대화 시작 |
-| 빌드 & 배포 | 서명 설정 (`keystore.properties`) |
-| 빌드 & 배포 | Play Store 등록 및 배포 |
-| 정보 화면 | `AboutFragment` — 버전, 이용약관, 오픈소스 라이선스 |
+| 빌드 & 배포 | Play Store 내부 테스트 트랙 실제 배포 |
+| 빌드 & 배포 | Play Store 프로덕션 출시 |
 
 ---
 
-## �📎 참조 문서
+## 📎 참조 문서
 
 | 문서 | 설명 |
 |---|---|
@@ -278,3 +271,4 @@
 | `docs/08_도구_스킬_시스템.md` | Function Calling + 도구/스킬 |
 | `docs/09_UI_화면_설계.md` | 화면 구성 & 와이어프레임 |
 | `docs/10_개발환경_설정.md` | Android Studio + Gemini Nano 설정 |
+| `docs/14_Play_Store_출시_체크리스트.md` | Play Store 등록 정보, 내부 테스트, 프로덕션 게이트 |

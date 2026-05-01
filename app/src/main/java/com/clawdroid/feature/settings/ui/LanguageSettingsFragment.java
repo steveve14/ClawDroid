@@ -7,13 +7,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.LocaleListCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.clawdroid.app.databinding.FragmentLanguageSettingsBinding;
 import com.clawdroid.core.data.repository.SettingsRepository;
+import com.clawdroid.core.locale.AppLocaleManager;
 
 import javax.inject.Inject;
 
@@ -55,10 +54,7 @@ public class LanguageSettingsFragment extends Fragment {
         settingsRepository.setAppLanguage(languageTag);
         updateRadioState(languageTag);
 
-        LocaleListCompat locales = languageTag.isEmpty()
-                ? LocaleListCompat.getEmptyLocaleList()
-                : LocaleListCompat.forLanguageTags(languageTag);
-        AppCompatDelegate.setApplicationLocales(locales);
+        AppLocaleManager.setLanguage(requireContext(), languageTag);
     }
 
     private void updateRadioState(String languageTag) {

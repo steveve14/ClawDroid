@@ -18,10 +18,11 @@
 
         <ImageView
             android:id="@+id/ivProviderIcon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_settings_gear"
-            android:contentDescription="provider icon" />
+            android:layout_width="@dimen/icon_md"
+            android:layout_height="@dimen/icon_md"
+            android:src="@android:drawable/ic_menu_manage"
+            android:contentDescription="provider icon"
+            app:tint="@color/md_on_primary_fixed" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -48,11 +49,12 @@
 
         <ImageView
             android:id="@+id/ivSelected"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/icon_md"
+            android:layout_height="@dimen/icon_md"
             android:src="@android:drawable/checkbox_on_background"
             android:visibility="gone"
-            android:contentDescription="selected" />
+            android:contentDescription="selected"
+            app:tint="@color/md_on_primary_fixed" />
 
     </LinearLayout>
 

@@ -82,14 +82,26 @@ public class VoiceChatViewModel extends ViewModel {
                 .subscribe(
                     list -> {
                         conversations.setValue(list);
-                        // ?좏깮????붾갑???놁쑝硫?媛??理쒓렐 ??붾갑 ?먮룞 ?ㅼ젙
-                        if (selectedConversation.getValue() == null && !list.isEmpty()) {
+                        ConversationEntity selected = selectedConversation.getValue();
+                        if (list.isEmpty()) {
+                            selectedConversation.setValue(null);
+                        } else if (selected == null || !containsConversation(list, selected.getId())) {
                             selectedConversation.setValue(list.get(0));
                         }
                     },
                     e -> error.setValue(e.getMessage())
                 )
         );
+    }
+
+    private boolean containsConversation(List<ConversationEntity> list, String conversationId) {
+        if (conversationId == null) return false;
+        for (ConversationEntity conversation : list) {
+            if (conversationId.equals(conversation.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void selectConversation(ConversationEntity conversation) {

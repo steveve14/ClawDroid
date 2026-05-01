@@ -10,7 +10,7 @@
         android:id="@+id/tvWidgetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🦞 ClawDroid"
+        android:text="@string/widget_title"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="#333333" />
@@ -21,7 +21,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="8dp"
-        android:text="빠른 질문을 입력하세요."
+        android:text="@string/widget_prompt"
         android:textSize="14sp"
         android:textColor="#666666"
         android:maxLines="6"
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:background="#6750A4"
             android:gravity="center"
-            android:text="질문하기"
+            android:text="@string/widget_ask"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -52,7 +52,7 @@
             android:paddingHorizontal="16dp"
             android:background="#E8DEF8"
             android:gravity="center"
-            android:text="앱 열기"
+            android:text="@string/widget_open_app"
             android:textColor="#6750A4"
             android:textSize="14sp" />
 

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.clawdroid.app.R;
 import com.clawdroid.app.databinding.FragmentSecuritySettingsBinding;
 import com.clawdroid.feature.settings.security.PinManager;
 
@@ -115,7 +116,7 @@ public class SecuritySettingsFragment extends Fragment {
                 == BiometricManager.BIOMETRIC_SUCCESS;
         binding.switchBiometric.setEnabled(biometricAvailable);
         if (!biometricAvailable) {
-            binding.tvBiometricDesc.setText("이 기기에서 생체 인증을 사용할 수 없습니다.");
+            binding.tvBiometricDesc.setText(R.string.security_biometric_unavailable);
         }
     }
 
@@ -137,37 +138,37 @@ public class SecuritySettingsFragment extends Fragment {
         layout.setPadding(padding, padding, padding, 0);
 
         EditText pinInput = new EditText(requireContext());
-        pinInput.setHint("PIN 입력 (4~6자리)");
+        pinInput.setHint(R.string.security_pin_enter_hint);
         pinInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         pinInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         layout.addView(pinInput);
 
         EditText confirmInput = new EditText(requireContext());
-        confirmInput.setHint("PIN 확인");
+        confirmInput.setHint(R.string.security_pin_confirm_hint);
         confirmInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         confirmInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         layout.addView(confirmInput);
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("PIN 설정")
+        .setTitle(R.string.security_pin_set_title)
                 .setView(layout)
-                .setPositiveButton("설정", (dialog, which) -> {
+        .setPositiveButton(R.string.common_set, (dialog, which) -> {
                     String pin = pinInput.getText().toString();
                     String confirm = confirmInput.getText().toString();
                     if (pin.length() < 4) {
-                        Toast.makeText(requireContext(), "PIN은 4자리 이상이어야 합니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.security_pin_min_length, Toast.LENGTH_SHORT).show();
                         binding.switchAppLock.setChecked(false);
                     } else if (!pin.equals(confirm)) {
-                        Toast.makeText(requireContext(), "PIN이 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.security_pin_mismatch, Toast.LENGTH_SHORT).show();
                         binding.switchAppLock.setChecked(false);
                     } else {
                         pinManager.setPin(pin);
                         pinManager.setAppLockEnabled(true);
                         updateBiometricVisibility();
-                        Toast.makeText(requireContext(), "앱 잠금이 활성화되었습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.security_app_lock_enabled, Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setNegativeButton("취소", (dialog, which) ->
+                    .setNegativeButton(R.string.common_cancel, (dialog, which) ->
                         binding.switchAppLock.setChecked(false))
                 .setCancelable(false)
                 .show();
@@ -175,27 +176,27 @@ public class SecuritySettingsFragment extends Fragment {
 
     private void showVerifyPinToDisable() {
         EditText pinInput = new EditText(requireContext());
-        pinInput.setHint("현재 PIN 입력");
+        pinInput.setHint(R.string.security_current_pin_hint);
         pinInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         pinInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
         int padding = (int) (16 * getResources().getDisplayMetrics().density);
         pinInput.setPadding(padding, padding, padding, 0);
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("PIN 확인")
+        .setTitle(R.string.security_pin_confirm_title)
                 .setView(pinInput)
-                .setPositiveButton("해제", (dialog, which) -> {
+        .setPositiveButton(R.string.common_disable, (dialog, which) -> {
                     if (pinManager.verifyPin(pinInput.getText().toString())) {
                         pinManager.clearPin();
                         pinManager.setBiometricEnabled(false);
                         updateBiometricVisibility();
-                        Toast.makeText(requireContext(), "앱 잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.security_app_lock_disabled, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(requireContext(), "PIN이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), R.string.security_pin_invalid, Toast.LENGTH_SHORT).show();
                         binding.switchAppLock.setChecked(true);
                     }
                 })
-                .setNegativeButton("취소", (dialog, which) ->
+                .setNegativeButton(R.string.common_cancel, (dialog, which) ->
                         binding.switchAppLock.setChecked(true))
                 .setCancelable(false)
                 .show();
@@ -203,9 +204,9 @@ public class SecuritySettingsFragment extends Fragment {
 
     private void enableBiometric() {
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("생체 인증 등록")
-                .setSubtitle("생체 인증으로 앱을 잠금 해제합니다.")
-                .setNegativeButtonText("취소")
+                .setTitle(getString(R.string.security_biometric_register_title))
+                .setSubtitle(getString(R.string.security_biometric_register_subtitle))
+                .setNegativeButtonText(getString(R.string.common_cancel))
                 .build();
 
         BiometricPrompt biometricPrompt = new BiometricPrompt(this,
@@ -215,7 +216,7 @@ public class SecuritySettingsFragment extends Fragment {
                     public void onAuthenticationSucceeded(
                             @NonNull BiometricPrompt.AuthenticationResult result) {
                         pinManager.setBiometricEnabled(true);
-                        Toast.makeText(requireContext(), "생체 인증이 활성화되었습니다.",
+                        Toast.makeText(requireContext(), R.string.security_biometric_enabled,
                                 Toast.LENGTH_SHORT).show();
                     }
 

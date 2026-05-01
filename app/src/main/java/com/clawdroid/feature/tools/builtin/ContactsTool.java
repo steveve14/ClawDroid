@@ -48,6 +48,7 @@ public class ContactsTool implements Tool {
 
         JsonObject query = new JsonObject();
         query.addProperty("type", "string");
+        query.addProperty("maxLength", 120);
         query.addProperty("description", "검색할 이름 또는 전화번호");
         properties.add("query", query);
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import com.clawdroid.core.data.db.dao.AiProviderDao;
 import com.clawdroid.core.data.db.entity.AiProviderEntity;
 import com.clawdroid.core.data.di.EncryptedPrefs;
+import com.clawdroid.core.locale.AppLocaleManager;
 
 import java.util.List;
 
@@ -219,11 +220,15 @@ public class SettingsRepository {
 
     // App language settings ("ko" or "en")
     public String getAppLanguage() {
-        return prefs.getString("app_language", "ko");
+        return AppLocaleManager.normalizeLanguage(
+            prefs.getString(AppLocaleManager.KEY_APP_LANGUAGE, AppLocaleManager.LANGUAGE_KOREAN));
     }
 
     public void setAppLanguage(String languageTag) {
-        prefs.edit().putString("app_language", languageTag).apply();
+        prefs.edit()
+            .putString(AppLocaleManager.KEY_APP_LANGUAGE,
+                AppLocaleManager.normalizeLanguage(languageTag))
+            .apply();
     }
 
     // Added models list (providerId|modelId entries)
